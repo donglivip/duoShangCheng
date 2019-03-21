@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div class="wrapper store index">
+			<!--头部-->
+			<div class="header">
+				<div class="aside mui-action-back">
+					<img src="img/Shape.png" class="back" />
+				</div>
+				<div class="head-main" style="background: #FFFFFF;font-size: .35rem;">
+					{{mydata.shopname}}
+				</div>
+				<div class="aside" @click="opennew('share')">
+					<img src="img/ahare02.png" class="share" />
+				</div>
+			</div>
+			<div class="main big-main">
+				<!--顶部店铺信息-->
+				<div class="store-top">
+					<img :src="mydata.shopicon" class="avatar" />
+					<div class="top-main">
+						<div class="name">{{mydata.shopname}}</div>
+						<div class="subtitle">经营类型：{{mydata.catname}}</div>
+					</div>
+					<img src="img/collect-active.png" class="collect" @click="collect(mydata.storeinfoid)" v-if="mydata.isShou==true"/>
+					<img src="img/collect.png" class="collect" @click="collect(mydata.storeinfoid)" v-if="mydata.isShou==false"/>
+				</div>
+				<!--中间店铺分类-->
+				<div class="nav-box">
+					<div class="nav-tab" @click="navchange(0)" :class="navindex==0?'active':''">首页</div>
+					<div class="nav-tab" @click="navchange(1)" :class="navindex==1?'active':''">商品</div>
+					<div class="nav-tab" @click="navchange(2)" :class="navindex==2?'active':''">新品</div>
+				</div>
+				<!--商品-->
+				<div class="shop-box">
+					<!--推荐列表-->
+					<div class="shop-tab" v-for='val in shopdata01' v-if="navindex==0" @click="openshop(val.goodsid)">
+						<div class="shopimg-box">
+							<img :src="val.pricon" class="shop-img" />
+						</div>
+						<div class="title">{{val.goodsname}}</div>
+						<div class="price">
+							<div class="money">￥{{val.goodsprices}}</div>
+							<div class="join">
+								团购
+							</div>
+						</div>
+						<div class="num">
+							
+						</div>
+					</div>
+					<!--商品列表-->
+					<div class="shop-tab" v-for='val in shopdata' v-if="navindex==1" @click="openshop(val.goodsid)">
+						<div class="shopimg-box">
+							<img :src="val.pricon" class="shop-img" />
+						</div>
+						<div class="title">{{val.goodsname}}</div>
+						<div class="price">
+							<div class="money">￥{{val.goodsprices}}</div>
+							<div class="join">
+								团购
+							</div>
+						</div>
+						<div class="num">
+							
+						</div>
+					</div>
+					<!--新品列表-->
+					<div class="shop-tab" v-for='val in shopdata02' v-if="navindex==2" @click="openshop(val.goodsid)">
+						<div class="shopimg-box">
+							<img :src="val.pricon" class="shop-img" />
+						</div>
+						<div class="title">{{val.goodsname}}</div>
+						<div class="price">
+							<div class="money">￥{{val.goodsprices}}</div>
+							<div class="join">
+								团购
+							</div>
+						</div>
+						<div class="num">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--<div class="bottom">
+				<div class="bottom-tab">
+					<div class="text">全部商品</div>
+				</div>
+				<div class="bottom-tab" @click="ejectchange">
+					<img src="img/more.png" />
+					<div class="text">热门分类</div>
+					<transition name='donghua'>
+						<div class="eject" v-if="ejectboo">
+							<div class="eject-inner">
+								<div class="eject-tab">
+									一级分类
+								</div>
+								<div class="eject-tab">
+									二级分类
+								</div>
+								<div class="eject-tab">
+									三级分类
+								</div>
+							</div>
+							<img src="img/down02.png" />
+						</div>
+					</transition>
+				</div>
+				<div class="bottom-tab02">
+					<img src="img/qq.png" />
+					<span>客服 </span>
+				</div>
+			</div>-->
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '.wrapper',
+			data: {
+				navindex: 0,
+				ejectboo: false,
+				mydata:'',
+				show:'',
+				shopdata:'',
+				shopdata01:[],
+				shopdata02:[]
+			},
+			methods: {
+				collect:function(id){
+					if(localStorage.getItem('userid') == null || localStorage.getItem('userid') == 'null') {
+						window.location.href = 'mlogin.html'
+					}
+					var that=this;
+					$.ajax({
+						type: "post",
+						url: url + "/shopsmain/?service=Favorites.add",
+						async: true,
+						data: {
+							userid:localStorage.getItem('userid'),
+							favoritesid:id,
+							types:'store'
+						},
+						success: function(res) {
+							
+							that.mydata.isShou=!that.mydata.isShou;
+							console.log(res)
+						}
+					});
+				},
+				openshop:function(id){
+					localStorage.setItem('goodsid',id)
+					this.opennew('shop')
+				},
+				navchange: function(index) {
+					this.navindex = index
+				},
+				ejectchange: function() {
+					this.ejectboo = !this.ejectboo
+				},
+				inputsubmit: function() {
+					this.opennew('search')
+				},
+				opennew: function(target) {
+					mui.openWindow({
+						url: './' + target + '.html',
+						id: target
+					})
+				},
+				myajax: function() {
+					var that = this
+//					获取店铺基本信息
+					$.ajax({
+						type: 'POST',
+						url: url + 'shopsmain/?service=Storeinfo.getStoreInfor',
+						datatype: 'json',
+						data: {
+							storeinfoid:localStorage.getItem('storeinfoid'),
+							userId:localStorage.getItem('userid')
+						},
+						success: function(data) {
+							console.log(1111111,data)
+							that.mydata = data.data;
+							
+						},
+						error: function() {
+							
+						},
+					});
+//					获取店铺下商品列表
+					$.ajax({
+						type: 'POST',
+						url: url + 'shopsmain/?service=Productinfo.getGoodsByStore',
+						datatype: 'json',
+						data: {
+							storeid:localStorage.getItem('storeinfoid'),
+							limit:15,
+							page:1
+						},
+						success: function(data) {
+							console.log(data)
+							that.shopdata = data.data;
+						},
+						error: function() {
+							
+						},
+					});
+//					获取店铺下推荐列表
+					$.ajax({
+						type: 'POST',
+						url: url + 'shopsmain/?service=Productinfo.getGoodsByIsrecommended',
+						datatype: 'json',
+						data: {
+							storeid:localStorage.getItem('storeinfoid'),
+							limit:15,
+							page:1
+						},
+						success: function(data) {
+							console.log(data)
+							that.shopdata01 = data.data;
+						},
+						error: function() {
+							
+						},
+					});
+//					获取店铺下新品列表
+					$.ajax({
+						type: 'POST',
+						url: url + 'shopsmain/?service=Productinfo.getGoodsByStore',
+						datatype: 'json',
+						data: {
+							storeid:localStorage.getItem('storeinfoid'),
+						},
+						success: function(data) {
+							console.log(data)
+							that.shopdata02 = data.data;
+						},
+						error: function() {
+							
+						},
+					});
+				}
+			},
+			mounted: function() {
+				this.myajax();
+			}
+		})
+	</script>
+
+</html>
