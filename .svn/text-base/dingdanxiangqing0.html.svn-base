@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/dingdanxiangqing0.css" />
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<div class="header-cebian">
+					<img src="img/youjian.png" />
+				</div>
+				<div class="header-text">订单详情</div>
+				<div class="header-cebian"></div>
+			</div>
+			<div class="main">
+				<div class="main-one">
+					<div class="one-box">
+						<div class="one-text">订单地址：</div>
+						<div class="one-text">江苏省南京市高新区永乐花园A座407室</div>
+					</div>
+					<div class="one-hezi">
+						<div class="one-text">联系人：王诗诗</div>
+						<div class="one-text">17864598475</div>
+					</div>
+				</div>
+				<div class="main-box">
+					<div class="box-top">
+						<div class="box-text">订单编号:123455666</div>
+					</div>
+					<div class="box-box">
+						<div class="box-left">
+							<img src="img/352435.jpg" />
+						</div>
+						<div class="box-content">
+							<div class="box-above">徐州保洁公司</div>
+							<div class="box-below">
+								<div class="below-text">服务态度：</div>
+								<div class="below-box">
+									<img src="img/xing.png" />
+									<img src="img/xing.png" />
+									<img src="img/xing.png" />
+									<img src="img/xing.png" />
+									<img src="img/xingx.png" />
+								</div>
+							</div>
+						</div>
+						<div class="box-right">
+							<img src="img/dianhua.png" />
+						</div>
+					</div>
+				</div>
+				<div class="main-two">
+					<div class="two-text">服务类型：</div>
+					<div class="two-text">其他</div>
+				</div>
+				<div class="main-two">
+					<div class="two-text">上门时间：立即上门</div>
+					<img src="img/you-hui.png" />
+				</div>
+				<div class="main-two">
+					<div class="two-text">最低价:</div>
+					<div class="two-news">￥25</div>
+				</div>
+				<div class="main-three">
+					<div class="three-text">备注：</div>
+					<input type="text" value="请尽快上门" readonly="readonly" />
+				</div>
+				<div class="main-four">
+					<div class="four-text">附照（最多三张）</div>
+					<div class="four-box">
+						<div class="img-box"><img src="img/135643.jpg" /></div>
+						<div class="img-box"><img src="img/234564.jpg" /></div>
+						<div class="img-box"><img src="img/2354564.jpg" /></div>
+					</div>
+				</div>
+			</div>
+           <div class="bottom">
+           	<div class="bottom-text">取消订单</div>
+           	<div class="bottom-word"></div>
+           	<div class="bottom-news">联系师傅</div>
+           	<div class="bottom-news">完成订单</div>
+           </div>
+		</div>
+	</body>
+
+</html>

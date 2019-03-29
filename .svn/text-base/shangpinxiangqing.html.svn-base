@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/shangpinxiangqing.css"/>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<img src="img/Group 26.png"/>
+			</div>
+			<div class="header02">
+				<img src="img/shenqing.png" style="width: 60%;height: auto;"/>
+			</div>
+			<div class="main">
+				<div class="main-one">
+					<img src="img/5346513.jpg"/>
+				</div>
+				<div class="main-two">
+					<div class="two-top">
+						<div class="two-text">¥ 256</div>
+					</div>
+					<div class="two-content">
+						<div class="two-news">YSL 圣罗兰 2018圣诞限定莹亮纯魅圆管口红釉No.78</div>
+					</div>
+					<div class="two-bottom">
+						<div class="two-word">快递:5.00元</div>
+						<div class="two-word">库存176</div>
+						<div class="two-word">销量12</div>
+					</div>
+				</div>
+				<div class="main-three">
+					<div class="three-box">
+						<div class="three-text">选择</div>
+						<div class="three-news">颜色</div>
+						<img src="img/you-hui.png"/>
+					</div>
+					<div class="three-hezi">
+						<div class="three-text">参数</div>
+						<div class="three-news">是否为特殊用途化妆品</div>
+					</div>
+				</div>
+				<div class="main-four">
+					<div class="four-top">
+						<div class="four-text">商品评价(23)</div>
+						<img src="img/you-hui.png"/>
+					</div>
+					<div class="four-content">
+						<div class="img-hezi">
+							<img src="img/234564.jpg"/>
+						</div>
+						<div class="four-news">dingding </div>
+					</div>
+					<div class="four-bottom">
+						<div class="four-upper">姨妈色系列口红安利</div>
+						<div class="four-lower">
+							<div class="img-box">
+								<img src="img/2354564.jpg"/>
+							</div>
+							<div class="img-box">
+								<img src="img/352435.jpg"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="main-five">
+					<div class="five-text">商品详情</div>
+				</div>
+			</div>
+			<div class="bottom">
+				<div class="bottom-lift">
+					<img src="img/tuandui (4).png"/>
+					<div class="bottom-text">收藏</div>
+				</div>
+				<div class="bottom-right">
+					<div class="bottom-news">加入购物车</div>
+					<div class="bottom-word">立即购买</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
