@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 64
-/svn/DuoShangCheng-YongHu/!svn/ver/7/%E5%A4%9A%E5%95%86%E5%9F%8E
+/svn/DuoShangCheng-YongHu/!svn/ver/8/%E5%A4%9A%E5%95%86%E5%9F%8E
 END
 dianpu.html
 K 25
@@ -123,17 +123,17 @@ svn:wc:ra_dav:version-url
 V 87
 /svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/shangpinxiangqing.html
 END
-zhuce.html
-K 25
-svn:wc:ra_dav:version-url
-V 75
-/svn/DuoShangCheng-YongHu/!svn/ver/3/%E5%A4%9A%E5%95%86%E5%9F%8E/zhuce.html
-END
 denglu.html
 K 25
 svn:wc:ra_dav:version-url
 V 76
 /svn/DuoShangCheng-YongHu/!svn/ver/3/%E5%A4%9A%E5%95%86%E5%9F%8E/denglu.html
+END
+zhuce.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/DuoShangCheng-YongHu/!svn/ver/3/%E5%A4%9A%E5%95%86%E5%9F%8E/zhuce.html
 END
 jinrishouru.html
 K 25
@@ -141,11 +141,11 @@ svn:wc:ra_dav:version-url
 V 81
 /svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/jinrishouru.html
 END
-wodedingdan.html
+lingqujilu.html
 K 25
 svn:wc:ra_dav:version-url
-V 81
-/svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/wodedingdan.html
+V 80
+/svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/lingqujilu.html
 END
 shangjiazhuce.html
 K 25
@@ -153,11 +153,11 @@ svn:wc:ra_dav:version-url
 V 83
 /svn/DuoShangCheng-YongHu/!svn/ver/3/%E5%A4%9A%E5%95%86%E5%9F%8E/shangjiazhuce.html
 END
-lingqujilu.html
+wodedingdan.html
 K 25
 svn:wc:ra_dav:version-url
-V 80
-/svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/lingqujilu.html
+V 81
+/svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/wodedingdan.html
 END
 gouwuche.html
 K 25
@@ -165,29 +165,29 @@ svn:wc:ra_dav:version-url
 V 78
 /svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/gouwuche.html
 END
-shezhi.html
-K 25
-svn:wc:ra_dav:version-url
-V 76
-/svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/shezhi.html
-END
 kefu.html
 K 25
 svn:wc:ra_dav:version-url
 V 74
 /svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/kefu.html
 END
-mingxi.html
+shezhi.html
 K 25
 svn:wc:ra_dav:version-url
 V 76
-/svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/mingxi.html
+/svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/shezhi.html
 END
 zujiliebie.html
 K 25
 svn:wc:ra_dav:version-url
 V 80
 /svn/DuoShangCheng-YongHu/!svn/ver/3/%E5%A4%9A%E5%95%86%E5%9F%8E/zujiliebie.html
+END
+mingxi.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/DuoShangCheng-YongHu/!svn/ver/2/%E5%A4%9A%E5%95%86%E5%9F%8E/mingxi.html
 END
 shoucangliebiao.html
 K 25
