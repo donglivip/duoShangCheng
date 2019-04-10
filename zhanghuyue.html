@@ -13,12 +13,12 @@
 		<div class="wrapper">
 			<div class="header">
 				<div class="header-top">
-					<div class="header-aside">
+					<div class="header-aside mui-action-back">
 						<img src="img/y  bai.png" />
 					</div>
 					<div class="header-text">账户余额</div>
 					<div class="header-aside">
-						<div class="header-news">明细</div>
+						<div class="header-news" style="white-space: nowrap;">明细</div>
 					</div>
 				</div>
 				<div class="header-bottom">
@@ -68,7 +68,7 @@
 				async:true,
 				dataType:'json',
 				data:{
-					smUserId:localStorage.getItem('id')
+					smUserId:localStorage.getItem('userid')
 				},
 				success:function(res ){
 					if (res.status==200) {
@@ -81,6 +81,12 @@
 					alert("网络连接失败，请稍后重试")
 				}
 			});
+			$('.header-news').click(function(){
+				mui.openWindow({
+					url:'mingxi.html',
+					id:'mingxi'
+				})
+			})
 		})
 	</script>
 </html>

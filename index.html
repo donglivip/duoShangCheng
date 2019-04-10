@@ -147,6 +147,13 @@
 					alert("网络连接失败，请稍后重试")
 				}
 			});
+			$(".main-three").on('click','.three-box',function(){
+				localStorage.setItem('storeinfoid',$(this).attr('myid'))
+				mui.openWindow({
+					url:"store.html",
+					id:"store"
+				})
+			})
 			//获取首页为你推荐
 			$.ajax({
 				type:"post",
@@ -176,7 +183,11 @@
 				}
 			});
 			$(".main-box").on('click','.main-four',function(){
-				 localStorage.getItem('dianpuid', $(this).attr('myid'))
+				 localStorage.getItem('storeinfoid', $(this).attr('myid'))
+				 mui.openWindow({
+					url:"store.html",
+					id:"store"
+				})
 			})
 			//跳转页面
 			$(".jump").click(function(){

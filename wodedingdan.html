@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="UTF-8">
 		<title></title>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
-		<link rel="stylesheet" type="text/css" href="css/wodedingdan.css"/>
+		<link rel="stylesheet" type="text/css" href="css/wodedingdan.css" />
 	</head>
+
 	<body>
 		<div class="wrapper">
 			<div class="header">
-				<div class="header-aside">
-					<img src="img/youjian.png"/>
+				<div class="header-aside mui-action-back">
+					<img src="img/youjian.png" />
 				</div>
-				<div class="header-text">购物车</div>	
+				<div class="header-text">我的订单</div>
 				<div class="header-aside"></div>
 			</div>
 			<div class="main">
@@ -31,7 +33,7 @@
 					</div>
 					<div class="two-content">
 						<div class="content-lift">
-							<img src="img/465361.jpg"/>
+							<img src="img/465361.jpg" />
 						</div>
 						<div class="content-text">圣罗兰纯口红 方管正红色1星星色52正橘色正品</div>
 					</div>
@@ -39,9 +41,51 @@
 					<div class="two-bottom">
 						<div class="bottom-text">查看物流</div>
 						<div class="bottom-news">确认收货</div>
-					</div>	
+					</div>
 				</div>
 			</div>
 		</div>
 	</body>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			data: {
+				orderdata: []
+			},
+			methods: {
+				myajax: function() {
+					var that = this
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/selectUserOrder",
+						async: true,
+						dataType: 'json',
+						data: {
+							smUserId: localStorage.getItem("id")
+						},
+						success: function(res) {
+							if(res.status == 200) {
+								that.mingxidata = res.data
+							} else {
+								alert(res.msg)
+							}
+						},
+						error: function(err) {
+							alert("网络连接失败，请稍后重试")
+						}
+					});
+				}
+			},
+			mounted: function() {
+
+			},
+			filters: {
+
+			}
+		})
+	</script>
+
 </html>

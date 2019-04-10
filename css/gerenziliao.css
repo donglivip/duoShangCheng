@@ -25,8 +25,8 @@ html,body,.wrapper{width: 100%;height: 100%;}
 	font-size: .36rem;
 	color: #141414 ;
 }
+input{flex: 1;border: 0;text-align: right;}
 .main-box{
-	height: 3.7rem;
 	padding: 0 .3rem ;
 	background: #FFFFFF;
 }
@@ -49,7 +49,6 @@ html,body,.wrapper{width: 100%;height: 100%;}
 	font-size: .28rem;
 	color: #929292 ;
 	flex: 1;
-	margin-left: .4rem;
 }
 .youjian{
 	height: .36rem;
@@ -74,8 +73,12 @@ html,body,.wrapper{width: 100%;height: 100%;}
 .main-content img{
 	height: .36rem;
 }
-.{
-	
+.btn{
+	position: fixed;
+	bottom: 0;left: 0;
+	background: red;color: #FFFFFF;
+	font-size: .25rem;display: flex;align-items: center;justify-content: center;
+	width: 100%;height: .8rem;
 }
 
 

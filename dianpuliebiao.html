@@ -12,7 +12,7 @@
 	<body>
 		<div class="wrapper">
 			<div class="header">
-				<div class="header-aside">
+				<div class="header-aside mui-action-back">
 					<img src="img/youjian.png" />
 				</div>
 				<div class="header-text">店铺列表</div>
@@ -64,7 +64,11 @@
 				}
 			});
 			$(".main").on('click', '.main-one', function() {
-				localStorage.setItem('dianpuxiangqingid',$(this).attr('myid'))
+				localStorage.setItem('storeinfoid', $(this).attr('myid'))
+				mui.openWindow({
+					url: './store.html',
+					id: 'store'
+				})
 			})
 		})
 	</script>

@@ -10,8 +10,13 @@
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<style type="text/css">
-		.back{height: .4rem;width: auto!important;}
+		.back {
+			height: .4rem;
+			width: auto!important;
+		}
+		.red{border-bottom: 1px solid red;color: red;}
 	</style>
+
 	<body>
 		<div class="wrapper store index">
 			<!--头部-->
@@ -37,30 +42,106 @@
 				</div>
 				<!--中间店铺分类-->
 				<div class="nav-box">
-					<div class="nav-tab">首页</div>
-					<div class="nav-tab">商品</div>
-					<div class="nav-tab">新品</div>
+
 				</div>
 				<!--商品-->
 				<div class="shop-box">
 					<!--商品列表-->
-					<div class="shop-tab">
-						<div class="shopimg-box">
-							<img src="img/153465.jpg" class="shop-img" />
-						</div>
-						<div class="title">商品名称</div>
-						<div class="price">
-							<div class="money">￥20.00</div>
-							<div class="join">
-								购买
-							</div>
-						</div>
-						<div class="num">
-							
-						</div>
-					</div>
+
 				</div>
 			</div>
 		</div>
 	</body>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function() {
+			//获取店铺分类下商品
+			$.ajax({
+				type: "post",
+				url: myurl + "/user/selectSmCommodityType",
+				async: true,
+				dataType: 'json',
+				data: {
+					smMerchantId: localStorage.getItem('storeinfoid')
+				},
+				success: function(res) {
+					if(res.status == 200) {
+						for(var i in res.data) {
+							$(".nav-box").append(`
+								<div class="nav-tab" myid='${res.data[i].smCommodityTypeId}'>${res.data[i].smCtResult}</div>
+							`)
+						}
+						$(".nav-tab").eq(0).click()
+					} else {
+						alert(res.msg)
+					}
+				},
+				error: function(err) {
+					alert("网络连接失败，请稍后重试")
+				}
+			});
+			//点击分类--获取分类下商品
+			$(".nav-box").on('click', '.nav-tab', function() {
+				$(".nav-tab").removeClass('red')
+				$(this).addClass('red')
+				var myid = $(this).attr('myid')
+				$.ajax({
+					type: "post",
+					url: myurl + "/user/selectSmCommodityIdSmCommodity",
+					async: true,
+					dataType: 'json',
+					data: {
+						smCommodityTypeId: myid
+					},
+					success: function(res) {
+						if(res.status == 200) {
+							$(".shop-box").html('')
+							for(var i in res.data) {
+								$(".shop-box").append(`
+									<div class="shop-tab jump" myid='${res.data[i].smCommodityId}'>
+										<div class="shopimg-box">
+											<img src="${res.data[i].smCoDefaultImg}" class="shop-img" />
+										</div>
+										<div class="title">${res.data[i].smCoName}</div>
+										<div class="price">
+											<div class="money">￥ ${res.data[i].smCoDefaultPrice}</div>
+											<div class="join">
+												购买
+											</div>
+										</div>
+									</div>
+								`)
+							}
+						} else {
+							alert(res.msg)
+						}
+						
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+			})
+			//跳转到商品详情
+			$(".shop-box").on('click', '.shop-tab', function() {
+				localStorage.setItem('shangpinxiangqingid', $(this).attr('myid'))
+				mui.openWindow({
+					url: 'shangpinxiangqing.html',
+					id: 'shangpinxiangqing'
+				})
+			})
+			//跳转页面
+			$(".jump").click(function(){
+				var jump=$(this).attr('myid')
+				mui.openWindow({
+					url:""+jump+".html",
+					id:jump
+				})
+			})
+			
+		})
+	</script>
+
 </html>
