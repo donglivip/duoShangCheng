@@ -201,15 +201,17 @@
 					//					加入购物车
 					$.ajax({
 						type: "post",
-						url: myurl + "/commodity/insertSmShoppingBasket",
+						url: myurl + "/user/inserShoppingCart",
 						async: true,
 						dataType: 'json',
 						data: {
 							smCommodityId: localStorage.getItem('shangpinxiangqingid'),
 							smUserId: localStorage.getItem('id'),
+							smSbCreateName:localStorage.getItem('id'),
 							smSbNum: that.shopnum,
 							smSbPrice: that.shopnum * that.shopdetail.listSmCoFarmat[that.guigeindex][1],
-							smSbNorm: that.shopdetail.listSmCoFarmat[that.guigeindex][0]
+							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0],
+							smMerchantId: localStorage.getItem('storeinfoid')
 						},
 						success: function(res) {
 							if(res.status == 200) {

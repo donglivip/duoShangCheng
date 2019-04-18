@@ -93,7 +93,8 @@
 					async: true,
 					dataType: 'json',
 					data: {
-						smCommodityTypeId: myid
+						smCommodityTypeId: myid,
+						smMerchantId: localStorage.getItem('storeinfoid')
 					},
 					success: function(res) {
 						if(res.status == 200) {
