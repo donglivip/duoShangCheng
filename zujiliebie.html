@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="UTF-8">
 		<title></title>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
-		<link rel="stylesheet" type="text/css" href="css/shangpinliebiao.css"/>
+		<link rel="stylesheet" type="text/css" href="css/shangpinliebiao.css" />
 	</head>
+
 	<body>
 		<div class="wrapper">
 			<div class="header">
 				<div class="header-aside mui-action-back">
-					<img src="img/youjian.png"/>
+					<img src="img/youjian.png" />
 				</div>
-				<div class="header-text">面膜</div>
+				<div class="header-text">足迹列表</div>
 				<div class="header-aside"></div>
 			</div>
 			<div class="main">
-				
+
 			</div>
 		</div>
 	</body>
@@ -25,20 +27,20 @@
 	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(function(){
-			function myajax(){
+		$(function() {
+			function myajax() {
 				$.ajax({
 					type: "post",
 					url: myurl + "/user/selectSmUserFootprint",
 					async: true,
 					dataType: 'json',
 					data: {
-						smUserId:localStorage.getItem('id')
+						smUserId: localStorage.getItem('id')
 					},
 					success: function(res) {
 						if(res.status == 200) {
 							$(".main").html('')
-							for (var i in res.data) {
+							for(var i in res.data) {
 								$(".main").append(`
 									<div class="main-one">
 										<div class="one-lift">
@@ -61,30 +63,31 @@
 						alert("网络连接失败，请稍后重试")
 					}
 				});
-				$(".main").on('click','.one-news',function(){
-					var myid=$(this).attr('myid')
+				$(".main").on('click', '.one-news', function() {
+					var myid = $(this).attr('myid')
 					$.ajax({
-					type: "post",
-					url: myurl + "/user/deleteSmUserFootprint",
-					async: true,
-					dataType: 'json',
-					data: {
-						smUserFootprintId:myid
-					},
-					success: function(res) {
-						if(res.status == 200) {
-							myajax()
-						} else {
-							alert(res.msg)
+						type: "post",
+						url: myurl + "/user/deleteSmUserFootprint",
+						async: true,
+						dataType: 'json',
+						data: {
+							smUserFootprintId: myid
+						},
+						success: function(res) {
+							if(res.status == 200) {
+								myajax()
+							} else {
+								alert(res.msg)
+							}
+						},
+						error: function(err) {
+							alert("网络连接失败，请稍后重试")
 						}
-					},
-					error: function(err) {
-						alert("网络连接失败，请稍后重试")
-					}
-				});
+					});
 				})
 			}
-			
+			myajax()
 		})
 	</script>
+
 </html>

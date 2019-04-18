@@ -15,7 +15,7 @@
 				<div class="header-aside mui-action-back">
 					<img src="img/youjian.png" />
 				</div>
-				<div class="header-text">面膜</div>
+				<div class="header-text">收藏列表</div>
 				<div class="header-aside"></div>
 			</div>
 			<div class="main">
@@ -78,7 +78,6 @@
 					success: function(res) {
 						if(res.status == 200) {
 							if (res.data==1) {
-								alert("删除成功")
 								myajax()
 							} else{
 								alert(res.msg)

@@ -1,135 +1,275 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="UTF-8">
 		<title></title>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
-		<link rel="stylesheet" type="text/css" href="css/gouwuche.css"/>
+		<link rel="stylesheet" type="text/css" href="css/gouwuche.css" />
 	</head>
+
 	<body>
 		<div class="wrapper">
 			<div class="header">
-				<div class="header-aside"></div>
-				<div class="header-text">购物车</div>	
-				<div class="header-aside">
-					<div class="header-news">管理</div>
+				<div class="header-aside mui-action-back">
+					<img src="img/youjian.png"/>
+				</div>
+				<div class="header-text">购物车</div>
+				<div class="header-aside guanli" style="font-size: .25rem;">
+					管理
 				</div>
 			</div>
 			<div class="main">
 				<div class="main-box">
-					<div class="main-one">
-						<div class="one-lift">
-							<img src="img/tuandui (2).png"/>
-						</div>
-						<div class="one-content">
-							<img src="img/352435.jpg"/>
-						</div>
-						<div class="one-right">
-							<div class="one-top">樱花沐浴露</div>
-							<div class="one-bottom">
-								<div class="one-text">¥ 399</div>
-								<div class="one-box">
-									<div class="one-news">-</div>
-									<div class="one-word">1</div>
-									<div class="one-news">+</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="main-one">
-						<div class="one-lift">
-							<img src="img/xuanzhong (1).png"/>
-						</div>
-						<div class="one-content">
-							<img src="img/2354564.jpg"/>
-						</div>
-						<div class="one-right">
-							<div class="one-top">胶原蛋白集中保湿口红</div>
-							<div class="one-bottom">
-								<div class="one-text">¥ 399</div>
-								<div class="one-box">
-									<div class="one-news">-</div>
-									<div class="one-word">1</div>
-									<div class="one-news">+</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="main-one">
-						<div class="one-lift">
-							<img src="img/xuanzhong (1).png"/>
-						</div>
-						<div class="one-content">
-							<img src="img/8554556.jpg"/>
-						</div>
-						<div class="one-right">
-							<div class="one-top">保湿水乳护肤套装</div>
-							<div class="one-bottom">
-								<div class="one-text">¥ 399</div>
-								<div class="one-box">
-									<div class="one-news">-</div>
-									<div class="one-word">1</div>
-									<div class="one-news">+</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="main-one">
-						<div class="one-lift">
-							<img src="img/xuanzhong (1).png"/>
-						</div>
-						<div class="one-content">
-							<img src="img/234564.jpg"/>
-						</div>
-						<div class="one-right">
-							<div class="one-top">蔚蓝香水</div>
-							<div class="one-bottom">
-								<div class="one-text">¥ 399</div>
-								<div class="one-box">
-									<div class="one-news">-</div>
-									<div class="one-word">1</div>
-									<div class="one-news">+</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
 				</div>
 				<div class="main-two">
 					<div class="two-lift">
-						<img src="img/xuanzhong (1).png"/>
+						<div class="box">
+							<input type='checkbox' class='allradio' /> <span class='raicle'></span>
+						</div>
 						<div class="two-text">全选</div>
 					</div>
 					<div class="two-content">
 						<div class="content-box">
-							<div class="content-text">总计:  </div>
-							<div class="content-news">¥9898.88</div>
+							<div class="content-text">总计: </div>
+							<div class="content-news">¥<span class="allprice"></span></div>
 						</div>
-						<div class="content-word">免运费</div>
 					</div>
 					<div class="two-right">
 						<div class="two-news">结算</div>
 					</div>
 				</div>
 			</div>
-			<div class="bottom">
-               <div class="bottom-box">
-               	   <img src="img/shouye 2.png"/>
-               	   <div class="bottom-news">首页</div>
-               </div>
-               <div class="bottom-box">
-               	   <img src="img/fenlei 2.png"/>
-               	   <div class="bottom-news">分类</div>
-               </div>
-                <div class="bottom-box">
-               	   <img src="img/Group 4.png"/>
-               	   <div class="bottom-text">购物袋</div>
-               </div>
-                <div class="bottom-box">
-               	   <img src="img/wode.png"/>
-               	   <div class="bottom-news">我的</div>
-               </div>              
-			</div>
 		</div>
 	</body>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function() {
+			//			全选事件
+			$('.allradio').change(function() {
+				$("input[type='checkbox']").prop("checked", $(this).is(':checked'))
+			})
+			//			结算事件
+			$('.two-right').click(function() {
+				if($('input[type=checkbox]:checked').length == 0) {
+					return false;
+				}
+				if($('.two-news').html() == '删除') {
+					//					删除购物车
+					for(var i = 0; i < $('.main-box .mycart').length; i++) {
+						if($('.main-box .mycart input').is(':checked')) {
+							$.ajax({
+								type: "post",
+								url: myurl + "/user/deleteSmShoppingBasket",
+								async: true,
+								data: {
+									smShoppingBasketId: $('.main-box .mycart').eq(i).attr('myid')
+								},
+								dataType: 'json',
+								success: function(res) {
+									if(res.status == 200) {
+										myajax()
+									} else {
+										alert(res.msg)
+									}
+								},
+								error: function(err) {
+									alert("网络连接失败，请稍后重试")
+								}
+							});
+						}
+					}
+				} else {
+					//					结算购物车
+					var shopdata = []
+					for(var i = 0; i < $('.main-box .mycart').length; i++) {
+
+						if($('.main-box .mycart input').is(':checked')) {
+							shopdata.push({
+								smCommodityId: $('.main-box .mycart').eq(i).attr('smCommodityId'),
+								smOdSpecif: $('.main-box .mycart').eq(i).attr('smOdSpecif'),
+								smOdNum: $('.main-box .mycart').eq(i).attr('smOdNum'),
+								smOdPrice: $('.main-box .mycart').eq(i).attr('smOdPrice'),
+								shopname: $('.main-box .mycart').eq(i).attr('shopname')
+							})
+						}
+					}
+					localStorage.setItem('shopdata', JSON.stringify(shopdata))
+					mui.openWindow({
+						url: 'tijiaodingdan.html',
+						id: 'tijiaodingdan'
+					})
+				}
+
+			})
+			//			管理单击事件
+			$('.guanli').click(function() {
+				var inner = $(this).html()
+				if(inner == '管理') {
+					$(this).html('取消')
+					$('.two-news').html('删除')
+				} else {
+					$(this).html('管理')
+					$('.two-news').html('结算')
+				}
+			})
+
+			function myajax() {
+				$.ajax({
+					type: "post",
+					url: myurl + "/user/selectSmShoppingBasket",
+					async: true,
+					data: {
+						smUserId: localStorage.getItem('id')
+					},
+					dataType: 'json',
+					success: function(res) {
+						if(res.status == 200) {
+							var price = 0
+							$(".main-box").html('')
+							for(var i in res.data) {
+								price += res.data[i].smSbPrice
+								$(".main-box").append(`
+    							<div class="main-one mycart" myid='${res.data[i].smShoppingBasketId}' shopname='${res.data[i].smCoName}' smOdPrice='${res.data[i].smSbPrice}' smOdNum='${res.data[i].smSbNum}' smOdSpecif='${res.data[i].smSbNorm}' smCommodityId='${res.data[i].smCommodityId}'>
+									<div class="one-lift box">
+										<input type='checkbox' class='myradio'/> <span class='raicle'></span>
+									</div>
+									<div class="one-content">
+										<img src="${myurl + res.data[i].smCoDefaultImg}" />
+									</div>
+									<div class="one-right">
+										<div class="one-top">${res.data[i].smCoName}</div>
+										<div class="one-top02">${res.data[i].smSbNorm}</div>
+										<div class="one-bottom">
+											<div class="one-text"> ¥ ${res.data[i].smSbPriceOne}</div>
+											<div class="one-box">
+												<div class="one-news remove" myid='${res.data[i].smShoppingBasketId}' num='${res.data[i].smSbNum}' price='${res.data[i].smSbPriceOne}'>-</div>
+												<input type="number" value="${res.data[i].smSbNum}" class="one-word" />
+												<div class="one-news add" myid='${res.data[i].smShoppingBasketId}' num='${res.data[i].smSbNum}' price='${res.data[i].smSbPriceOne}'>+</div>
+											</div>
+										</div>
+									</div>
+								</div>
+    						`)
+							}
+							$('.allprice').html(price)
+						} else {
+							alert(res.msg)
+						}
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+			}
+			myajax()
+			document.addEventListener('myajax', function() {
+				myajax()
+			})
+			//			增加数量
+			$(".main-box").on('click', '.add', function() {
+				var id = $(this).attr('myid')
+				var num = $(this).attr('num')
+				var price = $(this).attr('price')
+				$.ajax({
+					type: "post",
+					url: myurl + "/commodity/updateSmShoppingBasketNum",
+					async: true,
+					data: {
+						smShoppingBasketId: id,
+						smSbNum: parseInt(num) + 1,
+						smSbPrice: (parseInt(num) + 1) * price
+					},
+					dataType: 'json',
+					success: function(res) {
+						if(res.status == 200) {
+							myajax()
+						} else {
+							alert(res.msg)
+						}
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+			})
+			//			减少数量
+			$(".main-box").on('click', '.remove', function() {
+				var id = $(this).attr('myid')
+				var num = $(this).attr('num')
+				var price = $(this).attr('price')
+				if(num == 1) {
+					//					删除购物车
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/deleteSmShoppingBasket",
+						async: true,
+						data: {
+							smShoppingBasketId: id
+						},
+						dataType: 'json',
+						success: function(res) {
+							if(res.status == 200) {
+								myajax()
+							} else {
+								alert(res.msg)
+							}
+						},
+						error: function(err) {
+							alert("网络连接失败，请稍后重试")
+						}
+					});
+				} else {
+					//					减少购物车
+					$.ajax({
+						type: "post",
+						url: myurl + "/commodity/updateSmShoppingBasketNum",
+						async: true,
+						data: {
+							smShoppingBasketId: id,
+							smSbNum: num - 1,
+							smSbPrice: (num - 1) * price
+						},
+						dataType: 'json',
+						success: function(res) {
+							if(res.status == 200) {
+								myajax()
+							} else {
+								alert(res.msg)
+							}
+						},
+						error: function(err) {
+							alert("网络连接失败，请稍后重试")
+						}
+					});
+				}
+			})
+			//跳转页面-分类
+			$(".fenlei").click(function() {
+				mui.openWindow({
+					url: 'fenlei.html',
+					id: 'fenlei'
+				})
+			})
+			//跳转页面-首页
+			$(".shouye").click(function() {
+				mui.openWindow({
+					url: 'index.html',
+					id: 'index'
+				})
+			})
+			//跳转页面-我的
+			$(".wode").click(function() {
+				mui.openWindow({
+					url: 'wode.html',
+					id: 'wode'
+				})
+			})
+		})
+	</script>
+
 </html>
