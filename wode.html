@@ -18,11 +18,11 @@
 					</div>
 					<div class="header-bottom">
 						<div class="header-lift">
-							<img src="img/945421.jpg" />
+							<img src="img/945421.jpg" id="avatar"/>
 						</div>
 						<div class="header-right">
-							<div class="header-text">易烊千玺的梨涡</div>
-							<div class="header-news">推广码 123456</div>
+							<div class="header-text" id="name">新用户</div>
+							<div class="header-news" id="phone">123456</div>
 						</div>
 					</div>
 				</div>
@@ -125,6 +125,14 @@
 	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
+//			初始化信息
+			if(localStorage.getItem('name')!='null'){
+				$('#name').html(localStorage.getItem('name'))
+			}
+			$('#phone').html(localStorage.getItem('Phone'))
+			if(localStorage.getItem('smUsHeadimg')!=null){
+				$('#avatar').attr(myurl + localStorage.getItem('smUsHeadimg'))
+			}
 			//跳转页面
 			$(".jump").click(function() {
 				var jump = $(this).attr('myid')
