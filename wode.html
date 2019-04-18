@@ -18,7 +18,7 @@
 					</div>
 					<div class="header-bottom">
 						<div class="header-lift">
-							<img src="img/945421.jpg" id="avatar"/>
+							<img src="img/945421.jpg" id="avatar" />
 						</div>
 						<div class="header-right">
 							<div class="header-text" id="name">新用户</div>
@@ -78,10 +78,10 @@
 						<div class="three-text">账户余额</div>
 						<img src="img/you-hui.png" />
 					</div>
-					<div class="three-box">
+					<!--<div class="three-box">
 						<div class="three-text">在线客服</div>
 						<img src="img/you-hui.png" />
-					</div>
+					</div>-->
 					<div class="three-box jump" myid='renzhengzhongxin'>
 						<div class="three-text">认证中心</div>
 						<img src="img/you-hui.png" />
@@ -125,12 +125,12 @@
 	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
-//			初始化信息
-			if(localStorage.getItem('name')!='null'){
+			//			初始化信息
+			if(localStorage.getItem('name') != 'null') {
 				$('#name').html(localStorage.getItem('name'))
 			}
 			$('#phone').html(localStorage.getItem('Phone'))
-			if(localStorage.getItem('smUsHeadimg')!=null){
+			if(localStorage.getItem('smUsHeadimg') != null) {
 				$('#avatar').attr(myurl + localStorage.getItem('smUsHeadimg'))
 			}
 			//跳转页面
@@ -142,24 +142,24 @@
 				})
 			})
 			$.ajax({
-					type: "post",
-					url: myurl + "/user/selectSmUserAddress",
-					async: true,
-					dataType: 'json',
-					data: {
-						smUserId: localStorage.getItem('id')
-					},
-					success: function(res) {
-						if(res.status == 200) {
-							$('#snum').html(res.data.length)
-						} else {
-							alert(res.msg)
-						}
-					},
-					error: function(err) {
-						alert("网络连接失败，请稍后重试")
+				type: "post",
+				url: myurl + "/user/selectSmUserAddress",
+				async: true,
+				dataType: 'json',
+				data: {
+					smUserId: localStorage.getItem('id')
+				},
+				success: function(res) {
+					if(res.status == 200) {
+						$('#snum').html(res.data.length)
+					} else {
+						alert(res.msg)
 					}
-				});
+				},
+				error: function(err) {
+					alert("网络连接失败，请稍后重试")
+				}
+			});
 			$.ajax({
 				type: "post",
 				url: myurl + "/user/selectSmUserCollection",
