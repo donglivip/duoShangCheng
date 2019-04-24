@@ -77,7 +77,11 @@
 					}
 				});
 				$(".main").on('click','.main-one',function(){
-					$(this).attr('myid')
+					localStorage.setItem('storeinfoid', $(this).attr('myid'))
+					mui.openWindow({
+						url: "store.html",
+						id: "store"
+					})
 				})
 			})
 		})

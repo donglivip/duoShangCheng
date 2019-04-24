@@ -14,6 +14,9 @@
 			<div class="header mui-action-back">
 				<img src="img/Group 26.png" />
 			</div>
+			<div class="header" style="right: .2rem;left: auto;" @click="opennew('shenqing')">
+				<img src="img/upload.png" />
+			</div>
 			<div class="main" v-if="shopdetail!=''">
 				<div class="main-one">
 					<img :src="myurl + shopdetail.smCommodity.smCoDefaultImg" />
@@ -79,10 +82,10 @@
 				</div>
 			</div>
 			<div class="bottom" @click="alertchange()">
-					<img src="img/tuandui (4).png" class="bottom-lift" @click.stop="addcollect" v-if="shopdetail.userCollection==''"/>
-					<img src="img/star-active.png" class="bottom-lift" @click.stop="noollect" v-if="shopdetail.userCollection!=''"/>
-					<div class="bottom-news">加入购物车</div>
-					<div class="bottom-word">立即购买</div>
+				<img src="img/tuandui (4).png" class="bottom-lift" @click.stop="addcollect" v-if="shopdetail.userCollection==''" />
+				<img src="img/star-active.png" class="bottom-lift" @click.stop="noollect" v-if="shopdetail.userCollection!=''" />
+				<div class="bottom-news">加入购物车</div>
+				<div class="bottom-word">立即购买</div>
 			</div>
 			<div class="alert" v-if="alertboo">
 				<div class="alert-inner">
@@ -135,9 +138,9 @@
 				jinjinum: 1
 			},
 			methods: {
-//				取消收藏
-				noollect:function(){
-					var that=this
+				//				取消收藏
+				noollect: function() {
+					var that = this
 					$.ajax({
 						type: "post",
 						url: myurl + "/user/deleteSmUserCollection",
@@ -148,7 +151,7 @@
 						},
 						success: function(res) {
 							if(res.status == 200) {
-								that.shopdetail.userCollection=''
+								that.shopdetail.userCollection = ''
 							} else {
 								alert(res.msg)
 							}
@@ -157,10 +160,10 @@
 							alert("网络连接失败，请稍后重试")
 						}
 					});
-				},				
-//				添加收藏
-				addcollect:function(){
-					var that=this
+				},
+				//				添加收藏
+				addcollect: function() {
+					var that = this
 					$.ajax({
 						type: "post",
 						url: myurl + "/user/insertSmUserCollection",
@@ -173,7 +176,7 @@
 						},
 						success: function(res) {
 							if(res.status == 200) {
-								that.shopdetail.userCollection=1
+								that.shopdetail.userCollection = 1
 							} else {
 								alert(res.msg)
 							}
@@ -184,15 +187,50 @@
 					});
 				},
 				goshop: function() {
-					var shopdata = []
-					shopdata.push({
-						smCommodityId: this.shopdetail.smCommodity.smCommodityId,
-						smOdSpecif: this.shopdetail.listSmCoFarmat[this.guigeindex][0],
-						smOdNum: this.shopnum,
-						smOdPrice: this.shopdetail.listSmCoFarmat[this.guigeindex][1],
-						shopname: this.shopdetail.smCommodity.smCoName,
-						smOdCreateName: this.shopdetail.smCommodity.smCoIsGrade
-					})
+					//					立即下单
+					var that=this,
+						smShoppingBasketId=''
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/inserShoppingCart",
+						async: true,
+						dataType: 'json',
+						data: {
+							smCommodityId: localStorage.getItem('shangpinxiangqingid'),
+							smUserId: localStorage.getItem('id'),
+							smSbCreateName: localStorage.getItem('id'),
+							smSbNum: that.shopnum,
+							smSbPrice: that.shopnum * that.shopdetail.listSmCoFarmat[that.guigeindex][1],
+							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0],
+							smMerchantId: localStorage.getItem('storeinfoid')
+						},
+						success: function(res) {
+							if(res.status == 200) {
+								smShoppingBasketId=res.data
+							} else {
+								alert(res.msg)
+							}
+						},
+						error: function(err) {
+							alert("网络连接失败，请稍后重试")
+						}
+					});
+					var shopdata = [{
+						smMerchantId:localStorage.getItem('storeinfoid'),
+						smMeShopName:localStorage.getItem('smMeShopName'),
+						smMeShopImg:localStorage.getItem('smMeShopImg'),
+						smUserId:localStorage.getItem('id'),
+						list:[{
+							smCommodityId: this.shopdetail.smCommodity.smCommodityId,
+							smShoppingBasketId: smShoppingBasketId,
+							smSbNum: this.shopnum,
+							smSbPrice: this.shopdetail.listSmCoFarmat[this.guigeindex][1],
+							smCoName: this.shopdetail.smCommodity.smCoName,
+							smCoDefaultImg: this.shopdetail.smCommodity.smCoDefaultImg,
+							smUserId:localStorage.getItem('id'),
+							smSbSpec:this.shopdetail.listSmCoFarmat[this.guigeindex][0]
+						}]
+					}]
 					localStorage.setItem('shopdata', JSON.stringify(shopdata))
 					this.opennew('tijiaodingdan')
 				},
@@ -207,7 +245,7 @@
 						data: {
 							smCommodityId: localStorage.getItem('shangpinxiangqingid'),
 							smUserId: localStorage.getItem('id'),
-							smSbCreateName:localStorage.getItem('id'),
+							smSbCreateName: localStorage.getItem('id'),
 							smSbNum: that.shopnum,
 							smSbPrice: that.shopnum * that.shopdetail.listSmCoFarmat[that.guigeindex][1],
 							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0],
@@ -260,7 +298,7 @@
 						data: {
 							smCommodityId: localStorage.getItem('shangpinxiangqingid'),
 							province: '江苏',
-							smMerchantId:localStorage.getItem('storeinfoid'),
+							smMerchantId: localStorage.getItem('storeinfoid'),
 							smUserId: localStorage.getItem('id')
 						},
 						success: function(res) {

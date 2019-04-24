@@ -27,7 +27,7 @@
 				</div>
 			</div>
             <div class="main">
-            	<div class="main-one">
+            	<div class="main-one renzhengzhongxin">
             		<div class="one-lift">
             			<img src="img/bangding.png"/>
             		</div>
@@ -36,7 +36,7 @@
             			<img src="img/you-hui.png"/>
             		</div>
             	</div>
-            	<div class="main-one">
+            	<div class="main-one chongzhi">
             		<div class="one-lift">
             			<img src="img/chongzhi.png"/>
             		</div>
@@ -45,7 +45,7 @@
             			<img src="img/you-hui.png"/>
             		</div>
             	</div>
-            	<div class="main-one">
+            	<div class="main-one tixian">
             		<div class="one-lift">
             			<img src="img/chongzhi.png"/>
             		</div>
@@ -68,7 +68,7 @@
 				async:true,
 				dataType:'json',
 				data:{
-					smUserId:localStorage.getItem('userid')
+					smUserId:localStorage.getItem('id')
 				},
 				success:function(res ){
 					if (res.status==200) {
@@ -85,6 +85,24 @@
 				mui.openWindow({
 					url:'mingxi.html',
 					id:'mingxi'
+				})
+			})
+			$('.renzhengzhongxin').click(function(){
+				mui.openWindow({
+					url:'renzhengzhongxin.html',
+					id:'renzhengzhongxin'
+				})
+			})
+			$('.chongzhi').click(function(){
+				mui.openWindow({
+					url:'chongzhi.html',
+					id:'chongzhi'
+				})
+			})
+			$('.tixian').click(function(){
+				mui.openWindow({
+					url:'tixian.html',
+					id:'tixian'
 				})
 			})
 		})

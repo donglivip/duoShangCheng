@@ -142,8 +142,10 @@ textarea{
 	font-size: .25rem;
 }
 
-
-
+.shop-title{
+	height: .8rem;text-indent: .2rem;font-size: .25rem;display: flex;align-items: center;
+}
+.shop-title img{height: .7rem;width: .7rem;margin-right: .25rem;}
 
 
 
