@@ -16,7 +16,9 @@
 					<img src="img/youjian.png" />
 				</div>
 				<div class="header-text">个人资料</div>
-				<div class="header-aside"></div>
+				<div class="header-aside back" style="font-size: .2rem;white-space: nowrap;padding-right: .2rem;">
+					退出登录
+				</div>
 			</div>
 			<div class="main">
 				<div class="main-box">
@@ -43,6 +45,12 @@
 	<script type="text/javascript">
 		$(function() {
 			var imgurl = ''
+			$('.back').click(function(){
+				localStorage.clear()
+				mui.openWindow({
+					url:'denglu.html'
+				})
+			})
 			$('.btn').click(function() {
 				var ajaxjson = {
 					smUsId: localStorage.getItem('myid'),
