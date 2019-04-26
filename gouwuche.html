@@ -120,7 +120,9 @@
 					this.allprice=0
 					for(var i in this.cartdata) {
 						for(var j in this.cartdata[i].list) {
-							this.allprice += this.cartdata[i].list[j].smSbPrice * this.cartdata[i].list[j].smSbNum
+							if(this.cartdata[i].list[j].selection ==  1){
+								this.allprice += this.cartdata[i].list[j].smSbPrice * this.cartdata[i].list[j].smSbNum
+							}
 						}
 					}
 				},

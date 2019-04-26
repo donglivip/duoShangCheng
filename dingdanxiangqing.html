@@ -80,13 +80,49 @@
 					</div>
 				</div>
 			</div>
-           <div class="bottom">
-           	<div class="bottom-text">取消订单</div>
-           	<div class="bottom-word"></div>
-           	<div class="bottom-news">联系师傅</div>
-           	<div class="bottom-news">完成订单</div>
-           </div>
+			<div class="bottom">
+				<div class="bottom-text">取消订单</div>
+				<div class="bottom-word"></div>
+				<div class="bottom-news">联系师傅</div>
+				<div class="bottom-news">完成订单</div>
+			</div>
 		</div>
 	</body>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '.wrapper',
+			data: {
+				orderdata:{}
+			},
+			methods: {
+				myajax: function() {
+					var that = this
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/selectSmShopTypeOne",
+						async: true,
+						dataType: 'json',
+						success: function(res) {
+							if(res.status == 200) {
+								that.orderdata=res.data
+							} else {
+								alert(res.msg)
+							}
+						},
+						error: function(err) {
+							alert("网络连接失败，请稍后重试")
+						}
+					});
+				}
+			},
+			mounted: function() {
+				this.myajax()
+			}
+		})
+	</script>
 
 </html>
