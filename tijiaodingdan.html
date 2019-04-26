@@ -173,6 +173,7 @@
 					mui.plusReady(function() {
 						plus.nativeUI.closeWaiting()
 					})
+					this.opennew('wodedingdan')
 				},
 				change: function(text) {
 					this.smOrPayStyle = text
@@ -210,7 +211,7 @@
 										that.adressdata = res.data[i]
 									}
 								}
-								for(var i in res.data) {
+								for(var i in shopdata) {
 									shopdata[i].address = that.adressdata.smUaProvince
 									shopdata[i].phone = that.adressdata.smUaPhone
 									shopdata[i].name = that.adressdata.smUaName

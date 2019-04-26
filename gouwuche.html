@@ -32,9 +32,9 @@
 							</h2>
 						</div>
 						<div class="main-one" v-for="(item,index02) in val.list">
-							<div class="one-lift" @click="select(index,index02)">
-								<img src="img/nook.png" v-if="item.selection==0"/>
-								<img src="img/ok.png" v-if="item.selection==1"/>
+							<div class="one-lift" @click="changeselect(index,index02)">
+								<img src="img/nook.png" v-if="item.selection==0" />
+								<img src="img/ok.png" v-if="item.selection==1" />
 							</div>
 							<div class="one-content">
 								<img :src="myurl + item.smCoDefaultImg" />
@@ -56,7 +56,7 @@
 				</div>
 				<div class="main-two">
 					<div class="two-lift">
-						<div class="box">
+						<div class="box" @click="allchange">
 							<input type='checkbox' class='allradio' /> <span class='raicle'></span>
 						</div>
 						<div class="two-text">全选</div>
@@ -68,7 +68,7 @@
 						</div>
 					</div>
 					<div class="two-right">
-						<div class="two-news" v-if="state==0">结算</div>
+						<div class="two-news" v-if="state==0" @click="pay">结算</div>
 						<div class="two-news" v-if="state==1">删除</div>
 					</div>
 				</div>
@@ -84,18 +84,94 @@
 			el: '.wrapper',
 			data: {
 				cartdata: [],
-				allprice: 0,
-				state:0
+				state: 0,
+				allprice: 0
 			},
 			methods: {
-//				改变选中
-				select:function(index,index02){
-					that.cartdata[index].list[index02].selection=0?that.cartdata[index].list[index02].selection=1:that.cartdata[index].list[index02].selection=0
-				},					
-//				减少数量
-				remove:function(id,num,index,index02){
+				pay: function() {
+					//					去除未选中商品
+					for(var i in this.cartdata) {
+						for(var j = this.cartdata[i].list.length; j > 0; j--) {
+							//							判断是否选中
+							if(this.cartdata[i].list[j - 1].selection == 0) {
+								this.cartdata[i].list.splice(j - 1, 1)
+							}
+
+						}
+					}
+					//					去去除空商家
+					for(var j = this.cartdata.length - 1; j >= 0; j--) {
+						if(this.cartdata[j].list.length == 0) {
+							this.cartdata.splice(j, 1)
+						}
+					}
+					if(this.cartdata.length == 0) {
+						plus.nativeUI.toast('您还未选择商品呢！')
+						this.myajax()
+					} else {
+						localStorage.setItem('shopdata', JSON.stringify(this.cartdata))
+						mui.openWindow({
+							url: 'tijiaodingdan.html',
+							id: 'tijiaodingdan'
+						})
+					}
+				},
+				watchprice: function() {
+					this.allprice=0
+					for(var i in this.cartdata) {
+						for(var j in this.cartdata[i].list) {
+							this.allprice += this.cartdata[i].list[j].smSbPrice * this.cartdata[i].list[j].smSbNum
+						}
+					}
+				},
+				//				全选
+				allchange: function() {
+					if($('.allradio').is(':checked')) {
+						for(var i in this.cartdata) {
+							for(var j in this.cartdata[i].list) {
+								this.cartdata[i].list[j].selection = 1
+							}
+						}
+					} else {
+						alert(123)
+						for(var i in this.cartdata) {
+							for(var j in this.cartdata[i].list) {
+								this.cartdata[i].list[j].selection = 0
+							}
+						}
+					}
+					this.watchprice()
+				},
+				//				改变选中
+				changeselect: function(index, index02) {
 					var that = this
-					if(parseInt(num)<=1){
+					that.cartdata[index].list[index02].selection == 0 ? that.cartdata[index].list[index02].selection = 1 : that.cartdata[index].list[index02].selection = 0
+					this.watchprice()
+				},
+				//				减少数量
+				remove: function(id, num, index, index02) {
+					var that = this
+					if(parseInt(num) <= 1) {
+						//						删除购物车
+						$.ajax({
+							type: "post",
+							url: myurl + "/user/deleteShoppingCart",
+							async: true,
+							dataType: 'json',
+							data: {
+								smShoppingBasketId: id
+							},
+							success: function(res) {
+								if(res.status == 200) {
+									that.myajax()
+								} else {
+									alert(res.msg)
+								}
+							},
+							error: function(err) {
+								alert("网络连接失败，请稍后重试")
+							}
+						});
 						return false;
 					}
 					$.ajax({
@@ -104,23 +180,25 @@
 						async: true,
 						dataType: 'json',
 						data: {
-							smShoppingBasketId:id,
-							smSbNum:parseInt(num)-1
+							smShoppingBasketId: id,
+							smSbNum: parseInt(num) - 1
 						},
 						success: function(res) {
 							if(res.status == 200) {
-								that.cartdata[index].list[index02].smSbNum=parseInt(num)-1
+								that.cartdata[index].list[index02].smSbNum = parseInt(num) - 1
 							} else {
 								alert(res.msg)
 							}
+							that.watchprice()
 						},
 						error: function(err) {
 							alert("网络连接失败，请稍后重试")
 						}
 					});
-				},				
-//				增加数量
-				add:function(id,num,index,index02){
+					
+				},
+				//				增加数量
+				add: function(id, num, index, index02) {
 					var that = this
 					$.ajax({
 						type: "post",
@@ -128,21 +206,23 @@
 						async: true,
 						dataType: 'json',
 						data: {
-							smShoppingBasketId:id,
-							smSbNum:parseInt(num)+1
+							smShoppingBasketId: id,
+							smSbNum: parseInt(num) + 1
 						},
 						success: function(res) {
 							if(res.status == 200) {
-								that.cartdata[index].list[index02].smSbNum=parseInt(num)+1
+								that.cartdata[index].list[index02].smSbNum = parseInt(num) + 1
 							} else {
 								alert(res.msg)
 							}
+							that.watchprice()
 						},
 						error: function(err) {
 							alert("网络连接失败，请稍后重试")
 						}
 					});
 				},
+				//				获取购物车
 				myajax: function() {
 					var that = this
 					$.ajax({
@@ -151,11 +231,12 @@
 						async: true,
 						dataType: 'json',
 						data: {
-							smUserId:localStorage.getItem('id')
+							smUserId: localStorage.getItem('id')
 						},
 						success: function(res) {
 							if(res.status == 200) {
-								that.cartdata=res.data
+								//用于显示数据
+								that.cartdata = res.data
 							} else {
 								alert(res.msg)
 							}

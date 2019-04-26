@@ -12,7 +12,7 @@
 	<body>
 		<div class="wrapper">
 			<div class="header">
-				<div class="header-aside">
+				<div class="header-aside back">
 					<img src="img/youjian.png" />
 				</div>
 				<div class="header-text">我的订单</div>
@@ -21,10 +21,10 @@
 			<div class="main">
 				<div class="main-one">
 					<div class="one-text one-news" myid='-1' smOrPayStatus='1'>全部订单 </div>
-					<div class="one-text" myid='2' smOrPayStatus='2'>待付款</div>
-					<div class="one-text" myid='3' smOrPayStatus='2'>待发货</div>
+					<div class="one-text" myid='1' smOrPayStatus='2'>已完成</div>
+					<div class="one-text" myid='3' smOrPayStatus='1'>待发货</div>
 					<div class="one-text" myid='4' smOrPayStatus='1'>待收货</div>
-					<div class="one-text" myid='5' smOrPayStatus='1'>待评价</div>
+					<!--<div class="one-text" myid='5' smOrPayStatus='1'>待评价</div>-->
 					<div class="one-text" myid='6'>待退款</div>
 				</div>
 				<div class="main-box">
@@ -90,7 +90,11 @@
 				imgindex = $('.uimg').index(this)
 				upload()
 			})
-
+			$('.back').click(function(){
+				mui.openWindow({
+					url:'wode.html'
+				})
+			})
 			function upload() {
 				var that = this
 				var btnArray = [{
@@ -222,15 +226,16 @@
 								$(".main-box").append(`
 										<div class="main-two" ordeid='${res.data[i].smOrderId}'>
 											<div class="two-top">
-												<div class="top-text">下单时间 : ${res.data[i].smOrCreateTimeString}</div>
+												<div class="top-text">订单编号 : ${res.data[i].smOrderId}</div>
 											</div>
 											<div class="two-content">
 												<div class="content-lift">
 													<img src="${myurl + res.data[i].smCoDefaultImg}"/>
 												</div>
-												<div class="content-text">${res.data[i].smCoName}</div>
+												<div class="content-text">
+												${res.data[i].smCoName}
+												</div>
 											</div>
-											<div class="two-zi">实付 ：${res.data[i].smOrPrice}</div>
 											<div class="two-bottom" style='display:${(res.data[i].smOrReturnPay==1||myid==6)?"none":"flex"}'>
 												<div class="bottom-text gocancel" style="display:${(res.data[i].smOrStatus==2||res.data[i].smOrStatus==3||res.data[i].smOrStatus==6) ?'block':'none'}" orderid='${res.data[i].smOrderId}'>取消/退款</div>
 												<div class="bottom-text wuliu" style="display:${res.data[i].smOrStatus==3?'black':'none'}" myid='${res.data[i].smOrExpress}'>查看物流</div>
