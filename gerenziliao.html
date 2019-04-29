@@ -53,7 +53,7 @@
 			})
 			$('.btn').click(function() {
 				var ajaxjson = {
-					smUsId: localStorage.getItem('myid'),
+					smUserId: localStorage.getItem('id'),
 					smUsHeadimg: imgurl,
 					smUsNickname: $('.name').val()
 				}
@@ -69,7 +69,7 @@
 
 				$.ajax({
 					type: "post",
-					url: myurl + "/smUser/updateSmUserInfo",
+					url: myurl + "/user/updateSmUser",
 					async: true,
 					dataType: 'json',
 					data: ajaxjson,
@@ -188,7 +188,7 @@
 					ctx.drawImage(that, 0, 0, w, h);
 					$.ajax({
 						type: "post",
-						url: myurl + "/smUser/smUserHeadImg",
+						url: myurl + "/user/inserSmApplyMemberImage",
 						async: true,
 						dataType: 'json',
 						data: {

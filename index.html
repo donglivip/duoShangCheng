@@ -7,7 +7,7 @@
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title></title>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/shouye.css" />
 	</head>
@@ -79,6 +79,52 @@
 	<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
+			function plusReady() {
+				plus.navigator.setStatusBarBackground('#F55353');
+				if(localStorage.getItem('id') == undefined || localStorage.getItem('id') == null) {
+					mui.openWindow({
+						url: 'denglu.html',
+						id: 'denglu'
+					})
+				}
+				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+					$.ajax({
+						type: "post",
+						url: myurl + "/smUser/getVersion",
+						dataType: 'json',
+						success: function(res) {
+							if(res.data.msdVuVersion != inf.version) {
+								//								版本更新
+								plus.nativeUI.toast("正在为您更新资源~");
+								plus.downloader.createDownload(myurl + res.data.msdVuUrl, {
+									filename: "_doc/update/"
+								}, function(d, status) {
+									if(status == 200) {
+										plus.runtime.install(d.filename, {}, function() {
+											plus.nativeUI.alert("应用资源更新完成！点击重启！", function() {
+												plus.runtime.restart();
+											});
+										}, function(e) {
+											alert("安装更新包失败[" + e.code + "]：" + e.message);
+										});
+									} else {
+										plus.nativeUI.closeWaiting();
+										alert("下载更新包失败！");
+									}
+								}).start();
+							}
+						},
+						error: function(err) {
+							alert(JSON.stringify(err))
+						}
+					});
+				});
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
 			//查询所有一级分类
 			$.ajax({
 				type: "post",

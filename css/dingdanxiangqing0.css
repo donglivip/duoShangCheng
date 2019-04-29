@@ -53,7 +53,6 @@ html,body,.wrapper{width: 100%;height: 100%;overflow: hidden;}
 	justify-content: space-between;
 }
 .main-box{
-	height: 2.8rem;
 	background: #FFFFFF;
 }
 .box-top{
@@ -68,7 +67,6 @@ html,body,.wrapper{width: 100%;height: 100%;overflow: hidden;}
 	color: #26261E ;
 }
 .box-box{
-	height: 2rem;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
@@ -99,6 +97,7 @@ html,body,.wrapper{width: 100%;height: 100%;overflow: hidden;}
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+	font-size: .24rem
 }
 .below-text{
 	font-size: .24rem;
@@ -114,9 +113,8 @@ html,body,.wrapper{width: 100%;height: 100%;overflow: hidden;}
 	margin-right: .06rem;
 }
 .box-right{
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	font-size: .25rem;
+	text-align: right;
 }
 .box-right img{
 	height: .52rem;

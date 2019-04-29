@@ -55,7 +55,7 @@
 					</div>
 				</div>
 				<div class="btn" @click="gisubmit">
-					注册
+					提交申请
 				</div>
 			</div>
 			<div class="input-text">
@@ -140,6 +140,10 @@
 						success: function(res) {
 							if(res.status == 200) {
 								that.shopdata = res.data
+								if(res.data.length==0){
+									alert('该商户还未开通专属会员！')
+									mui.back()
+								}
 							} else {
 								alert(res.msg)
 							}
