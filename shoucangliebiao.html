@@ -19,7 +19,7 @@
 				<div class="header-aside"></div>
 			</div>
 			<div class="main">
-				
+
 			</div>
 		</div>
 	</body>
@@ -35,12 +35,12 @@
 					async: true,
 					dataType: 'json',
 					data: {
-						smUserId:localStorage.getItem('id')
+						smUserId: localStorage.getItem('id')
 					},
 					success: function(res) {
 						if(res.status == 200) {
 							$(".main").html('')
-							for (var i in res.data) {
+							for(var i in res.data) {
 								$(".main").append(`
 									<div class="main-one">
 										<div class="one-lift">
@@ -48,8 +48,9 @@
 										</div>
 										<div class="one-right">
 											<div class="one-text">${res.data[i].smCoName}</div>
-											<div class="one-news" style="text-align: right;" myid='${res.data[i].smCoUpdateName}'>
-												删除
+											<div class="one-news" style="text-align: right;">
+												<span id='shanchu' myid='${res.data[i].smCoUpdateName}'>删除</span>
+												<span id='chakan' myid='${res.data[i].smCommodityId}'>查看</span>
 											</div>
 										</div>
 									</div>
@@ -65,21 +66,21 @@
 				});
 			}
 			myajax()
-			$(".main").on('click','.one-news',function(){
-				var myid=$(this).attr('myid')
+			$(".main").on('click', '#shanchu', function() {
+				var myid = $(this).attr('myid')
 				$.ajax({
 					type: "post",
 					url: myurl + "/user/deleteSmUserCollection",
 					async: true,
 					dataType: 'json',
 					data: {
-						smUserCollectionId:myid
+						smUserCollectionId: myid
 					},
 					success: function(res) {
 						if(res.status == 200) {
-							if (res.data==1) {
+							if(res.data == 1) {
 								myajax()
-							} else{
+							} else {
 								alert(res.msg)
 							}
 						} else {
@@ -90,6 +91,13 @@
 						alert("网络连接失败，请稍后重试")
 					}
 				});
+			})
+			$(".main").on('click', '#chakan', function() {
+				var myid = $(this).attr('myid')
+				localStorage.setItem('shangpinxiangqingid', myid)
+				mui.openWindow({
+					url: 'shangpinxiangqing.html'
+				})
 			})
 		})
 	</script>

@@ -22,7 +22,7 @@
 					<input type="text" placeholder="输入商品" readonly="readonly" />
 				</div>
 				<div class="header-aside">
-					<img src="img/news.png" />
+					<!--<img src="img/news.png" />-->
 				</div>
 			</div>
 			<div class="main">
@@ -90,13 +90,13 @@
 				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 					$.ajax({
 						type: "post",
-						url: myurl + "/smUser/getVersion",
+						url: myurl + "/user/selectSmVersionUpgrade",
 						dataType: 'json',
 						success: function(res) {
-							if(res.data.msdVuVersion != inf.version) {
+							if(res.data.smVuVersion != inf.version) {
 								//								版本更新
 								plus.nativeUI.toast("正在为您更新资源~");
-								plus.downloader.createDownload(myurl + res.data.msdVuUrl, {
+								plus.downloader.createDownload(myurl + res.data.smVuUrl, {
 									filename: "_doc/update/"
 								}, function(d, status) {
 									if(status == 200) {
@@ -267,6 +267,7 @@
 				plus.geolocation.getCurrentPosition(function(p) {
 					$('.city').html(p.address.city)
 				}, function(e) {
+					alert(JSON.stringify(e))
 					alert('定位失败，请检查网络和GPS后重试！')
 				});
 			})

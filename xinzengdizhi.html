@@ -94,6 +94,7 @@
 					},
 					success: function(res) {
 						if(res.status == 200) {
+							plus.webview.getWebviewById('wodedizhi').reload()
 							mui.back()
 						} else {
 							alert(res.msg)

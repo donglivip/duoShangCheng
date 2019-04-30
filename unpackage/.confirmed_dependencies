@@ -1,55 +1,55 @@
 {
-	"index.html": {
-		"refer": [
-			"wode.html",
-			"nav03.html",
-			"dianpu.html",
-			"store.html"
-		]
-	},
-	"wode.html": {
-		"refer": [
-			"shezhi.html",
-			"shoucangliebiao.html",
-			"zujiliebie.html",
-			"wodedizhi.html",
-			"gerenziliao.html",
-			"shangjiazhuce.html"
-		]
-	},
-	"dianpu.html": {
-		"refer": [
-			"fenlei.html"
-		]
-	},
-	"shangjiazhuce.html": {
-		"refer": [
-			"index.html"
-		]
-	},
-	"fenlei.html": {
-		"refer": [
-			"shangjiazhuce.html"
-		]
-	},
-	"nav03.html": {
-		"refer": [
-			"store.html"
-		]
-	},
-	"denglu.html": {
-		"refer": [
-			"zhuce.html"
-		]
-	},
-	"gerenziliao.html": {
-		"refer": [
-			"denglu.html"
-		]
-	},
-	"store.html": {
-		"refer": [
-			"shangpinxiangqing.html"
-		]
-	}
+  "index.html": {
+    "refer": [
+      "wode.html",
+      "nav03.html",
+      "dianpu.html",
+      "store.html"
+    ]
+  },
+  "wode.html": {
+    "refer": [
+      "shezhi.html",
+      "shoucangliebiao.html",
+      "zujiliebie.html",
+      "wodedizhi.html",
+      "gerenziliao.html",
+      "shangjiazhuce.html"
+    ]
+  },
+  "dianpu.html": {
+    "refer": [
+      "fenlei.html"
+    ]
+  },
+  "shangjiazhuce.html": {
+    "refer": [
+      "index.html"
+    ]
+  },
+  "fenlei.html": {
+    "refer": [
+      "shangjiazhuce.html"
+    ]
+  },
+  "nav03.html": {
+    "refer": [
+      "store.html"
+    ]
+  },
+  "denglu.html": {
+    "refer": [
+      "zhuce.html"
+    ]
+  },
+  "gerenziliao.html": {
+    "refer": [
+      "denglu.html"
+    ]
+  },
+  "store.html": {
+    "refer": [
+      "shangpinxiangqing.html"
+    ]
+  }
 }
