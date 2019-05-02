@@ -31,14 +31,11 @@
 			//分类下面的店铺
 			$.ajax({
 				type: "post",
-				url: myurl + "/user/selectSmMerchantSmShopType",
+				url: myurl + "/user/selectSmMerchantSmShopTypeClass",
 				async: true,
 				dataType: 'json',
 				data: {
-					smShopTypeId: localStorage.getItem('dianpuliebiaoid'),
-					smAdvertisementAddressId: '',
-					smAdvertisementMarketId: '',
-					smStPpid: ''
+					smStPpid: localStorage.getItem('dianpuliebiaoid')
 				},
 				success: function(res) {
 					if(res.status == 200) {

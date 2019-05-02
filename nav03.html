@@ -10,7 +10,9 @@
 		<link rel="stylesheet" type="text/css" href="css/bug.css" />
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 	</head>
-
+	<style type="text/css">
+		.aside{width: 1rem;flex: inherit!important;text-align: right;}
+	</style>
 	<body>
 		<div class="wrapper">
 			<div class="header header02">
@@ -186,8 +188,8 @@
 					var that = this
 					//					获取广告列表
 					var ajaxjson = {
-						smStPpid: that.goodsTypeid, //一级分类id
-						smShopTypeId: that.goodsType2id, //二级分类id
+						smShopTypeId: that.goodsTypeid, //一级分类id
+						smStPpid: that.goodsType2id, //二级分类id
 						smAdvertisementAddressId: that.regionId, //地址id
 						smAdvertisementMarketId: that.marketIdid //市场Id
 					}
