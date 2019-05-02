@@ -72,10 +72,10 @@
 					if(this.price == '') {
 						return false;
 					}
-					if(this.price <= 20) {
-						alert('最少提现20元')
-						return false;
-					}
+//					if(this.price <= 20) {
+//						alert('最少提现20元')
+//						return false;
+//					}
 					//				提现
 					$.ajax({
 						type: 'post',
@@ -83,7 +83,7 @@
 						dataType: 'json',
 						data: {
 							price: that.price,
-							smUserId: localStorage.getItem('myid'),
+							smUserId: localStorage.getItem('id'),
 							state: that.state,
 							withdrawPrice: that.price * that.guizedata.smWcrServiceCharge / 100
 						},

@@ -101,6 +101,7 @@
 					},
 					success: function(res) {
 						if(res.status == 200) {
+							$(".right-bottom").html('')
 							for(var i in res.data) {
 								$(".right-bottom").append(`
 								<div class="right-status" myid='${res.data[i].smShopTypeId}'>

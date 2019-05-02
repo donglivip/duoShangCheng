@@ -48,6 +48,9 @@
 							</div>
 						</div>
 					</div>
+					<div class="main-two" style="font-size: .24rem;">
+						运费：￥{{val.smOrFreight}}
+					</div>
 					<div class="main-two">
 						<textarea placeholder="备注：" v-model="val.remarks"></textarea>
 					</div>
@@ -63,7 +66,7 @@
 			</div>
 			<div class="bottom" @click="pay">
 				<div class="bottom-left">
-					总计：￥{{orderAllPrice}}
+					总计：￥{{orderAllPrice}}	
 				</div>
 				<div class="bottom-text">去结算</div>
 			</div>
@@ -237,8 +240,14 @@
 									dataTpe: 'json',
 									success: function(res) {
 										if(res.status = 200) {
+											
 											that.shopdata = res.data
 											for (var i in res.data) {
+												if(res.data[i].smOrFreight==-1){
+													alert('该地区不在商家配送范围内！请修改收货地址')
+													that.opennew('wodedizhi')
+													return false;
+												}
 												that.orderAllPrice+=res.data[i].sumPrice
 											}
 										} else {

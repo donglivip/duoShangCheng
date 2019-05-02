@@ -21,7 +21,7 @@
 			<div class="main">
 				<div class="main-one">
 					<div class="one-text one-news" myid='-1' smOrPayStatus='1'>全部订单 </div>
-					<div class="one-text" myid='1' smOrPayStatus='2'>已完成</div>
+					<div class="one-text" myid='1' smOrPayStatus='1'>已完成</div>
 					<div class="one-text" myid='3' smOrPayStatus='1'>待发货</div>
 					<div class="one-text" myid='4' smOrPayStatus='1'>待收货</div>
 					<!--<div class="one-text" myid='5' smOrPayStatus='1'>待评价</div>-->
@@ -57,12 +57,12 @@
 						<img src="img/star.png" class="starimg" />
 					</div>
 					<textarea placeholder="请输入评价内容" class="ratingtext"></textarea>
-					<div class="upimg">
+					<!--<div class="upimg">
 						<img src="img/addimg.png" class="uimg" />
 						<img src="img/addimg.png" class="uimg" />
 						<img src="img/addimg.png" class="uimg" />
 						<img src="img/addimg.png" class="uimg" />
-					</div>
+					</div>-->
 					<div class="btn-box">
 						<div class="btn rquxiao">
 							取消
@@ -85,7 +85,8 @@
 				shopid = '',
 				starindex = 5,
 				smCeImglist = ['', '', '', ''],
-				imgindex = 0
+				imgindex = 0,
+				price=0
 			$('.uimg').click(function() {
 				imgindex = $('.uimg').index(this)
 				upload()
@@ -236,11 +237,11 @@
 												${res.data[i].smCoName}
 												</div>
 											</div>
-											<div class="two-bottom" style='display:${(res.data[i].smOrReturnPay==1||myid==6)?"none":"flex"}'>
-												<div class="bottom-text gocancel" style="display:${(res.data[i].smOrStatus==2||res.data[i].smOrStatus==3||res.data[i].smOrStatus==6) ?'block':'none'}" orderid='${res.data[i].smOrderId}'>取消/退款</div>
-												<div class="bottom-text wuliu" style="display:${res.data[i].smOrStatus==3?'black':'none'}" myid='${res.data[i].smOrExpress}'>查看物流</div>
-												<div class="bottom-news ordeok" style="display:${res.data[i].smOrStatus==3?'black':'none'}" orderid='${res.data[i].smOrderId}'>确认收货</div>
-												<div class="bottom-news gorating" style="display:${res.data[i].smOrStatus==4?'black':'none'}" orderid='${res.data[i].smOrderId}' shopid='${res.data[i].smCommodityId}'>评价</div>
+											<div class="two-bottom" style='display:${(res.data[i].smOrReturnPay==1||myid==6||res.data[i].smOrStyle==2)?"none":"flex"}'>
+												<div class="bottom-text gocancel" orderid='${res.data[i].smOrderId}' price='${res.data[i].smOdPrice}'>取消/退款</div>
+												<div class="bottom-text wuliu" style="display:${res.data[i].smOrStatus==4?'black':'none'}" myid='${res.data[i].smOrExpress}'>查看物流</div>
+												<div class="bottom-news ordeok" style="display:${res.data[i].smOrStatus==4?'black':'none'}" orderid='${res.data[i].smOrderId}'>确认收货</div>
+												<div class="bottom-news gorating" style="display:${res.data[i].smOrStatus==1?'black':'none'}" orderid='${res.data[i].smOrderId}' shopid='${res.data[i].smCommodityId}'>评价</div>
 											</div>
 										</div>
 									`)
@@ -350,27 +351,26 @@
 				var ajaxjson = {
 					smOrderId: id,
 					smUserId: localStorage.getItem('myid'),
-					smCommodityId: shopid,
+//					smCommodityId: shopid,
 					smCeGrade: starindex,
-					smCeResult: ratingtext,
-					smCeImgOne: smCeImglist[0],
-					smCeImgTwo: smCeImglist[1],
-					smCeImgThree: smCeImglist[2],
-					smCeImgFour: smCeImglist[3]
+					smCeResult: ratingtext
+//					smCeImgOne: smCeImglist[0],
+//					smCeImgTwo: smCeImglist[1],
+//					smCeImgThree: smCeImglist[2],
+//					smCeImgFour: smCeImglist[3]
 				}
-				if(smCeImglist[0]==''){
-					delete ajaxjson.smCeImgOne
-				}
-				if(smCeImglist[1]==''){
-					delete ajaxjson.smCeImgTwo
-				}
-				if(smCeImglist[2]==''){
-					delete ajaxjson.smCeImgThree
-				}
-				if(smCeImglist[3]==''){
-					delete ajaxjson.smCeImgFour
-				}
-				console.log(JSON.stringify(ajaxjson))
+//				if(smCeImglist[0]==''){
+//					delete ajaxjson.smCeImgOne
+//				}
+//				if(smCeImglist[1]==''){
+//					delete ajaxjson.smCeImgTwo
+//				}
+//				if(smCeImglist[2]==''){
+//					delete ajaxjson.smCeImgThree
+//				}
+//				if(smCeImglist[3]==''){
+//					delete ajaxjson.smCeImgFour
+//				}
 				$.ajax({
 					type: "post",
 					url: myurl + "/user/userAutomaticPraise",
@@ -379,7 +379,7 @@
 					dataType: 'json',
 					success: function(res) {
 						if(res.status == 200) {
-							$(".one-text").eq(myid - 1).click()
+							$(".one-text").eq(0).click()
 							$('.rating').hide()
 						} else {
 							alert(res.msg)
@@ -402,6 +402,10 @@
 				var cancenprice = $('.cancenprice').val()
 				if(cancentext == '' || cancenprice == '') {
 					alert('信息填写不完整')
+					return false;
+				}
+				if(cancenprice>price){
+					alert('退款金额超出订单价格')
 					return false;
 				}
 				$.ajax({
@@ -432,6 +436,7 @@
 			//			取消订单
 			$(".main-box").on('click', '.gocancel', function() {
 				id = $(this).attr('orderid')
+				price=$(this).attr('price')
 				$('.cancel').css('display', 'flex')
 				if(e.preventDefault) {
 					e.preventDefault();

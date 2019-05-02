@@ -131,7 +131,7 @@
 			}
 			$('#phone').html(localStorage.getItem('Phone'))
 			if(localStorage.getItem('smUsHeadimg') != null) {
-				$('#avatar').attr(myurl + localStorage.getItem('smUsHeadimg'))
+				$('#avatar').attr('src',myurl + localStorage.getItem('smUsHeadimg'))
 			}
 			//跳转页面
 			$(".jump").click(function() {

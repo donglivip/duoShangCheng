@@ -107,13 +107,15 @@
 						return '分红收入'
 					} else if(value == 6) {
 						return '退款收入'
+					}else{
+						return '充值'
 					}
 				},
 				type: function(value) {
 					if(value == 1) {
-						return '已入账'
+						return '已完成'
 					} else if(value == 2) {
-						return '待支付'
+						return '待完成'
 					} else if(value == 3) {
 						return '支付中'
 					}

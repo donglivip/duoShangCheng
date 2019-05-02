@@ -160,6 +160,7 @@ html,body,.wrapper{width: 100%;height: 100%;}
 	justify-content: center;
 	flex-direction: column;
 	padding-bottom: .2rem;
+	padding-top: .2rem;
 }
 .cancel-inner textarea,.rating-inner textarea{width: 4rem;height: 1rem;padding: .2rem;box-sizing: border-box;border: 1px solid gainsboro;border-radius: .1rem;}
 
