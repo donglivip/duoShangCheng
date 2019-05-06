@@ -117,7 +117,8 @@
 					dataType: 'json',
 					data: {
 						smCommodityTypeId: myid,
-						smMerchantId: localStorage.getItem('storeinfoid')
+						smMerchantId: localStorage.getItem('storeinfoid'),
+						smUserId:localStorage.getItem('myid')
 					},
 					success: function(res) {
 						if(res.status == 200) {

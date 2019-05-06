@@ -302,10 +302,13 @@
 							smCommodityId: localStorage.getItem('shangpinxiangqingid'),
 							province: '江苏',
 							smMerchantId: localStorage.getItem('storeinfoid'),
-							smUserId: localStorage.getItem('id')
+							smUserId: localStorage.getItem('myid')
 						},
 						success: function(res) {
 							if(res.status == 200) {
+								for(var i in res.data.listSmCoFarmat){
+									res.data.listSmCoFarmat[i][1]=res.data.listSmCoFarmat[i][1]*res.data.smMmDiscount
+								}
 								that.shopdetail = res.data
 								that.canshudata = ''
 								for(var i in res.data.listSmCoParameter) {
