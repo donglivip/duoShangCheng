@@ -91,6 +91,9 @@
 						type: "post",
 						url: myurl + "/user/selectSmVersionUpgrade",
 						dataType: 'json',
+						data:{
+							num:1
+						},
 						success: function(res) {
 							if(res.data.smVuVersion != inf.version) {
 								//								版本更新
@@ -136,7 +139,7 @@
 							$(".nav").append(`
 								<div class="nav-box" myid="${res.data.smShopTypeId}">
 									<div class="img-box">
-										<img src="${res.data[i].smStOneTypeImg}" />
+										<img src="${myurl + res.data[i].smStOneTypeImg}" />
 									</div>
 									<span>
 										${res.data[i].smStName}
