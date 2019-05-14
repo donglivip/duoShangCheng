@@ -47,10 +47,10 @@
 						<img src="img/you-hui.png" />
 					</div>
 					<div class="one-bottom">
-						<div class="one-box">
+<!-- 						<div class="one-box">
 							<img src="img/tuandui (3).png" />
 							<div class="one-word">待付款</div>
-						</div>
+						</div> -->
 						<div class="one-box">
 							<img src="img/daifahuo.png" />
 							<div class="one-word">待发货</div>
@@ -125,79 +125,85 @@
 	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
-			//			初始化信息
-			if(localStorage.getItem('name') != 'null') {
-				$('#name').html(localStorage.getItem('name'))
-			}
-			$('#phone').html(localStorage.getItem('Phone'))
-			if(localStorage.getItem('smUsHeadimg') != null) {
-				$('#avatar').attr('src',myurl + localStorage.getItem('smUsHeadimg'))
-			}
-			//跳转页面
-			$(".jump").click(function() {
-				var jump = $(this).attr('myid')
-				mui.openWindow({
-					url: "" + jump + ".html",
-					id: jump
+			function myajax() {
+				//			初始化信息
+				if (localStorage.getItem('name') != 'null') {
+					$('#name').html(localStorage.getItem('name'))
+				}
+				$('#phone').html(localStorage.getItem('Phone'))
+				if (localStorage.getItem('smUsHeadimg') != 'null'&&localStorage.getItem('smUsHeadimg') != null) {
+					$('#avatar').attr('src', myurl + localStorage.getItem('smUsHeadimg'))
+				}
+				//跳转页面
+				$(".jump").click(function() {
+					var jump = $(this).attr('myid')
+					mui.openWindow({
+						url: "" + jump + ".html",
+						id: jump
+					})
 				})
+				$.ajax({
+					type: "post",
+					url: myurl + "/user/selectSmUserAddress",
+					async: true,
+					dataType: 'json',
+					data: {
+						smUserId: localStorage.getItem('id')
+					},
+					success: function(res) {
+						if (res.status == 200) {
+							$('#snum').html(res.data.length)
+						} else {
+							alert(res.msg)
+						}
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+				$.ajax({
+					type: "post",
+					url: myurl + "/user/selectSmUserCollection",
+					async: true,
+					dataType: 'json',
+					data: {
+						smUserId: localStorage.getItem('id')
+					},
+					success: function(res) {
+						if (res.status == 200) {
+							$('#cnum').html(res.data.length)
+						} else {
+							alert(res.msg)
+						}
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+				$.ajax({
+					type: "post",
+					url: myurl + "/user/selectSmUserFootprint",
+					async: true,
+					dataType: 'json',
+					data: {
+						smUserId: localStorage.getItem('id')
+					},
+					success: function(res) {
+						if (res.status == 200) {
+							$('#znum').html(res.data.length)
+						} else {
+							alert(res.msg)
+						}
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+			}
+			myajax()
+			document.addEventListener('myajax',function () {
+			       myajax() 
 			})
-			$.ajax({
-				type: "post",
-				url: myurl + "/user/selectSmUserAddress",
-				async: true,
-				dataType: 'json',
-				data: {
-					smUserId: localStorage.getItem('id')
-				},
-				success: function(res) {
-					if(res.status == 200) {
-						$('#snum').html(res.data.length)
-					} else {
-						alert(res.msg)
-					}
-				},
-				error: function(err) {
-					alert("网络连接失败，请稍后重试")
-				}
-			});
-			$.ajax({
-				type: "post",
-				url: myurl + "/user/selectSmUserCollection",
-				async: true,
-				dataType: 'json',
-				data: {
-					smUserId: localStorage.getItem('id')
-				},
-				success: function(res) {
-					if(res.status == 200) {
-						$('#cnum').html(res.data.length)
-					} else {
-						alert(res.msg)
-					}
-				},
-				error: function(err) {
-					alert("网络连接失败，请稍后重试")
-				}
-			});
-			$.ajax({
-				type: "post",
-				url: myurl + "/user/selectSmUserFootprint",
-				async: true,
-				dataType: 'json',
-				data: {
-					smUserId: localStorage.getItem('id')
-				},
-				success: function(res) {
-					if(res.status == 200) {
-						$('#znum').html(res.data.length)
-					} else {
-						alert(res.msg)
-					}
-				},
-				error: function(err) {
-					alert("网络连接失败，请稍后重试")
-				}
-			});
 		})
 	</script>
 

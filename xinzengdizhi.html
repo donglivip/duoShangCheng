@@ -94,8 +94,10 @@
 					},
 					success: function(res) {
 						if(res.status == 200) {
+							mui.plusReady(function () {
+							    mui.fire(plus.webview.getWebviewById('wodedizhi'),'shua')
+							})
 							if(plus.webview.getWebviewById('tijiaodingdan')!=undefined){
-								plus.webview.getWebviewById('wodedizhi').reload()
 								plus.webview.getWebviewById('tijiaodingdan').reload()
 							}
 							mui.back()

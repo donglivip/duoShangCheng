@@ -231,7 +231,7 @@
 											</div>
 											<div class="two-content">
 												<div class="content-lift">
-													<img src="${myurl + res.data[i].smCoDefaultImg}"/>
+													<img src="${res.data[i].smCoDefaultImg}"/>
 												</div>
 												<div class="content-text">
 												${res.data[i].smCoName}
@@ -400,6 +400,7 @@
 			$(".cancelok").click(function() {
 				var cancentext = $('.cancentext').val()
 				var cancenprice = $('.cancenprice').val()
+				var price=$(this).attr('price')
 				if(cancentext == '' || cancenprice == '') {
 					alert('信息填写不完整')
 					return false;

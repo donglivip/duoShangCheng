@@ -35,10 +35,10 @@
 				<div class="main-box" v-for="val in shopdata">
 					<div class="store">
 						<div class="shop-title">
-							<img :src="myurl + val.smMeShopImg"/> {{val.smMeShopName}}
+							<img :src="val.smMeShopImg"/> {{val.smMeShopName}}
 						</div>
 						<div class="shop-tab" v-for="item in val.list">
-							<img :src="myurl + item.smCoDefaultImg" class="avatar"/>
+							<img :src="item.smCoDefaultImg" class="avatar"/>
 							<div class="shop-name">
 								{{item.smCoName}}
 							</div>
@@ -123,6 +123,7 @@
 						hurl = myurl + "/user/payUserAil"
 						ajaxjson.state=that.smOrPayStyle
 					}
+					console.log(JSON.stringify(ajaxjson))
 					$.ajax({
 						type: "post",
 						url: hurl,

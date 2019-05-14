@@ -12,7 +12,12 @@
 		<link href="https://cdn.bootcss.com/framework7/1.6.5/css/framework7.ios.min.css" rel="stylesheet">
 		<link href="https://cdn.bootcss.com/framework7/1.6.5/css/framework7.ios.colors.min.css" rel="stylesheet">
 	</head>
-
+	<style type="text/css">
+		.main{
+			height: calc(100% - .96rem);
+			overflow-y: scroll;
+		}
+	</style>
 	<body>
 		<div class="wrapper">
 			<div class="header">
@@ -23,6 +28,7 @@
 				<div class="header-aside"></div>
 			</div>
 			<div class="main">
+				<div id="wrapper">
 				<div class="main-box">
 					<div class="input-text">
 						<input type="text" placeholder="店铺名称" v-model="smMerchantName" />
@@ -57,10 +63,12 @@
 				<div class="btn" @click="gisubmit">
 					提交申请
 				</div>
+				</div>
+				<div class="input-text">
+					<input type="text" placeholder="商户所在地" id="location" />
+				</div>
 			</div>
-			<div class="input-text">
-				<input type="text" placeholder="商户所在地" id="location" />
-			</div>
+			
 
 		</div>
 	</body>
@@ -74,7 +82,7 @@
 
 	<script type="text/javascript">
 		var myvue=new Vue({
-			el: '.main',
+			el: '#wrapper',
 			data: {
 				shopdata: [],
 				layuiboo: false,
@@ -97,18 +105,32 @@
 						data: {
 							smMerchantMemberId: that.smMerchantMemberId,
 							smShopTypeId: localStorage.getItem('smShopTypeId'),
-							smUserId: localStorage.getItem('myid'),
+							smUserId: localStorage.getItem('id'),
 							smAmQq: that.smAmQq,
 							smAmAddress: $('#location').val(),
 							smAmShopLogo: that.smAmShopLogo,
 							smAmBusinessLicenesImg: that.smAmBusinessLicenesImg,
-							smAmCreateName: localStorage.getItem('myid'),
+							smAmCreateName: localStorage.getItem('id'),
 							smMerchantId: localStorage.getItem('storeinfoid'),
 							smMerchantName: that.smMerchantName
 						},
 						success: function(res) {
+							console.log(JSON.stringify( {
+							smMerchantMemberId: that.smMerchantMemberId,
+							smShopTypeId: localStorage.getItem('smShopTypeId'),
+							smUserId: localStorage.getItem('id'),
+							smAmQq: that.smAmQq,
+							smAmAddress: $('#location').val(),
+							smAmShopLogo: that.smAmShopLogo,
+							smAmBusinessLicenesImg: that.smAmBusinessLicenesImg,
+							smAmCreateName: localStorage.getItem('id'),
+							smMerchantId: localStorage.getItem('storeinfoid'),
+							smMerchantName: that.smMerchantName
+						}))
+							console.log(JSON.stringify(res))
 							if(res.status == 200) {
-								that.shopdata = res.data
+								alert('已为您提交申请')
+								mui.back()
 							} else {
 								alert(res.msg)
 							}
@@ -159,8 +181,8 @@
 			}
 		})
 		var target=''
-		function upload(target) {
-			target=target
+		function upload(id) {
+			target=id
 			var btnArray = [{
 				title: "照相机"
 			}, {
@@ -248,6 +270,7 @@
 					},
 					success: function(res) {
 						if(res.status == 200) {
+							console.log(target)
 							if(target==0){
 								$('.add').attr('src', myurl +res.data)
 								myvue.smAmShopLogo=res.data

@@ -67,7 +67,7 @@
 				},
 				success: function(res) {
 					if(res.status == 200) {
-						$('.avatar').attr('src',myurl + res.data.smMeShopImg)
+						$('.avatar').attr('src',res.data.smMeShopImg)
 						localStorage.setItem('smMeShopImg',res.data.smMeShopImg)
 						$('.name').html(res.data.smMeShopName)
 						localStorage.setItem('smMeShopName',res.data.smMeShopName)

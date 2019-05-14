@@ -19,7 +19,7 @@
 			</div>
 			<div class="main" v-if="shopdetail!=''">
 				<div class="main-one">
-					<img :src="myurl + shopdetail.smCommodity.smCoDefaultImg" />
+					<img :src=" shopdetail.smCommodity.smCoDefaultImg" />
 				</div>
 				<div class="main-two">
 					<div class="two-top">
@@ -84,13 +84,18 @@
 			<div class="bottom" @click="alertchange()">
 				<img src="img/tuandui (4).png" class="bottom-lift" @click.stop="addcollect" v-if="shopdetail.userCollection==''" />
 				<img src="img/star-active.png" class="bottom-lift" @click.stop="noollect" v-if="shopdetail.userCollection!=''" />
+				<img src="img/kefu.png" class="bottom-lift" @click.stop="kshow"/>
 				<div class="bottom-news">加入购物车</div>
 				<div class="bottom-word">立即购买</div>
+			</div>
+			<div class="kefu" v-show="kboo">
+				<img src="img/close.png" class="myclose" @click.stop="kshow"/>
+				<iframe :src="ksrc" width="90%" height="90%" frameborder="0"></iframe>
 			</div>
 			<div class="alert" v-if="alertboo">
 				<div class="alert-inner">
 					<div class="alert-top">
-						<img :src="myurl + shopdetail.smCommodity.smCoDefaultImg" class="avatar" />
+						<img :src="shopdetail.smCommodity.smCoDefaultImg" class="avatar" />
 						<strong>¥ {{shopdetail.listSmCoFarmat[guigeindex][1]}}</strong>
 						<img src="img/close.png" class="close" @click="alertchange" />
 					</div>
@@ -135,9 +140,16 @@
 				guigeindex: 0,
 				alertboo: false,
 				shopnum: 1,
-				jinjinum: 1
+				jinjinum: 1,
+				ksrc:'',
+				kboo:false
 			},
 			methods: {
+//				弹出聊天室
+				kshow:function(){
+					this.ksrc=myurl + '/house/intoUser?userId='+localStorage.getItem('id')+'&merchantId='+this.shopdetail.smCommodity.smCoCreateName
+					this.kboo=!this.kboo
+				},
 				//				取消收藏
 				noollect: function() {
 					var that = this
@@ -176,6 +188,8 @@
 						},
 						success: function(res) {
 							if(res.status == 200) {
+								var shoucang=plus.webview.getWebviewById('wode')
+								mui.fire(shoucang,'myajax')
 								that.shopdetail.userCollection = 1
 							} else {
 								alert(res.msg)
@@ -270,7 +284,11 @@
 					if(type == 0 && this.shopnum > 1) {
 						this.shopnum--
 					} else if(type == 1) {
-						this.shopnum++
+						if(this.shopnum<this.shopdetail.smCommodity.smCoStock){
+							this.shopnum++
+						}else{
+							plus.nativeUI.toast('库存不足')
+						}
 					}
 				},
 				changeguige: function(index) {
@@ -302,12 +320,12 @@
 							smCommodityId: localStorage.getItem('shangpinxiangqingid'),
 							province: '江苏',
 							smMerchantId: localStorage.getItem('storeinfoid'),
-							smUserId: localStorage.getItem('myid')
+							smUserId: localStorage.getItem('id')
 						},
 						success: function(res) {
 							if(res.status == 200) {
 								for(var i in res.data.listSmCoFarmat){
-									res.data.listSmCoFarmat[i][1]=res.data.listSmCoFarmat[i][1]*res.data.smMmDiscount
+									res.data.listSmCoFarmat[i][1]=new Number(res.data.listSmCoFarmat[i][1]*res.data.smMmDiscount).toFixed(2)
 								}
 								that.shopdetail = res.data
 								that.canshudata = ''

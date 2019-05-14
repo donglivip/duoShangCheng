@@ -88,13 +88,18 @@
 							withdrawPrice: that.price * that.guizedata.smWcrServiceCharge / 100
 						},
 						success: function(res) {
-							mui.plusReady(function() {
-								if(plus.webview.getWebviewById('zhanghuyue') != undefined) {
-									plus.webview.getWebviewById('zhanghuyue').reload()
-									plus.webview.getWebviewById('wode').reload()
-								}
-							})
-							mui.back()
+							if(res.status==200){
+								mui.plusReady(function() {
+									if(plus.webview.getWebviewById('zhanghuyue') != undefined) {
+										plus.webview.getWebviewById('zhanghuyue').reload()
+										plus.webview.getWebviewById('wode').reload()
+									}
+								})
+								mui.back()
+							}else{
+								alert(res.msg)
+							}
+							
 						},
 						error: function(res) {
 							alert('网络连接失败，请检查网络后再试！')
