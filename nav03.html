@@ -6,13 +6,18 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/shangpinliebiao.css"/>
+		<link rel="stylesheet" type="text/css" href="css/shangpinliebiao.css" />
 		<link rel="stylesheet" type="text/css" href="css/bug.css" />
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<style type="text/css">
-		.aside{width: 1rem;flex: inherit!important;text-align: right;}
+		.aside {
+			width: 1rem;
+			flex: inherit!important;
+			text-align: right;
+		}
 	</style>
+
 	<body>
 		<div class="wrapper">
 			<div class="header header02">
@@ -50,7 +55,7 @@
 						</div>
 						<div class="one-right">
 							<div class="one-text">{{val.smMeShopName}}</div>
-							<div class="one-news">{{val.smMeAddress}}</div>			
+							<div class="one-news">{{val.smMeAddress}}</div>
 						</div>
 					</div>
 				</div>
@@ -69,6 +74,11 @@
 				<div class="botton-nav adresschange" v-show="nav02boo" @click="nav02show">
 					<div class="bottom-main">
 						<div class="left">
+							<div class="left-tab" @click="change('','全部地区')" >
+								<span>
+									全部地区
+								</span>
+							</div>
 							<div class="left-tab" @click="change(val.smAdvertisementAddressId,val.smAaArea)" v-for="(val,index) in adressdata" :class="index==myindex?'active':''">
 								<span>
 									{{val.smAaProvice}}{{val.smAaCity}}{{val.smAaArea}}
@@ -94,8 +104,8 @@
 						<div class="bottom-tab" @click="changenav04('','全部分类')" :class="goodsType2id==''?'active02':''">
 							全部分类
 						</div>
-						<div class="bottom-tab" v-for="val in nav04" @click="changenav04(val.smShopTypeId,val.smStName)" :class="goodsType2id==val.smShopTypeId?'active02':''">
-							{{val.smStName}}
+						<div class="bottom-tab" v-for="val in nav04" @click="changenav04(val.smAdvertisementThreeClassId,val.smAtcThreeName)" :class="goodsType2id==val.smShopTypeId?'active02':''">
+							{{val.smAtcThreeName}}
 						</div>
 					</div>
 				</div>
@@ -140,23 +150,48 @@
 					})
 				},
 				nav04show: function() {
-					if(this.goodsTypeid != '') {
-						this.nav04boo = !this.nav04boo
-						this.myajax()
+					if(this.marketIdname == '全部市场') {
+						mui.toast('请先选择市场')
 					} else {
-						plus.nativeUI.toast('请先选择所属行业')
+						this.nav04boo = !this.nav04boo
 					}
 
 				},
 				changenav04: function(id, name) {
+					var that=this
 					this.goodsType2id = id
 					this.goodsType2name = name
-					this.myajax()
+//					获取三级分类下的广告
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/selectAdvertisementThree",
+						dataType: 'json',
+						data: {
+							smShopTypeId: localStorage.getItem('navid'),
+							name:id
+						},
+						success: function(res) {
+							that.navdata = res.data
+						}
+					});
 				},
 				changenav03: function(id, name) {
+					var that=this
 					this.marketIdid = id
 					this.marketIdname = name
-					this.myajax()
+//					获取市场下的广告
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/selectAdvertisementMarket",
+						dataType: 'json',
+						data: {
+							smShopTypeId: localStorage.getItem('navid'),
+							name:id
+						},
+						success: function(res) {
+							that.navdata = res.data
+						}
+					});
 				},
 				nav01show: function() {
 					this.nav01boo = !this.nav01boo
@@ -169,20 +204,73 @@
 					})
 				},
 				changenav01: function(id, name) {
+					var that=this
 					this.goodsTypeid = id
 					this.goodsTypename = name
-					this.myajax()
+					//					获取二级分类广告
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/selectAdvertisementTwo",
+						dataType: 'json',
+						data: {
+							smShopTypeId: localStorage.getItem('navid'),
+							name:id
+						},
+						success: function(res) {
+							that.navdata = res.data
+							//					获取三级分类
+							$.ajax({
+								type: "post",
+								url: myurl + "/user/selectAdvertisementTwoThree",
+								dataType: 'json',
+								data: {
+									smShopTypeId: localStorage.getItem('navid'),
+									smAtcTwo:that.goodsTypeid
+								},
+								success: function(res) {
+									that.nav04 = res.data
+								}
+							});
+						}
+					});
 				},
 				nav02show: function() {
-					this.nav02boo = !this.nav02boo
+					if(this.goodsTypename=='全部行业'){
+						mui.toast('请先选择行业')
+					}else{
+						this.nav02boo = !this.nav02boo
+					}
 				},
 				change: function(id, name) {
+					var that=this
 					this.regionId = id
 					this.regionname = name
-					this.myajax()
+					if(this.smShopTypeId==''){
+						mui.toast('请先选择行业')
+					}
+//					获取地区下的广告
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/selectAdvertisementAddress",
+						dataType: 'json',
+						data: {
+							smShopTypeId: localStorage.getItem('navid'),
+							name:id
+						},
+						success: function(res) {
+							that.navdata = res.data
+						}
+					});
 				},
 				nav03show: function() {
-					this.nav03boo = !this.nav03boo
+					if(this.regionname=='全部地区'){
+						mui.toast('请先选择地区')
+					}else{
+						this.nav03boo = !this.nav03boo
+					}
+				},
+				haveg: function(id) {
+
 				},
 				myajax: function() {
 					var that = this
@@ -193,38 +281,18 @@
 						smAdvertisementAddressId: that.regionId, //地址id
 						smAdvertisementMarketId: that.marketIdid //市场Id
 					}
-					if(that.goodsType2id != '') {
-						ajaxjson.smStPpid = ''
-					}
-					$.ajax({
-						type: "post",
-						url: myurl + "/user/selectSmMerchantSmShopType",
-						dataType: 'json',
-						data: ajaxjson,
-						success: function(res) {
-							that.navdata = res.data
-						}
-					});
 
-					//					获取一级分类
+					//					获取二级分类
 					$.ajax({
 						type: "get",
-						url: myurl + "/user/selectSmShopTypeOne",
+						url: myurl + "/user/selectSmShopTypeTwo",
 						dataType: 'json',
+						data: {
+							smStPpid: localStorage.getItem('navid')
+						},
 						success: function(res) {
 							that.nav01 = res.data
-							//					获取二级分类
-							$.ajax({
-								type: "post",
-								url: myurl + "/user/selectSmShopTypeTwo",
-								dataType: 'json',
-								data: {
-									smStPpid: res.data[0].smShopTypeId
-								},
-								success: function(res) {
-									that.nav04 = res.data
-								}
-							});
+							
 						}
 					});
 
@@ -249,6 +317,7 @@
 							that.nav03 = res.data
 						}
 					});
+					this.changenav01('','全部行业')
 				}
 			},
 			mounted: function() {

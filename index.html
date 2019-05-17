@@ -137,7 +137,7 @@
 					if(res.status == 200) {
 						for(var i in res.data) {
 							$(".nav").append(`
-								<div class="nav-box" myid="${res.data.smShopTypeId}">
+								<div class="nav-box" myid="${res.data[i].smShopTypeId}">
 									<div class="img-box">
 										<img src="${myurl + res.data[i].smStOneTypeImg}" />
 									</div>
