@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/shangpinliebiao.css" />
 		<link rel="stylesheet" type="text/css" href="css/bug.css" />
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
@@ -16,6 +17,11 @@
 			flex: inherit!important;
 			text-align: right;
 		}
+		.swiper-slide img{
+			width: 100%;height: 100%;
+		}
+		.swiper-container{height: 3rem;}
+		.swiper-pagination-bullet-active{background: #F55353;}
 	</style>
 
 	<body>
@@ -48,23 +54,40 @@
 						<img src="img/Arrow_up.png" />
 					</div>
 				</div>
+				<!-- 广告区域 -->
 				<div class="adver-main">
-					<div class="main-one" v-for='val in navdata' @click="openshop(val.smMerchantId)">
+					<div class="swiper-container" v-if="goodsType2id==''">
+					    <div class="swiper-wrapper">
+					        <div class="swiper-slide" v-for="val in navdata.type" @click="openshop(val.smMerchantId)">
+								<img :src="myurl + val.smMeShopImg" >
+							</div>
+					    </div>
+					    <!-- Add Pagination -->
+					    <div class="swiper-pagination"></div>
+					</div>
+					<div class="main-one" v-for='val in navdata.normal' @click="openshop(val.smMerchantId)" v-if="goodsType2id==''">
 						<div class="one-lift">
 							<img :src="val.smMeShopImg" />
 						</div>
 						<div class="one-right">
 							<div class="one-text">{{val.smMeShopName}}</div>
-							<div class="one-news">{{val.smMeAddress}}</div>
+						</div>
+					</div>
+					<div class="main-one" v-for='val in navdata' @click="openshop(val.smMerchantId)" v-if="goodsType2id!=''">
+						<div class="one-lift">
+							<img :src="val.smMeShopImg" />
+						</div>
+						<div class="one-right">
+							<div class="one-text">{{val.smMeShopName}}</div>
 						</div>
 					</div>
 				</div>
-				<!--选择行业-->
+				<!--二级行业-->
 				<div class="botton-nav" v-show="nav01boo" @click="nav01show">
 					<div class="bottom-main">
-						<div class="bottom-tab" @click="changenav01('','全部行业')" :class="goodsTypeid==''?'active02':''">
+<!-- 						<div class="bottom-tab" @click="changenav01('','全部行业')" :class="goodsTypeid==''?'active02':''">
 							全部行业
-						</div>
+						</div> -->
 						<div class="bottom-tab" v-for="val in nav01" @click="changenav01(val.smShopTypeId,val.smStName)" :class="goodsTypeid==val.smShopTypeId?'active02':''">
 							{{val.smStName}}
 						</div>
@@ -73,39 +96,33 @@
 				<!--选择地区-->
 				<div class="botton-nav adresschange" v-show="nav02boo" @click="nav02show">
 					<div class="bottom-main">
-						<div class="left">
-							<div class="left-tab" @click="change('','全部地区')" >
-								<span>
-									全部地区
-								</span>
+<!-- 							<div class="bottom-tab" @click="change('','全部地区')" >
+								全部地区
+							</div> -->
+							<div class="bottom-tab" @click="change(val.smAdvertisementAddressId,val.smAaArea)" v-for="(val,index) in adressdata" >
+								{{val.smAaProvice}}{{val.smAaCity}}{{val.smAaArea}}
 							</div>
-							<div class="left-tab" @click="change(val.smAdvertisementAddressId,val.smAaArea)" v-for="(val,index) in adressdata" :class="index==myindex?'active':''">
-								<span>
-									{{val.smAaProvice}}{{val.smAaCity}}{{val.smAaArea}}
-								</span>
-							</div>
-						</div>
 					</div>
 				</div>
 				<!--全部市场-->
 				<div class="botton-nav" v-show="nav03boo" @click="nav03show">
 					<div class="bottom-main">
-						<div class="bottom-tab" @click="changenav03('','全部市场')" :class="marketIdid==''?'active02':''">
+	<!-- 					<div class="bottom-tab" @click="changenav03('','全部市场')" :class="marketIdid==''?'active02':''">
 							全部市场
-						</div>
+						</div> -->
 						<div class="bottom-tab" v-for="val in nav03" @click="changenav03(val.smAdvertisementMarketId,val.smAmName)" :class="marketIdid==val.smAdvertisementMarketId?'active02':''">
 							{{val.smAmName}}
 						</div>
 					</div>
 				</div>
-				<!--二级行业-->
+				<!--三级行业-->
 				<div class="botton-nav" v-show="nav04boo" @click="nav04show">
 					<div class="bottom-main">
-						<div class="bottom-tab" @click="changenav04('','全部分类')" :class="goodsType2id==''?'active02':''">
+<!-- 						<div class="bottom-tab" @click="changenav04('','全部分类')" :class="goodsType2id==''?'active02':''">
 							全部分类
-						</div>
-						<div class="bottom-tab" v-for="val in nav04" @click="changenav04(val.smAdvertisementThreeClassId,val.smAtcThreeName)" :class="goodsType2id==val.smShopTypeId?'active02':''">
-							{{val.smAtcThreeName}}
+						</div> -->
+						<div class="bottom-tab" v-for="val in nav04" @click="changenav04(val.smShopTypeId,val.smStName)" :class="goodsType2id==val.smShopTypeId?'active02':''">
+							{{val.smStName}}
 						</div>
 					</div>
 				</div>
@@ -115,6 +132,7 @@
 	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		new Vue({
 			el: '.wrapper',
@@ -164,11 +182,12 @@
 //					获取三级分类下的广告
 					$.ajax({
 						type: "post",
-						url: myurl + "/user/selectAdvertisementThree",
+						url: myurl + "/user/selectSmMerchantSmShopTypeClass",
 						dataType: 'json',
 						data: {
-							smShopTypeId: localStorage.getItem('navid'),
-							name:id
+							smStPpid:id,
+							smAdvertisementAddressId:that.regionId,
+							smAdvertisementMarketId:that.marketIdid
 						},
 						success: function(res) {
 							that.navdata = res.data
@@ -176,17 +195,22 @@
 					});
 				},
 				changenav03: function(id, name) {
+					// 市场改变事件
 					var that=this
 					this.marketIdid = id
 					this.marketIdname = name
+					this.goodsType2id=''
+					this.goodsType2name=''
 //					获取市场下的广告
 					$.ajax({
 						type: "post",
-						url: myurl + "/user/selectAdvertisementMarket",
+						url: myurl + "/user/querySmMerchantBySelective",
 						dataType: 'json',
 						data: {
-							smShopTypeId: localStorage.getItem('navid'),
-							name:id
+							smShopTypeIdOne: localStorage.getItem('navid'),
+							smShopTypeIdTwo:that.goodsTypeid,
+							smAdvertisementAddressId:that.regionId,
+							smAdvertisementMarketId:id
 						},
 						success: function(res) {
 							that.navdata = res.data
@@ -204,28 +228,30 @@
 					})
 				},
 				changenav01: function(id, name) {
+					// 二级分类改变事件
 					var that=this
 					this.goodsTypeid = id
 					this.goodsTypename = name
+					this.goodsType2id=''
+					this.goodsType2name=''
 					//					获取二级分类广告
 					$.ajax({
 						type: "post",
-						url: myurl + "/user/selectAdvertisementTwo",
+						url: myurl + "/user/querySmMerchantBySelective",
 						dataType: 'json',
 						data: {
-							smShopTypeId: localStorage.getItem('navid'),
-							name:id
+							smShopTypeIdOne: localStorage.getItem('navid'),//一级id
+							smShopTypeIdTwo:id
 						},
 						success: function(res) {
 							that.navdata = res.data
 							//					获取三级分类
 							$.ajax({
 								type: "post",
-								url: myurl + "/user/selectAdvertisementTwoThree",
+								url: myurl + "/user/selectSmShopTypeTwo",
 								dataType: 'json',
 								data: {
-									smShopTypeId: localStorage.getItem('navid'),
-									smAtcTwo:that.goodsTypeid
+									smStPpid:that.goodsTypeid
 								},
 								success: function(res) {
 									that.nav04 = res.data
@@ -245,17 +271,34 @@
 					var that=this
 					this.regionId = id
 					this.regionname = name
+					this.goodsType2id=''
+					this.goodsType2name=''
 					if(this.smShopTypeId==''){
 						mui.toast('请先选择行业')
 					}
+					//					获取市场
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/selectSmAdvertisementMarket",
+						dataType: 'json',
+						data: {
+							smAdvertisementAddressId: that.regionId
+						},
+						success: function(res) {
+							that.nav03 = res.data
+						}
+					});
+					this.marketIdid = ''
+					this.marketIdname = '全部市场'
 //					获取地区下的广告
 					$.ajax({
 						type: "post",
-						url: myurl + "/user/selectAdvertisementAddress",
+						url: myurl + "/user/querySmMerchantBySelective",
 						dataType: 'json',
 						data: {
-							smShopTypeId: localStorage.getItem('navid'),
-							name:id
+							smShopTypeIdOne: localStorage.getItem('navid'),
+							smShopTypeIdTwo:that.goodsTypeid,
+							smAdvertisementAddressId:that.regionId
 						},
 						success: function(res) {
 							that.navdata = res.data
@@ -274,13 +317,6 @@
 				},
 				myajax: function() {
 					var that = this
-					//					获取广告列表
-					var ajaxjson = {
-						smShopTypeId: that.goodsTypeid, //一级分类id
-						smStPpid: that.goodsType2id, //二级分类id
-						smAdvertisementAddressId: that.regionId, //地址id
-						smAdvertisementMarketId: that.marketIdid //市场Id
-					}
 
 					//					获取二级分类
 					$.ajax({
@@ -305,26 +341,31 @@
 							that.adressdata = res.data
 						}
 					});
-					//					获取市场
+					//					获取一级广告
 					$.ajax({
-						type: "post",
-						url: myurl + "/user/selectSmAdvertisementMarket",
-						dataType: 'json',
-						data: {
-							regionId: localStorage.getItem('adressid')
+						type: "POST",
+						url: myurl + '/user/querySmMerchantBySelective',
+						datatype: 'json',
+						data:{
+							smShopTypeIdOne: localStorage.getItem('navid'),//一级id
 						},
 						success: function(res) {
-							that.nav03 = res.data
+							that.navdata = res.data
 						}
 					});
-					this.changenav01('','全部行业')
 				}
 			},
 			mounted: function() {
 				this.myajax()
 			},
 			updated: function() {
-
+				var swiper = new Swiper('.swiper-container', {
+				    pagination: '.swiper-pagination',
+				    autoplay: 3000,
+					pagination: {
+						el: '.swiper-pagination',
+					  }
+				});
 			}
 		})
 	</script>

@@ -18,7 +18,7 @@
 					未知
 				</div>
 				<div class="header-text jump" myid='sousuo'>
-					<input type="text" placeholder="输入店铺" readonly="readonly" />
+					<input type="text" placeholder="搜索商品" readonly="readonly" />
 				</div>
 				<div class="header-aside">
 					<!--<img src="img/news.png" />-->
@@ -34,6 +34,14 @@
 				</div>
 				<div class="nav">
 
+				</div>
+				<!-- 新闻 -->
+				<div class="new">
+					<span class="red">同城</span>
+					<span>头条</span>
+					<div class="new-box">
+
+					</div>
 				</div>
 				<div class="main-two">
 					<div class="two-text">广告区</div>
@@ -57,13 +65,13 @@
 					<img src="img/shop.png" />
 					<div class="bottom-news">店铺</div>
 				</div>-->
-				<div class="bottom-box jump" myid='fenlei'>
+				<div class="bottom-box jump" myid='shoucangliebiao'>
 					<img src="img/fenlei 2.png" />
-					<div class="bottom-news">分类</div>
+					<div class="bottom-news">收藏</div>
 				</div>
-				<div class="bottom-box jump" myid='shangjiazhuce'>
-					<img src="img/add.png" />
-					<div class="bottom-news">商家</div>
+				<div class="bottom-box jump" myid='gouwuche'>
+					<img src="img/gouwudai.png" />
+					<div class="bottom-news">购物车</div>
 				</div>
 				<div class="bottom-box jump" myid='wode'>
 					<img src="img/wode.png" />
@@ -80,7 +88,7 @@
 		$(function() {
 			function plusReady() {
 				plus.navigator.setStatusBarBackground('#F55353');
-				if(localStorage.getItem('id') == undefined || localStorage.getItem('id') == null) {
+				if (localStorage.getItem('id') == undefined || localStorage.getItem('id') == null) {
 					mui.openWindow({
 						url: 'denglu.html',
 						id: 'denglu'
@@ -91,17 +99,17 @@
 						type: "post",
 						url: myurl + "/user/selectSmVersionUpgrade",
 						dataType: 'json',
-						data:{
-							num:1
+						data: {
+							num: 1
 						},
 						success: function(res) {
-							if(res.data.smVuVersion != inf.version) {
+							if (res.data.smVuVersion != inf.version) {
 								//								版本更新
 								plus.nativeUI.toast("正在为您更新资源~");
 								plus.downloader.createDownload(myurl + res.data.smVuUrl, {
 									filename: "_doc/update/"
 								}, function(d, status) {
-									if(status == 200) {
+									if (status == 200) {
 										plus.runtime.install(d.filename, {}, function() {
 											plus.nativeUI.alert("应用资源更新完成！点击重启！", function() {
 												plus.runtime.restart();
@@ -122,11 +130,33 @@
 					});
 				});
 			}
-			if(window.plus) {
+			if (window.plus) {
 				plusReady();
 			} else {
 				document.addEventListener("plusready", plusReady, false);
 			}
+			//查询首页新闻
+			$.ajax({
+				type: "post",
+				url: myurl + "/user/querySmNewsHomePage",
+				async: true,
+				dataType: 'json',
+				success: function(res) {
+					if (res.status == 200) {
+						$(".new-box").append(
+							`
+									<div class="news">
+										${res.data[0].smNeTitle}
+									</div>
+								`)
+					} else {
+						alert(res.msg)
+					}
+				},
+				error: function(err) {
+
+				}
+			});
 			//查询所有一级分类
 			$.ajax({
 				type: "post",
@@ -134,9 +164,10 @@
 				async: true,
 				dataType: 'json',
 				success: function(res) {
-					if(res.status == 200) {
-						for(var i in res.data) {
-							$(".nav").append(`
+					if (res.status == 200) {
+						for (var i in res.data) {
+							$(".nav").append(
+								`
 								<div class="nav-box" myid="${res.data[i].smShopTypeId}">
 									<div class="img-box">
 										<img src="${myurl + res.data[i].smStOneTypeImg}" />
@@ -145,16 +176,23 @@
 										${res.data[i].smStName}
 									</span>
 								</div>
-							`)
+							`
+							)
 						}
 					} else {
 						alert(res.msg)
 					}
 				},
 				error: function(err) {
-				
+
 				}
 			});
+			$('.new').click(function() {
+				mui.openWindow({
+					url: "newlist.html",
+					id: "newlist"
+				})
+			})
 			$(".nav").on('click', '.nav-box', function() {
 				localStorage.setItem('navid', $(this).attr('myid'))
 				mui.openWindow({
@@ -165,30 +203,39 @@
 			//获取轮播图
 			$.ajax({
 				type: "post",
-				url: myurl + "/user/selectBanner",
+				url: myurl + "/user/querySmBannerHomePage",
 				async: true,
 				dataType: 'json',
 				success: function(res) {
-					if(res.status == 200) {
-						for(var i in res.data) {
-							$('.swiper-wrapper').append(`
-								<div class="swiper-slide">
+					if (res.status == 200) {
+						for (var i in res.data) {
+							$('.swiper-wrapper').append(
+								`
+								<div class="swiper-slide" id='${res.data[i].smBaUrl}'>
 									<img src="${myurl + res.data[i].smBaImg}" />
 								</div>
-							`)
+							`
+							)
 						}
 						var swiper = new Swiper('.swiper-container', {
 							pagination: {
 								el: '.swiper-pagination'
-							}
+							},
+							autoplay: true
 						});
-
+						$('.swiper-slide').click(function() {
+							var id = $(this).attr('id')
+							localStorage.setItem('storeinfoid', id)
+							mui.openWindow({
+								url: 'store.html'
+							})
+						})
 					} else {
 						alert(res.msg)
 					}
 				},
 				error: function(err) {
-					
+
 				}
 			});
 			//获取首页广告位置的店铺
@@ -198,21 +245,23 @@
 				async: true,
 				dataType: 'json',
 				success: function(res) {
-					if(res.status == 200) {
-						for(var i in res.data) {
-							$(".main-three").append(`
+					if (res.status == 200) {
+						for (var i in res.data) {
+							$(".main-three").append(
+								`
 								<div class="three-box" myid="${res.data[i].smMerchantId}">
 									<img src="${res.data[i].smMeShopImg}" />
 									<div class="three-text">${res.data[i].smMeShopName}</div>
 								</div>
-							`)
+							`
+							)
 						}
 					} else {
 						alert(res.msg)
 					}
 				},
 				error: function(err) {
-					
+
 				}
 			});
 			$(".main-three").on('click', '.three-box', function() {
@@ -229,9 +278,10 @@
 				async: true,
 				dataType: 'json',
 				success: function(res) {
-					if(res.status == 200) {
-						for(var i in res.data) {
-							$(".main-box").append(`
+					if (res.status == 200) {
+						for (var i in res.data) {
+							$(".main-box").append(
+								`
 								<div class="main-four" myid="${res.data[i].smMerchantId}">
 									<div class="four-lift">
 										<img src="${res.data[i].smMeShopImg}" />
@@ -240,14 +290,15 @@
 										<div class="four-text">${res.data[i].smMeShopName}</div>
 									</div>
 								</div>
-							`)
+							`
+							)
 						}
 					} else {
 						alert(res.msg)
 					}
 				},
 				error: function(err) {
-					
+
 				}
 			});
 			$(".main-box").on('click', '.main-four', function() {

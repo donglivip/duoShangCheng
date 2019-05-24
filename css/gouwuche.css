@@ -78,6 +78,7 @@ body,
 	margin-right: .36rem;
 	height: 1.6rem;
 	width: 1.6rem;
+	overflow: hidden;
 }
 
 .one-content img {

@@ -123,7 +123,8 @@
 					dataType: 'json',
 					data: {
 						smUserAddressId: myid,
-						smUaIsDefault: 1
+						smUaIsDefault: 1,
+						smUserId: localStorage.getItem('id')
 					},
 					success: function(res) {
 						if(res.status == 200) {
