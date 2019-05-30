@@ -19,6 +19,14 @@
 			font-size: .3rem;
 			width: 1rem;
 		}
+		.main-inner{
+			display: flex;flex-wrap: wrap;
+		}
+		.main-one{
+			width: 50%;height: 4rem;
+		}
+		.one-lift{height: 3rem;}
+		.header{background: #F55353;color: #FFFFFF;}
 	</style>
 	<body>
 		<div class="wrapper">
@@ -32,7 +40,7 @@
 				<div class="header-aside goto">GO</div>
 			</div>
 			<div class="main">
-				
+				<div class="main-inner"></div>
 			</div>
 		</div>
 	</body>
@@ -57,9 +65,9 @@
 					},
 					success:function(res){
 						if (res.status==200) {
-							$(".main").html('')
+							$(".main-inner").html('')
 							for (var i in res.data) {
-								$(".main").append(`
+								$(".main-inner").append(`
 									<div class="main-one" myid='${res.data[i].smCommodityId}'>
 										<div class="one-lift">
 											<img src="${res.data[i].smCoDefaultImg}"/>

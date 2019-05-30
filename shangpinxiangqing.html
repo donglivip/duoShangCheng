@@ -12,8 +12,10 @@
 			<div class="header mui-action-back">
 				<img src="img/Group 26.png" />
 			</div>
-			<div class="header" style="right: .2rem;left: auto;" @click="opennew('shenqing')">
-				<img src="img/upload.png" />
+			<div class="header" style="right: .2rem;left: auto;background: rgba(255,255,255,.3);
+    padding: .1rem;
+    border-radius: .5rem;" @click="opennew('shenqing')">
+				申请分销商
 			</div>
 			<div class="main" v-if="shopdetail!=''">
 				<div class="main-one">
@@ -27,7 +29,6 @@
 						<div class="two-news">{{shopdetail.smCommodity.smCoName}}</div>
 					</div>
 					<div class="two-bottom">
-						<div class="two-word">快递:{{shopdetail.smCommodity.smCoIsFreeShipping==1?'包邮':shopdetail.smExpressFee}}</div>
 						<div class="two-word">库存{{shopdetail.smCommodity.smCoStock}}</div>
 						<div class="two-word">销量{{shopdetail.smCommodity.smCoSalesVolume}}</div>
 					</div>
@@ -86,11 +87,11 @@
 				<div class="bottom-news">加入购物车</div>
 				<div class="bottom-word">立即购买</div>
 			</div>
-			<div class="kefu" v-if="kboo">
+			<div class="kefu" v-show="kboo">
 				<img src="img/close.png" class="myclose" @click.stop="kshow"/>
 				<iframe :src="ksrc" width="100%" height="100%" frameborder="0"></iframe>
 			</div>
-			<div class="alert" v-if="alertboo">
+			<div class="alert" v-show="alertboo">
 				<div class="alert-inner">
 					<div class="alert-top">
 						<img :src="shopdetail.smCommodity.smCoDefaultImg" class="avatar" />
@@ -145,8 +146,9 @@
 			methods: {
 //				弹出聊天室
 				kshow:function(){
-					this.ksrc=myurl + '/house/intoUser?userId='+localStorage.getItem('id')+'&merchantId='+this.shopdetail.smCommodity.smCoCreateName
-					this.kboo=!this.kboo
+					this.ksrc='http://wpa.qq.com/msgrd?v=3&uin='+this.shopdetail.qq+'&site=qq&menu=yes'
+					// this.kboo=!this.kboo
+					
 				},
 				//				取消收藏
 				noollect: function() {
@@ -182,11 +184,12 @@
 						data: {
 							smCommodityId: localStorage.getItem('shangpinxiangqingid'),
 							smUserId: localStorage.getItem('id'),
-							smUcCreateName: localStorage.getItem('id')
+							smUcCreateName: localStorage.getItem('id'),
+							type:1
 						},
 						success: function(res) {
 							if(res.status == 200) {
-								var shoucang=plus.webview.getWebviewById('wode')
+								var shoucang=plus.webview.getWebviewById('shoucangliebiao')
 								mui.fire(shoucang,'myajax')
 								that.shopdetail.userCollection = 1
 							} else {
@@ -201,7 +204,9 @@
 				goshop: function() {
 					//					立即下单
 					var that=this,
-						smShoppingBasketId=''
+						smShoppingBasketId='',
+						lprice=that.shopdetail.listSmCoFarmat[that.guigeindex][1]
+					if(that.shopnum>that.shopdetail.smCommodity.smCoStock){alert('库存不足');return false;}
 					$.ajax({
 						type: "post",
 						url: myurl + "/user/inserShoppingCart",
@@ -212,7 +217,7 @@
 							smUserId: localStorage.getItem('id'),
 							smSbCreateName: localStorage.getItem('id'),
 							smSbNum: that.shopnum,
-							smSbPrice: that.shopnum * that.shopdetail.listSmCoFarmat[that.guigeindex][1],
+							smSbPrice:  that.shopdetail.listSmCoFarmat[that.guigeindex][1],
 							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0],
 							smMerchantId: localStorage.getItem('storeinfoid')
 						},
@@ -247,11 +252,13 @@
 						}]
 					}]
 					localStorage.setItem('shopdata', JSON.stringify(shopdata))
+					that.shopdetail.listSmCoFarmat[that.guigeindex][1]=lprice
 					this.opennew('tijiaodingdan')
 				},
 				addcart: function() {
 					var that = this
 					//					加入购物车
+					if(that.shopnum>that.shopdetail.smCommodity.smCoStock){alert('库存不足');return false;}
 					$.ajax({
 						type: "post",
 						url: myurl + "/user/inserShoppingCart",

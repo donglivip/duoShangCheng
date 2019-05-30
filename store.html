@@ -28,7 +28,8 @@
 					店铺详情
 				</div>
 				<div class="aside">
-					<!--<img src="img/qq.png" class="back" />-->
+					<img src="img/star.png" class="back" id="add"/>
+					<img src="img/starn.png" class="back" id="delete"/>
 				</div>
 			</div>
 			<div class="main big-main">
@@ -41,7 +42,7 @@
 				</div>
 				<!--中间店铺分类-->
 				<div class="nav-box">
-
+					
 				</div>
 				<!--商品-->
 				<div class="shop-box">
@@ -56,6 +57,58 @@
 	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
+			// 添加收藏
+			$('#delete').click(function(){
+				$.ajax({
+					type: "post",
+					url: myurl + "/user/insertSmUserCollection",
+					async: true,
+					dataType: 'json',
+					data: {
+						smCommodityId: localStorage.getItem('storeinfoid'),
+						smUserId: localStorage.getItem('id'),
+						smUcCreateName: localStorage.getItem('id'),
+						type:2
+					},
+					success: function(res) {
+						if(res.status == 200) {
+							$('#delete').hide()
+							$('#add').show()
+							var shoucang=plus.webview.getWebviewById('shoucangliebiao')
+							mui.fire(shoucang,'myajax')
+						} else {
+							alert(res.msg)
+						}
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+			})
+			var shopdata=''
+			// 取消收藏
+			$('#add').click(function(){
+				$.ajax({
+					type: "post",
+					url: myurl + "/user/deleteSmUserCollection",
+					async: true,
+					dataType: 'json',
+					data: {
+						smUserCollectionId: shopdata.smMeCreateName
+					},
+					success: function(res) {
+						if(res.status == 200) {
+							$('#add').hide()
+							$('#delete').show()
+						} else {
+							alert(res.msg)
+						}
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+			})
 //			根据店铺id查询店铺信息
 			$.ajax({
 				type: "post",
@@ -63,14 +116,23 @@
 				async: true,
 				dataType: 'json',
 				data: {
-					smMerchantId: localStorage.getItem('storeinfoid')
+					smMerchantId: localStorage.getItem('storeinfoid'),
+					smUserId: localStorage.getItem('id')
 				},
 				success: function(res) {
 					if(res.status == 200) {
+						shopdata=res.data
 						$('.avatar').attr('src',res.data.smMeShopImg)
 						localStorage.setItem('smMeShopImg',res.data.smMeShopImg)
 						$('.name').html(res.data.smMeShopName)
 						localStorage.setItem('smMeShopName',res.data.smMeShopName)
+						if(res.data.smMeUpdateName==2){
+							$('#add').hide()
+							$('#delete').show()
+						}else{
+							$('#add').show()
+							$('#delete').hide()
+						}
 					} else {
 						alert(res.msg)
 					}
@@ -95,6 +157,9 @@
 								<div class="nav-tab" myid='${res.data[i].smCommodityTypeId}'>${res.data[i].smCtResult}</div>
 							`)
 						}
+						$(".nav-box").append(`
+							<div class="nav-tab" myid='jianjie'>企业简介</div>
+						`)
 						$(".nav-tab").eq(0).click()
 					} else {
 						alert(res.msg)
@@ -110,44 +175,48 @@
 				$(this).addClass('red')
 				var myid = $(this).attr('myid')
 				localStorage.setItem('smShopTypeId',myid)
-				$.ajax({
-					type: "post",
-					url: myurl + "/user/selectSmCommodityIdSmCommodity",
-					async: true,
-					dataType: 'json',
-					data: {
-						smCommodityTypeId: myid,
-						smMerchantId: localStorage.getItem('storeinfoid'),
-						smUserId:localStorage.getItem('myid')
-					},
-					success: function(res) {
-						if(res.status == 200) {
-							$(".shop-box").html('')
-							for(var i in res.data) {
-								$(".shop-box").append(`
-									<div class="shop-tab jump" myid='${res.data[i].smCommodityId}'>
-										<div class="shopimg-box">
-											<img src="${res.data[i].smCoDefaultImg}" class="shop-img" />
-										</div>
-										<div class="title">${res.data[i].smCoName}</div>
-										<div class="price">
-											<div class="money">￥ ${res.data[i].smCoDefaultPrice}</div>
-											<div class="join">
-												购买
+				if(myid=='jianjie'){
+					<!-- 企业简介 -->
+				}else{
+					$.ajax({
+						type: "post",
+						url: myurl + "/user/selectSmCommodityIdSmCommodity",
+						async: true,
+						dataType: 'json',
+						data: {
+							smCommodityTypeId: myid,
+							smMerchantId: localStorage.getItem('storeinfoid'),
+							smUserId:localStorage.getItem('myid')
+						},
+						success: function(res) {
+							if(res.status == 200) {
+								$(".shop-box").html('')
+								for(var i in res.data) {
+									$(".shop-box").append(`
+										<div class="shop-tab jump" myid='${res.data[i].smCommodityId}'>
+											<div class="shopimg-box">
+												<img src="${res.data[i].smCoDefaultImg}" class="shop-img" />
+											</div>
+											<div class="title">${res.data[i].smCoName}</div>
+											<div class="price">
+												<div class="money">￥ ${res.data[i].smCoDefaultPrice}</div>
+												<div class="join">
+													购买
+												</div>
 											</div>
 										</div>
-									</div>
-								`)
+									`)
+								}
+							} else {
+								alert(res.msg)
 							}
-						} else {
-							alert(res.msg)
+							
+						},
+						error: function(err) {
+							alert("网络连接失败，请稍后重试")
 						}
-						
-					},
-					error: function(err) {
-						alert("网络连接失败，请稍后重试")
-					}
-				});
+					});
+				}
 			})
 			//跳转到商品详情
 			$(".shop-box").on('click', '.shop-tab', function() {

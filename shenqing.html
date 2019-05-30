@@ -6,7 +6,6 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
-
 		<link rel="stylesheet" type="text/css" href="css/shenqing.css" />
 		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="https://cdn.bootcss.com/framework7/1.6.5/css/framework7.ios.min.css" rel="stylesheet">
@@ -24,7 +23,7 @@
 				<div class="header-aside mui-action-back">
 					<img src="img/youjian.png" />
 				</div>
-				<div class="header-text">申请高级会员</div>
+				<div class="header-text">申请分销商</div>
 				<div class="header-aside"></div>
 			</div>
 			<div class="main">
@@ -43,7 +42,7 @@
 					</div>
 
 					<div class="title">
-						上传店铺LOGO
+						上传店铺门招
 					</div>
 					<img src="img/addimg.png" class="add" @click="upload(0)"/>
 				</div>
@@ -56,7 +55,7 @@
 				<div class="layui" v-show="layuiboo" @click="layuichange">
 					<div class="layui-inner">
 						<div class="layui-tab" v-for="val in shopdata" @click="havedengji(val.smMerchantMemberId,val.smMmName)">
-							{{val.smMmName}}
+							<!-- {{val.smMmName}} -->分销商
 						</div>
 					</div>
 				</div>
@@ -129,7 +128,7 @@
 						}))
 							console.log(JSON.stringify(res))
 							if(res.status == 200) {
-								alert('已为您提交申请')
+								alert('已为您提交申请,分销商购买商品物流费用自理！')
 								mui.back()
 							} else {
 								alert(res.msg)

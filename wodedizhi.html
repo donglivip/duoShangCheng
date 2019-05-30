@@ -65,7 +65,7 @@
 				            			</div>
 				            			<div class="bottom-box">
 				            				<div class="bottom-news shanchu" myid='${res.data[i].smUserAddressId}'>删除</div>
-				            				<div class="bottom-news bianji" myid='${res.data[i].smUserAddressId}'>编辑</div>
+				            				<div class="bottom-news bianji" myid='${res.data[i].smUserAddressId}' dizhiname='${res.data[i].smUaName}' dizhiphone='${res.data[i].smUaPhone}' dizhidetail='${res.data[i].smUaResult}'>编辑</div>
 				            			</div>
 				            		</div>           		
 				            	</div>
@@ -84,6 +84,9 @@
 			//编辑地址
 			$(".main").on('click', '.bianji', function() {
 				localStorage.setItem('bianjidizhiid', $(this).attr('myid'))
+				localStorage.setItem('dizhiname', $(this).attr('dizhiname'))
+				localStorage.setItem('dizhiphone', $(this).attr('dizhiphone'))
+				localStorage.setItem('dizhidetail', $(this).attr('dizhidetail'))
 				mui.openWindow({
 					url: 'bianjidizhi.html',
 					id: 'bianjidizhi'

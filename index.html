@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="utf-8">
@@ -10,7 +9,9 @@
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/shouye.css" />
 	</head>
-
+	<style type="text/css">
+		.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{height: 5px;display: flex;justify-content: center;}
+	</style>
 	<body>
 		<div class="wrapper">
 			<div class="header">
@@ -32,8 +33,13 @@
 					<!-- 如果需要分页器 -->
 					<div class="swiper-pagination"></div>
 				</div>
-				<div class="nav">
-
+				<div class="swiper-container main-one01">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide nav nav02"></div>
+						<div class="swiper-slide nav nav01"></div>
+					</div>
+					<!-- 如果需要分页器 -->
+					<div class="swiper-pagination"></div>
 				</div>
 				<!-- 新闻 -->
 				<div class="new">
@@ -166,19 +172,51 @@
 				success: function(res) {
 					if (res.status == 200) {
 						for (var i in res.data) {
-							$(".nav").append(
-								`
-								<div class="nav-box" myid="${res.data[i].smShopTypeId}">
-									<div class="img-box">
-										<img src="${myurl + res.data[i].smStOneTypeImg}" />
+							if(i<=9){
+								$(".nav02").append(
+									`
+									<div class="nav-box" myid="${res.data[i].smShopTypeId}">
+										<div class="img-box">
+											<img src="${myurl + res.data[i].smStOneTypeImg}" />
+										</div>
+										<span>
+											${res.data[i].smStName}
+										</span>
 									</div>
-									<span>
-										${res.data[i].smStName}
-									</span>
-								</div>
-							`
-							)
+								`
+								)
+							}else{
+								$(".nav01").append(
+									`
+									<div class="nav-box" myid="${res.data[i].smShopTypeId}">
+										<div class="img-box">
+											<img src="${myurl + res.data[i].smStOneTypeImg}" />
+										</div>
+										<span>
+											${res.data[i].smStName}
+										</span>
+									</div>
+								`
+								)
+							}
+							
 						}
+						var boo=false
+						var swiper = new Swiper('.main-one01', {
+							pagination: {
+								el: '.swiper-pagination'
+							},
+							loop:true,
+							on:{
+								slideChangeTransitionEnd:function(){
+									if(boo){
+										 localStorage.setItem('activeIndex',this.activeIndex)
+									}
+								}
+							}
+						});
+						swiper.slideTo( localStorage.getItem('activeIndex'), 1000, false);
+						boo=true
 					} else {
 						alert(res.msg)
 					}
@@ -209,22 +247,25 @@
 				success: function(res) {
 					if (res.status == 200) {
 						for (var i in res.data) {
-							$('.swiper-wrapper').append(
+							if(res.data[i]!=null){
+								$('.main-one .swiper-wrapper').append(
+									`
+									<div class="swiper-slide" id='${res.data[i].smBaUrl}'>
+										<img src="${myurl + res.data[i].smBaImg}" />
+									</div>
 								`
-								<div class="swiper-slide" id='${res.data[i].smBaUrl}'>
-									<img src="${myurl + res.data[i].smBaImg}" />
-								</div>
-							`
-							)
+								)
+							}
+							
 						}
-						var swiper = new Swiper('.swiper-container', {
+						var swiper = new Swiper('.main-one', {
 							pagination: {
 								el: '.swiper-pagination'
 							},
 							autoplay:true,
 							loop:true
 						});
-						$('.swiper-slide').click(function() {
+						$('.main-one .swiper-slide').click(function() {
 							var id = $(this).attr('id')
 							localStorage.setItem('storeinfoid', id)
 							mui.openWindow({

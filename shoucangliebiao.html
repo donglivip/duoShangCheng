@@ -7,8 +7,46 @@
 		<title></title>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="css/shangpinliebiao.css" />
-		<link rel="stylesheet" type="text/css" href="css/shouye.css"/>
 	</head>
+	<style type="text/css">
+		.top{
+			display: flex;
+			height: .8rem;
+			align-items: center;
+			font-size: .2rem;
+		}
+		.top-nav{
+			flex: 1;
+			text-align: center;
+			line-height: .8rem;
+			box-sizing: border-box;
+		}
+		.top-active{
+			border-bottom: 2px solid #F55353;
+			color:#F55353;
+		}
+		.four-lift{
+			width: 23%;
+			font-size: .2rem;
+			overflow: hidden;
+			margin: .05rem;
+			background: #FFFFFF;
+			height: 3rem;
+			margin: .05rem;
+		}
+		.four-lift img{
+			width: 2rem;
+			height: 2rem;
+		}
+		.four-text{
+			line-height: .25rem;height: .5rem;
+			overflow: hidden;
+		}
+		.main{background: ghostwhite;display: flex;flex-wrap: wrap;}
+		.four-bottom{
+			text-align: center;font-size: .24rem;background: #F55353;color: #FFFFFF;height: .45rem;line-height: .45rem;
+		}
+	</style>
 	<body>
 		<div class="wrapper">
 			<div class="header">
@@ -16,8 +54,19 @@
 				<div class="header-text">收藏列表</div>
 				<div class="header-aside"></div>
 			</div>
-			<div class="main" style="height: calc(100% - 1.96rem);">
-
+			<div class="top">
+				<div class="top-nav top-active">
+					商品收藏
+				</div>
+				<div class="top-nav">
+					店铺收藏
+				</div>
+			</div>
+			<div class="main" style="height: calc(100% - 2.76rem);" id="m01">
+				
+			</div>
+			<div class="main" style="height: calc(100% - 2.76rem);display: none;" id="m02">
+				
 			</div>
 			<div class="bottom">
 				<div class="bottom-box jump" myid='index'>
@@ -48,6 +97,13 @@
 	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
+			$('.top-nav').click(function(){
+				$('.top-nav').removeClass('top-active')
+				$(this).addClass('top-active')
+				var index=$(this).index()
+				$('.main').hide()
+				$('.main').eq(index).show()
+			})
 			//跳转页面
 			$(".jump").click(function() {
 				var jump = $(this).attr('myid')
@@ -56,7 +112,11 @@
 					id: jump
 				})
 			})
+			window.document.addEventListener("myajax",function (e) {
+				myajax()
+			});
 			function myajax() {
+				// 查询商品收藏
 				$.ajax({
 					type: "post",
 					url: myurl + "/user/selectSmUserCollection",
@@ -67,25 +127,47 @@
 					},
 					success: function(res) {
 						if(res.status == 200) {
-							$(".main").html('')
+							$("#m01").html('')
 							for(var i in res.data) {
-								$(".main").append(`
-									<div class="main-four" >
+								$("#m01").append(`
 										<div class="four-lift">
-											<img src="${res.data[i].smCoDefaultImg}" />
-										</div>
-										<div class="four-right">
+											<img src="${res.data[i].smCoDefaultImg}" id='chakan' myid='${res.data[i].smCommodityId}'/>
 											<div class="four-text">${res.data[i].smCoName}</div>
-											<div class="four-bottom">
-												<span id='shanchu' myid='${res.data[i].smCoUpdateName}'>
-													删除
-												</span>
-												<span id='chakan' myid='${res.data[i].smCommodityId}'>
-													查看
-												</span>
+											<div class="four-bottom" id='shanchu' myid='${res.data[i].smCoUpdateName}'>
+												删除
 											</div>
 										</div>
-									</div>
+								`)
+							}
+						} else {
+							alert(res.msg)
+						}
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+				<!-- 查询店铺收藏 -->
+				$.ajax({
+					type: "post",
+					url: myurl + "/user/selectSmUserCollectionMerchant",
+					async: true,
+					dataType: 'json',
+					data: {
+						smUserId: localStorage.getItem('id')
+					},
+					success: function(res) {
+						if(res.status == 200) {
+							$("#m02").html('')
+							for(var i in res.data) {
+								$("#m02").append(`
+										<div class="four-lift">
+											<img src="${res.data[i].smMeShopImg}" id='chakan01' myid='${res.data[i].smMerchantId}'/>
+											<div class="four-text">${res.data[i].smMeShopName}</div>
+											<div class="four-bottom" id='shanchu' myid='${res.data[i].smMeUpdateName}'>
+												删除
+											</div>
+										</div>
 								`)
 							}
 						} else {
@@ -129,6 +211,13 @@
 				localStorage.setItem('shangpinxiangqingid', myid)
 				mui.openWindow({
 					url: 'shangpinxiangqing.html'
+				})
+			})
+			$(".main").on('click', '#chakan01', function() {
+				var myid = $(this).attr('myid')
+				localStorage.setItem('storeinfoid', myid)
+				mui.openWindow({
+					url: 'store.html'
 				})
 			})
 		})
