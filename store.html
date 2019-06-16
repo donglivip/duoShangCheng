@@ -14,7 +14,13 @@
 			height: .4rem;
 			width: auto!important;
 		}
+		.main{overflow: hidden;}
 		.red{border-bottom: 1px solid red;color: red;}
+		.shop-box{height: calc(100% - 2.1rem);overflow-y: scroll;}
+		.jianjie{
+			margin: 0 auto;
+		}
+		.index .title{white-space: inherit;height: .9rem;}
 	</style>
 
 	<body>
@@ -109,6 +115,7 @@
 					}
 				});
 			})
+			var detail=''
 //			根据店铺id查询店铺信息
 			$.ajax({
 				type: "post",
@@ -177,6 +184,13 @@
 				localStorage.setItem('smShopTypeId',myid)
 				if(myid=='jianjie'){
 					<!-- 企业简介 -->
+					if(shopdata.smMeIntroduce==null||shopdata.smMeIntroduce=='null'){
+						$(".shop-box").html(`<div class='jianjie'>暂无企业简介</div>`)
+					}else{
+						$(".shop-box").html(`<div class='jianjie'>${shopdata.smMeIntroduce}</div>`)
+					}
+					
+					
 				}else{
 					$.ajax({
 						type: "post",
@@ -192,12 +206,16 @@
 							if(res.status == 200) {
 								$(".shop-box").html('')
 								for(var i in res.data) {
+									res.data[i].smCoDefaultImg=JSON.parse(res.data[i].smCoDefaultImg)
 									$(".shop-box").append(`
 										<div class="shop-tab jump" myid='${res.data[i].smCommodityId}'>
 											<div class="shopimg-box">
-												<img src="${res.data[i].smCoDefaultImg}" class="shop-img" />
+												<img src="${res.data[i].smCoDefaultImg[0]}" class="shop-img" />
 											</div>
-											<div class="title">${res.data[i].smCoName}</div>
+											<div class="title">
+												<strong style="display:${res.data[i].smCoActivity!=null?'inline-bock':'none'}">${res.data[i].smCoActivity}</strong>
+												${res.data[i].smCoName}
+											</div>
 											<div class="price">
 												<div class="money">￥ ${res.data[i].smCoDefaultPrice}</div>
 												<div class="join">

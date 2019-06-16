@@ -5,8 +5,15 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="css/shangpinxiangqing.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
 	</head>
+	<style type="text/css">
+		.swiper-slide{height: 5rem;}
+		.swiper-slide img{width: 100%;overflow: hidden;}
+		.swiper-pagination-bullet-active{background: #F55353;}
+	</style>
 	<body>
 		<div class="wrapper">
 			<div class="header mui-action-back">
@@ -19,11 +26,25 @@
 			</div>
 			<div class="main" v-if="shopdetail!=''">
 				<div class="main-one">
-					<img :src=" shopdetail.smCommodity.smCoDefaultImg" />
+					<div class="swiper-container main-one">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" v-for="i in shopdetail.smCommodity.smCoDefaultImg">
+								<img :src="i" alt="">
+							</div>
+						</div>
+						<!-- 如果需要分页器 -->
+						<div class="swiper-pagination"></div>
+					</div>
 				</div>
 				<div class="main-two">
 					<div class="two-top">
 						<div class="two-text">¥ {{shopdetail.listSmCoFarmat[guigeindex][1]}}</div>
+						<div class="two-right">
+							<img src="img/tuandui (4).png" class="bottom-lift" @click.stop="addcollect" v-if="shopdetail.userCollection==''" />
+				<img src="img/star-active.png" class="bottom-lift" @click.stop="noollect" v-if="shopdetail.userCollection!=''" />
+							<div style="font-size: .2rem;">收藏</div>
+						</div>
+						
 					</div>
 					<div class="two-content">
 						<div class="two-news">{{shopdetail.smCommodity.smCoName}}</div>
@@ -81,8 +102,6 @@
 				</div>
 			</div>
 			<div class="bottom" @click="alertchange()">
-				<img src="img/tuandui (4).png" class="bottom-lift" @click.stop="addcollect" v-if="shopdetail.userCollection==''" />
-				<img src="img/star-active.png" class="bottom-lift" @click.stop="noollect" v-if="shopdetail.userCollection!=''" />
 				<img src="img/kefu.png" class="bottom-lift" @click.stop="kshow"/>
 				<div class="bottom-news">加入购物车</div>
 				<div class="bottom-word">立即购买</div>
@@ -91,36 +110,44 @@
 				<img src="img/close.png" class="myclose" @click.stop="kshow"/>
 				<iframe :src="ksrc" width="100%" height="100%" frameborder="0"></iframe>
 			</div>
-			<div class="alert" v-show="alertboo">
+			<div class="alert" v-show="alertboo"@click="alertchange()">
 				<div class="alert-inner">
 					<div class="alert-top">
-						<img :src="shopdetail.smCommodity.smCoDefaultImg" class="avatar" />
+						<img :src="shopdetail.smCommodity.smCoDefaultImg[0]" class="avatar" />
 						<strong>¥ {{shopdetail.listSmCoFarmat[guigeindex][1]}}</strong>
-						<img src="img/close.png" class="close" @click="alertchange" />
+						<img src="img/Group 27.png" class="close" @click.stop="alertchange()" />
 					</div>
 					<div class="title">
 						商品规格
 					</div>
 					<div class="box">
-						<div class="tab" v-for="(val,index) in shopdetail.listSmCoFarmat" :class="index==guigeindex?'active':''" @click="changeguige(index)">
+						<div class="tab" v-for="(val,index) in shopdetail.listSmCoFarmat" :class="index==guigeindex?'active':''" @click.stop="changeguige(index)">
 							{{val[0]}}
+						</div>
+					</div>
+					<div class="title">
+						商品颜色
+					</div>
+					<div class="box">
+						<div class="tab" v-for="(val,index) in shopdetail.smCommodity.smCoColour" :class="index==colorindex?'active':''" @click.stop="changindex(index)">
+							{{val}}
 						</div>
 					</div>
 					<div class="title">
 						<span>购买数量</span>
 						<div class="ipnut-box">
-							<div class="changebox" @click="cshopnum(0)">
+							<div class="changebox" @click.stop="cshopnum(0)">
 								-
 							</div>
 							<input type="number" readonly="readonly" v-model="shopnum" />
-							<div class="changebox" @click="cshopnum(1)">
+							<div class="changebox" @click.stop="cshopnum(1)">
 								+
 							</div>
 						</div>
 					</div>
 					<div class="bottom-right alert-bottom">
-						<div class="bottom-news" @click="addcart()">加入购物车</div>
-						<div class="bottom-word" @click="goshop">立即购买</div>
+						<div class="bottom-news" @click.stop="addcart()">加入购物车</div>
+						<div class="bottom-word" @click.stop="goshop">立即购买</div>
 					</div>
 				</div>
 			</div>
@@ -141,14 +168,18 @@
 				shopnum: 1,
 				jinjinum: 1,
 				ksrc:'',
-				kboo:false
+				kboo:false,
+				colorindex:0
 			},
 			methods: {
+				changindex:function(index){
+					this.colorindex=index
+				},
 //				弹出聊天室
 				kshow:function(){
 					this.ksrc='http://wpa.qq.com/msgrd?v=3&uin='+this.shopdetail.qq+'&site=qq&menu=yes'
 					// this.kboo=!this.kboo
-					
+					localStorage.setItem('qq',this.shopdetail.qq)
 				},
 				//				取消收藏
 				noollect: function() {
@@ -218,7 +249,7 @@
 							smSbCreateName: localStorage.getItem('id'),
 							smSbNum: that.shopnum,
 							smSbPrice:  that.shopdetail.listSmCoFarmat[that.guigeindex][1],
-							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0],
+							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0] +that.shopdetail.smCommodity.smCoColour[that.colorindex],
 							smMerchantId: localStorage.getItem('storeinfoid')
 						},
 						success: function(res) {
@@ -246,7 +277,7 @@
 							smSbNum: this.shopnum,
 							smSbPrice: this.shopdetail.listSmCoFarmat[this.guigeindex][1],
 							smCoName: this.shopdetail.smCommodity.smCoName,
-							smCoDefaultImg: this.shopdetail.smCommodity.smCoDefaultImg,
+							smCoDefaultImg: this.shopdetail.smCommodity.smCoDefaultImg[0],
 							smUserId:localStorage.getItem('id'),
 							smSbSpec:this.shopdetail.listSmCoFarmat[this.guigeindex][0]
 						}]
@@ -329,6 +360,12 @@
 						},
 						success: function(res) {
 							if(res.status == 200) {
+								if(res.data.smCommodity.smCoColour!=null&&res.data.smCommodity.smCoColour!='null'&&res.data.smCommodity.smCoColour!="[]"){
+									res.data.smCommodity.smCoColour=JSON.parse(res.data.smCommodity.smCoColour)
+								}else{
+									res.data.smCommodity.smCoColour=['随机']
+								}
+								res.data.smCommodity.smCoDefaultImg=JSON.parse(res.data.smCommodity.smCoDefaultImg)
 								for(var i in res.data.listSmCoFarmat){
 									res.data.listSmCoFarmat[i][1]=new Number(res.data.listSmCoFarmat[i][1]*res.data.smMmDiscount).toFixed(2)
 								}
@@ -352,8 +389,21 @@
 				document.addEventListener('myajax', function() {
 					that.myajax()
 				})
-
+				$('.main').on('click','img',function(){
+					var src=$(this).attr('src')
+					plus.nativeUI.previewImage([
+						src
+					]);
+				})
 				this.myajax()
+			},
+			updated:function(){
+				var swiper = new Swiper('.swiper-container', {
+					pagination: {
+						el: '.swiper-pagination'
+					},
+					loop:true
+				});
 			}
 		})
 	</script>

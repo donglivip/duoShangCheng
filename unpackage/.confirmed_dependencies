@@ -5,7 +5,8 @@
 			"nav03.html",
 			"dianpu.html",
 			"store.html",
-			"denglu.html"
+			"denglu.html",
+			"shoucangliebiao.html"
 		]
 	},
 	"wode.html": {
@@ -17,7 +18,8 @@
 			"gerenziliao.html",
 			"shangjiazhuce.html",
 			"zhanghuyue.html",
-			"index.html"
+			"index.html",
+			"wuliuguanli.html"
 		]
 	},
 	"dianpu.html": {
@@ -70,12 +72,19 @@
 	},
 	"tijiaodingdan.html": {
 		"refer": [
-			"wodedizhi.html"
+			"wodedizhi.html",
+			"wodedingdan.html"
 		]
 	},
 	"wodedizhi.html": {
 		"refer": [
 			"xinzengdizhi.html"
+		]
+	},
+	"wuliuguanli.html": {
+		"refer": [
+			"xinznegwuliu.html",
+			"bianjiwuliu.html"
 		]
 	}
 }

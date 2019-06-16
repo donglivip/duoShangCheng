@@ -9,6 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="css/shangpinliebiao.css" />
 	</head>
 	<style type="text/css">
+		.main-inner{display: flex;flex-wrap: wrap;}
 		.top{
 			display: flex;
 			height: .8rem;
@@ -42,10 +43,22 @@
 			line-height: .25rem;height: .5rem;
 			overflow: hidden;
 		}
-		.main{background: ghostwhite;display: flex;flex-wrap: wrap;}
+		.main{background: ghostwhite;}
 		.four-bottom{
 			text-align: center;font-size: .24rem;background: #F55353;color: #FFFFFF;height: .45rem;line-height: .45rem;
 		}
+		.main-one {
+    width: 50%;
+	height: 4.7rem;
+}
+.one-title strong{background: red;
+    color: #FFFFff;
+    padding: 0 .2rem;
+    border-radius: .2rem;}
+	.one-title{font-size: .24rem;
+    margin: .1rem;}
+	.one-text{justify-content: space-between;display: flex;}
+	.dbtn{background: red;color: #FFFFFF;height: .5rem;font-size: .2rem;line-height: .5rem;text-align: center;}
 	</style>
 	<body>
 		<div class="wrapper">
@@ -62,11 +75,15 @@
 					店铺收藏
 				</div>
 			</div>
-			<div class="main" style="height: calc(100% - 2.76rem);" id="m01">
-				
+			<div class="main" style="height: calc(100% - 2.76rem);" >
+				<div class="main-inner" id="m01">
+					
+				</div>
 			</div>
-			<div class="main" style="height: calc(100% - 2.76rem);display: none;" id="m02">
-				
+			<div class="main" style="height: calc(100% - 2.76rem);display: none;">
+				<div class="main-inner" id="m02">
+					
+				</div>
 			</div>
 			<div class="bottom">
 				<div class="bottom-box jump" myid='index'>
@@ -129,12 +146,26 @@
 						if(res.status == 200) {
 							$("#m01").html('')
 							for(var i in res.data) {
+								res.data[i].smCoDefaultImg=JSON.parse(res.data[i].smCoDefaultImg)
 								$("#m01").append(`
-										<div class="four-lift">
-											<img src="${res.data[i].smCoDefaultImg}" id='chakan' myid='${res.data[i].smCommodityId}'/>
-											<div class="four-text">${res.data[i].smCoName}</div>
-											<div class="four-bottom" id='shanchu' myid='${res.data[i].smCoUpdateName}'>
-												删除
+										<div class="main-one" myid='${res.data[i].smCommodityId}' id='chakan'>
+											<div class="one-lift" style='height:3rem'>
+												<img src="${res.data[i].smCoDefaultImg[0]}"/>
+											</div>
+											<div class="one-right">
+												<div class="one-title">
+													<strong style="display:${res.data[i].smCoActivity!=null?'inline-bock':'none'}">${res.data[i].smCoActivity}</strong>
+													${res.data[i].smCoName}
+												</div>			
+											</div>
+											<div class="one-right" style='height:auto'>
+												<div class="one-text" style='height:auto'>
+													<span>￥${res.data[i].smCoDefaultPrice}</span>
+													<span>销量:${res.data[i].smCoSalesVolume}</span>
+												</div>	
+												<div class="dbtn" myid='${res.data[i].smCoUpdateName}' id='shanchu'>
+													删除
+												</div>	
 											</div>
 										</div>
 								`)
@@ -200,11 +231,13 @@
 						} else {
 							alert(res.msg)
 						}
+						if(e){}
 					},
 					error: function(err) {
 						alert("网络连接失败，请稍后重试")
 					}
 				});
+				if(e){}
 			})
 			$(".main").on('click', '#chakan', function() {
 				var myid = $(this).attr('myid')

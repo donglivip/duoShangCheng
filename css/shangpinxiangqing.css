@@ -11,6 +11,7 @@ html,body,.wrapper{width: 100%;height: 100%;}
 	left: .2rem;
 	color: #FFFFFF;
 	font-size: .22rem;
+	z-index: 998;
 }
 .header img{
 	height: .7rem;
@@ -42,6 +43,7 @@ html,body,.wrapper{width: 100%;height: 100%;}
 	color: #F55353 ;
 	margin: .3rem;
 	font-weight: 600 ;
+	flex: 1;
 }
 .two-content{
 	padding: 0 .3rem ;
@@ -54,6 +56,14 @@ html,body,.wrapper{width: 100%;height: 100%;}
 	overflow: hidden;
 	margin-bottom: .4rem;
 }
+.two-right{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: .2rem;
+}
+.two-right img{margin: .4rem 0 0 0;height: .4rem;}
 .two-bottom{
 	display: flex;
 	align-items: center;
@@ -160,7 +170,6 @@ html,body,.wrapper{width: 100%;height: 100%;}
 }
 .main-five{
 	background: #FFFFFF;
-	padding: 0 .3rem;
 	font-size: .32rem;
 }
 .five-text{
@@ -175,7 +184,7 @@ html,body,.wrapper{width: 100%;height: 100%;}
 	justify-content: center;
 }
 .bottom-lift{
-	height: .45rem;
+	height: .55rem;
 	margin-right: .3rem;
 }
 .kefu{
@@ -197,7 +206,7 @@ html,body,.wrapper{width: 100%;height: 100%;}
 .bottom-news{
 	font-size: .28rem;
 	color: #FFFFFF ;
-	width: 2.5rem;
+	width: 3rem;
 	height: .8rem;
 	background: #FF8686 ;
 	text-align: center;
@@ -216,7 +225,7 @@ html,body,.wrapper{width: 100%;height: 100%;}
 	border-top-right-radius: .4rem;
 	border-bottom-right-radius: .4rem;
 }
-.alert{position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,.5);display: flex;align-items: flex-end;}
+.alert{position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,.5);display: flex;align-items: flex-end;z-index: 9999;}
 .alert-inner{background: #FFFFFF;width: 100%;border-top-left-radius: .1rem;border-top-right-radius: .1rem;}
 .alert-top{display: flex;padding: .3rem .2rem .2rem .2rem;}
 .avatar{width: 2.2rem;height: 2.2rem;border-radius: .1rem;margin-right: .4rem;}
@@ -230,4 +239,4 @@ strong{color: #F55353;font-size: .3rem;flex: 1;display: flex;align-items: center
 .changebox{width: .6rem;height: .5rem;display: flex;align-items: center;justify-content: center;font-size: .25rem;background: #F4F7FA;}
 .ipnut-box input{width: .7rem;height: .5rem;margin: 0 .05rem;background: #F4F7FA;text-align: center;line-height: .4rem;border: 0;}
 .alert-bottom{margin: 1.5rem auto .2rem;}
-.main-five img{width: 100%;margin: .2rem 0;}
+.main-five img{width: 100%;margin: -.1rem 0 0 0;}

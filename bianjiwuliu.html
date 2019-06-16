@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/framework7/1.6.5/css/framework7.ios.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/framework7/1.6.5/css/framework7.ios.colors.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/xinzengdizhi.css" />
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<div class="header-cebian mui-action-back">
+					<img src="img/youjian.png" />
+				</div>
+				<div class="header-text">编辑物流</div>
+				<div class="header-cebian"></div>
+			</div>
+			<div class="main">
+				<div class="main-one">
+					<div class="one-text">物流名称</div>
+					<input type="text" placeholder="德邦" class="phone name" />
+				</div>
+			</div>
+			<div class="bottom">
+				<div class="bottom-text">确认编辑</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdn.bootcss.com/framework7/1.6.5/js/framework7.min.js"></script>
+	<script src="js/regionsObject2.js"></script>
+	<script src="js/cityPicker.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".name").val(localStorage.getItem('dizhiname'))
+			$(".bottom").click(function() {
+				var name = $(".name").val() //联系人
+				if(name == '') {
+					alert("物流名称不能为空")
+					return
+				}
+				$.ajax({
+					type: "post",
+					url: myurl + "/user/updateUserLogosticesAll",
+					async: true,
+					dataType: 'json',
+					data: {
+						smUserLogisticsId: localStorage.getItem('bianjidizhiid'),
+						smSulName: name,
+						smSulUpdateName:localStorage.getItem('id')
+					},
+					success: function(res) {
+						if(res.status == 200) {
+							var xiadanyemian=plus.webview.getWebviewById("wuliuguanli");
+							mui.fire(xiadanyemian,'myajax',{});
+							mui.back()
+						} else {
+							alert(res.msg)
+						}
+					},
+					error: function(err) {
+						alert("网络连接失败，请稍后重试")
+					}
+				});
+			});
+		})
+	</script>
+
+</html>

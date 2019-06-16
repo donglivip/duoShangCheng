@@ -130,6 +130,8 @@ html,body,.wrapper{width:100% ;height: 100%;overflow: hidden;}
 	font-size: .32rem;
 	color: #F55353;
 	margin-top: .7rem;
+	align-items: flex-end;
+	justify-content: space-between;
 }
 .four-bottom span{margin-right: .4rem;}
 .four-text{
