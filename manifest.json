@@ -1,7 +1,7 @@
 {
     "@platforms" : [ "android", "iPhone", "iPad" ],
     "id" : "H5CF5E194", /*应用的标识，创建应用时自动生成，勿手动修改*/
-    "name" : "小王商城", /*应用名称，程序桌面图标名称*/
+    "name" : "贩宝商城", /*应用名称，程序桌面图标名称*/
     "version" : {
         "name" : "1.1.1", /*应用版本名称*/
         "code" : ""
@@ -31,7 +31,8 @@
         },
         "Payment" : {},
         "OAuth" : {},
-        "Share" : {}
+        "Share" : {},
+        "Push" : {}
     },
     "plus" : {
         "splashscreen" : {
@@ -72,6 +73,13 @@
                         "description" : "微信支付",
                         "appid" : "wx54b3ad3a1e8248c4"
                     }
+                },
+                "push" : {
+                    "igexin" : {
+                        "appid" : "NDCZuquueeARU5mNrjbK7",
+                        "appkey" : "aDVMHzCJ2eAU2bvKt1WTQ",
+                        "appsecret" : "aKgXTUsi1Q8vF0YT3IaRz3"
+                    }
                 }
             },
             "apple" : {
@@ -87,27 +95,33 @@
                 "keystore" : "", /*Android应用打包使用的密钥库文件*/
                 "password" : "", /*Android应用打包使用密钥库中证书的密码*/
                 "aliasname" : "", /*Android应用打包使用密钥库中证书的别名*/
+				"schemes": [  
+					"fanbao"  
+				],
                 "permissions" : [
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
                     "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
                     "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
-                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
-                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>",
+                    "<uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
-                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
-                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
-                    "<uses-feature android:name=\"android.hardware.camera\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
-                    "<uses-permission android:name=\"android.permission.CAMERA\"/>"
-                ]
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ],
+                "targetSdkVersion" : 26
             },
             /*使用Native.js调用原生安卓API需要使用到的系统权限*/
             "orientation" : [ "portrait-primary" ], /*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
@@ -199,245 +213,216 @@
         }
     },
     "dependencies" : {
-		"pages": {
-			"index.html": {
-				"resources": [],
-				"refer": [
-					"wode.html",
-					"nav03.html",
-					"dianpu.html",
-					"store.html",
-					"denglu.html",
-					"shoucangliebiao.html"
-				],
-				"priority": 0
-			},
-			"wode.html": {
-				"resources": [],
-				"refer": [
-					"shezhi.html",
-					"shoucangliebiao.html",
-					"zujiliebie.html",
-					"wodedizhi.html",
-					"gerenziliao.html",
-					"shangjiazhuce.html",
-					"zhanghuyue.html",
-					"index.html",
-					"wuliuguanli.html"
-				],
-				"priority": 0
-			},
-			"dianpu.html": {
-				"resources": [],
-				"refer": [
-					"fenlei.html"
-				],
-				"priority": 0
-			},
-			"shangjiazhuce.html": {
-				"resources": [],
-				"refer": [
-					"index.html"
-				],
-				"priority": 0
-			},
-			"fenlei.html": {
-				"resources": [],
-				"refer": [
-					"shangjiazhuce.html"
-				],
-				"priority": 0
-			},
-			"nav03.html": {
-				"resources": [],
-				"refer": [
-					"store.html"
-				],
-				"priority": 0
-			},
-			"denglu.html": {
-				"resources": [],
-				"refer": [
-					"zhuce.html",
-					"index.html"
-				],
-				"priority": 0
-			},
-			"gerenziliao.html": {
-				"resources": [],
-				"refer": [
-					"denglu.html"
-				],
-				"priority": 0
-			},
-			"store.html": {
-				"resources": [],
-				"refer": [
-					"shangpinxiangqing.html"
-				],
-				"priority": 0
-			},
-			"zhanghuyue.html": {
-				"resources": [],
-				"refer": [
-					"tixian.html"
-				],
-				"priority": 0
-			},
-			"shangpinxiangqing.html": {
-				"resources": [],
-				"refer": [
-					"shenqing.html",
-					"gouwuche.html",
-					"tijiaodingdan.html"
-				],
-				"priority": 0
-			},
-			"tijiaodingdan.html": {
-				"resources": [],
-				"refer": [
-					"wodedizhi.html",
-					"wodedingdan.html"
-				],
-				"priority": 0
-			},
-			"wodedizhi.html": {
-				"resources": [],
-				"refer": [
-					"xinzengdizhi.html"
-				],
-				"priority": 0
-			},
-			"wuliuguanli.html": {
-				"resources": [],
-				"refer": [
-					"xinznegwuliu.html",
-					"bianjiwuliu.html"
-				],
-				"priority": 0
-			}
-		},
-		"idle": {
-			"resources": [
-				"img/Group.png",
-				"js/regionsObject2.js",
-				"img/465361.jpg",
-				"img/Arrow_up.png",
-				"img/Group 26.png",
-				"img/bangding.png",
-				"img/fenlei.png",
-				"bianjidizhi.html",
-				"img/sf.png",
-				"css/xinzengdizhi.css",
-				"img/Shape Copy.png",
-				"img/xuanzhong (1).png",
-				"img/yz.png",
-				"img/add.png",
-				"css/jinrishouru.css",
-				"css/xiaoxi.css",
-				"img/945421.jpg",
-				"css/shouye.css",
-				"js/mui.js",
-				"img/xuanzhong.png",
-				"wodekehu.html",
-				"img/tuandui (3).png",
-				"img/shouye.png",
-				"css/zhanghuyue.css",
-				"img/Group 27.png",
-				"img/dizhi.png",
-				"img/shop.png",
-				"img/weixin.png",
-				"css/kefu.css",
-				"img/erwei.png",
-				"img/sousuo-m.png",
-				"img/5346513.jpg",
-				"img/Shape.png",
-				"css/bug.css",
-				"css/wodedizhi.css",
-				"img/153465.jpg",
-				"img/tuandui (2).png",
-				"css/shezhi.css",
-				"img/fenlei 2.png",
-				"css/shangpinxiangqing.css",
-				"img/tuandui (1).png",
-				"img/wode.png",
-				"sousuo.html",
-				"img/you.png",
-				"css/querendingdan.css",
-				"lingqujilu.html",
-				"xiaoxi.html",
-				"css/gouwuche.css",
-				"img/gouwudai.png",
-				"img/daifahuo.png",
-				"chongzhi.html",
-				"img/addimg.png",
-				"img/234564.jpg",
-				"css/tixian.css",
-				"img/shouye 2.png",
-				"css/lingqujilu.css",
-				"css/swiper.min.css",
-				"img/tuikuan.png",
-				"img/shop-active.png",
-				"img/youjian.png",
-				"css/chongzhi.css",
-				"img/kong1.png",
-				"img/shezhi.png",
-				"img/dingwei.png",
-				"css/wodekeku.css",
-				"css/xiaoxixiangqing.css",
-				"css/shangjiazhuce.css",
-				"img/2354564.jpg",
-				"img/8554556.jpg",
-				"dianpuliebiao.html",
-				"css/shenqing.css",
-				"img/Group 28.png",
-				"css/fenlei.css",
-				"css/wodedingdan.css",
-				"kefu.html",
-				"css/zhuce.css",
-				"css/main.css",
-				"shangpinliebiao.html",
-				"js/URL.js",
-				"css/nav.css",
-				"js/rem.js",
-				"css/gerenziliao.css",
-				"img/you-hui.png",
-				"img/jia.png",
-				"img/chongzhi.png",
-				"img/xuanze.png",
-				"img/xiaoxi.png",
-				"css/denglu.css",
-				"querendingdan.html",
-				"xiaoxixiangqing.html",
-				"img/shenqing.png",
-				"img/add-active.png",
-				"img/zhifubao.png",
-				"css/dingdanxiangqing0.css",
-				"css/mingxi.css",
-				"js/swiper.min.js",
-				"lingquchanpin.html",
-				"img/news.png",
-				"img/daishouhuo.png",
-				"js/vue.js",
-				"dingdanxiangqing0.html",
-				"css/wode.css",
-				"img/Group 4.png",
-				"css/dianpu.css",
-				"img/qq.png",
-				"js/jquery.min.js",
-				"img/y  bai.png",
-				"mingxi.html",
-				"img/352435.jpg",
-				"css/dianpuliebiao.css",
-				"jinrishouru.html",
-				"img/tuandui (4).png",
-				"js/cityPicker.js",
-				"img/sz.png",
-				"css/shangpinliebiao.css",
-				"img/165156.jpg",
-				"css/lingquchanpin.css",
-				"css/reset.css"
-			]
-		}
-	}
+        "pages" : {
+            "index.html" : {
+                "resources" : [],
+                "refer" : [
+                    "wode.html",
+                    "nav03.html",
+                    "dianpu.html",
+                    "store.html",
+                    "denglu.html",
+                    "shoucangliebiao.html"
+                ],
+                "priority" : 0
+            },
+            "wode.html" : {
+                "resources" : [],
+                "refer" : [
+                    "shezhi.html",
+                    "shoucangliebiao.html",
+                    "zujiliebie.html",
+                    "wodedizhi.html",
+                    "gerenziliao.html",
+                    "shangjiazhuce.html",
+                    "zhanghuyue.html",
+                    "index.html",
+                    "wuliuguanli.html"
+                ],
+                "priority" : 0
+            },
+            "dianpu.html" : {
+                "resources" : [],
+                "refer" : [ "fenlei.html" ],
+                "priority" : 0
+            },
+            "shangjiazhuce.html" : {
+                "resources" : [],
+                "refer" : [ "index.html" ],
+                "priority" : 0
+            },
+            "fenlei.html" : {
+                "resources" : [],
+                "refer" : [ "shangjiazhuce.html" ],
+                "priority" : 0
+            },
+            "nav03.html" : {
+                "resources" : [],
+                "refer" : [ "store.html" ],
+                "priority" : 0
+            },
+            "denglu.html" : {
+                "resources" : [],
+                "refer" : [ "zhuce.html", "index.html" ],
+                "priority" : 0
+            },
+            "gerenziliao.html" : {
+                "resources" : [],
+                "refer" : [ "denglu.html" ],
+                "priority" : 0
+            },
+            "store.html" : {
+                "resources" : [],
+                "refer" : [ "shangpinxiangqing.html" ],
+                "priority" : 0
+            },
+            "zhanghuyue.html" : {
+                "resources" : [],
+                "refer" : [ "tixian.html" ],
+                "priority" : 0
+            },
+            "shangpinxiangqing.html" : {
+                "resources" : [],
+                "refer" : [ "shenqing.html", "gouwuche.html", "tijiaodingdan.html" ],
+                "priority" : 0
+            },
+            "tijiaodingdan.html" : {
+                "resources" : [],
+                "refer" : [ "wodedizhi.html", "wodedingdan.html" ],
+                "priority" : 0
+            },
+            "wodedizhi.html" : {
+                "resources" : [],
+                "refer" : [ "xinzengdizhi.html" ],
+                "priority" : 0
+            },
+            "wuliuguanli.html" : {
+                "resources" : [],
+                "refer" : [ "xinznegwuliu.html", "bianjiwuliu.html" ],
+                "priority" : 0
+            }
+        },
+        "idle" : {
+            "resources" : [
+                "img/Group.png",
+                "js/regionsObject2.js",
+                "img/465361.jpg",
+                "img/Arrow_up.png",
+                "img/Group 26.png",
+                "img/bangding.png",
+                "img/fenlei.png",
+                "bianjidizhi.html",
+                "img/sf.png",
+                "css/xinzengdizhi.css",
+                "img/Shape Copy.png",
+                "img/xuanzhong (1).png",
+                "img/yz.png",
+                "img/add.png",
+                "css/jinrishouru.css",
+                "css/xiaoxi.css",
+                "img/945421.jpg",
+                "css/shouye.css",
+                "js/mui.js",
+                "img/xuanzhong.png",
+                "wodekehu.html",
+                "img/tuandui (3).png",
+                "img/shouye.png",
+                "css/zhanghuyue.css",
+                "img/Group 27.png",
+                "img/dizhi.png",
+                "img/shop.png",
+                "img/weixin.png",
+                "css/kefu.css",
+                "img/erwei.png",
+                "img/sousuo-m.png",
+                "img/5346513.jpg",
+                "img/Shape.png",
+                "css/bug.css",
+                "css/wodedizhi.css",
+                "img/153465.jpg",
+                "img/tuandui (2).png",
+                "css/shezhi.css",
+                "img/fenlei 2.png",
+                "css/shangpinxiangqing.css",
+                "img/tuandui (1).png",
+                "img/wode.png",
+                "sousuo.html",
+                "img/you.png",
+                "css/querendingdan.css",
+                "lingqujilu.html",
+                "xiaoxi.html",
+                "css/gouwuche.css",
+                "img/gouwudai.png",
+                "img/daifahuo.png",
+                "chongzhi.html",
+                "img/addimg.png",
+                "img/234564.jpg",
+                "css/tixian.css",
+                "img/shouye 2.png",
+                "css/lingqujilu.css",
+                "css/swiper.min.css",
+                "img/tuikuan.png",
+                "img/shop-active.png",
+                "img/youjian.png",
+                "css/chongzhi.css",
+                "img/kong1.png",
+                "img/shezhi.png",
+                "img/dingwei.png",
+                "css/wodekeku.css",
+                "css/xiaoxixiangqing.css",
+                "css/shangjiazhuce.css",
+                "img/2354564.jpg",
+                "img/8554556.jpg",
+                "dianpuliebiao.html",
+                "css/shenqing.css",
+                "img/Group 28.png",
+                "css/fenlei.css",
+                "css/wodedingdan.css",
+                "kefu.html",
+                "css/zhuce.css",
+                "css/main.css",
+                "shangpinliebiao.html",
+                "js/URL.js",
+                "css/nav.css",
+                "js/rem.js",
+                "css/gerenziliao.css",
+                "img/you-hui.png",
+                "img/jia.png",
+                "img/chongzhi.png",
+                "img/xuanze.png",
+                "img/xiaoxi.png",
+                "css/denglu.css",
+                "querendingdan.html",
+                "xiaoxixiangqing.html",
+                "img/shenqing.png",
+                "img/add-active.png",
+                "img/zhifubao.png",
+                "css/dingdanxiangqing0.css",
+                "css/mingxi.css",
+                "js/swiper.min.js",
+                "lingquchanpin.html",
+                "img/news.png",
+                "img/daishouhuo.png",
+                "js/vue.js",
+                "dingdanxiangqing0.html",
+                "css/wode.css",
+                "img/Group 4.png",
+                "css/dianpu.css",
+                "img/qq.png",
+                "js/jquery.min.js",
+                "img/y  bai.png",
+                "mingxi.html",
+                "img/352435.jpg",
+                "css/dianpuliebiao.css",
+                "jinrishouru.html",
+                "img/tuandui (4).png",
+                "js/cityPicker.js",
+                "img/sz.png",
+                "css/shangpinliebiao.css",
+                "img/165156.jpg",
+                "css/lingquchanpin.css",
+                "css/reset.css"
+            ]
+        }
+    }
 }

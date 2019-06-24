@@ -32,6 +32,8 @@
 		.type span{flex: 1;text-align: center;line-height: .7rem;}
 		.one-title{font-size: .24rem;margin: .1rem;}
 		.one-title strong{background: red;color: #FFFFff;padding:0 .2rem;border-radius: .2rem;}
+		.price{color: #F55353;font-size: .3rem;}
+		.dizhi{color: #999999;font-size: .2rem;}
 	</style>
 	<body>
 		<div class="wrapper">
@@ -112,12 +114,12 @@
 										</div>
 										<div class="one-right" style='height:auto'>
 											<div class="one-text">
-												<span>销量:${res.data[i].smCoSalesVolume}</span>
-												<span>邮费:${res.data[i].smCoIsFreeShipping==1?'包邮':'不包邮'}</span>
+												<span class='dizhi'>销量:${res.data[i].smCoSalesVolume}</span>
+												<span class='dizhi'>邮费:${res.data[i].smCoIsFreeShipping==1?'包邮':'不包邮'}</span>
 											</div>		
 											<div class="one-text" style='height:auto'>
-												<span>￥${res.data[i].smCoDefaultPrice}</span>
-												<span>${res.data[i].smCoUpdateName}</span>
+												<span class='price'>￥${res.data[i].smCoDefaultPrice}</span>
+												<span class='dizhi'>${res.data[i].smCoUpdateName}</span>
 											</div>		
 										</div>
 									</div>

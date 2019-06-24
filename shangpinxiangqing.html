@@ -10,8 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
 	</head>
 	<style type="text/css">
-		.swiper-slide{height: 5rem;}
-		.swiper-slide img{width: 100%;overflow: hidden;}
+		.swiper-slide img,.swiper-slide{width: 100%;height: 100%;}
 		.swiper-pagination-bullet-active{background: #F55353;}
 	</style>
 	<body>
@@ -60,7 +59,7 @@
 						<div class="three-news">{{shopdetail.listSmCoFarmat[guigeindex][0]}}</div>
 						<img src="img/you-hui.png" />
 					</div>
-					<div class="three-hezi">
+					<div class="three-hezi" @click="cgai">
 						<div class="three-text">参数</div>
 						<div class="three-news">{{canshudata}}</div>
 					</div>
@@ -109,6 +108,22 @@
 			<div class="kefu" v-show="kboo">
 				<img src="img/close.png" class="myclose" @click.stop="kshow"/>
 				<iframe :src="ksrc" width="100%" height="100%" frameborder="0"></iframe>
+			</div>
+			<div class="alert" style="flex-direction: column;justify-content: flex-end;" v-show="cboo">
+				<div class="top">参数详情</div>
+				<div class="alert-inner02">
+					<div class="box" v-for="val in shopdetail.listSmCoParameter">
+						<div class="title">
+							{{val[0]}}
+						</div>
+						<div class="text">
+							{{val[1]}}
+						</div>
+					</div>
+				</div>
+				<div class="qu" @click="cgai">
+					取消
+				</div>
 			</div>
 			<div class="alert" v-show="alertboo"@click="alertchange()">
 				<div class="alert-inner">
@@ -169,9 +184,13 @@
 				jinjinum: 1,
 				ksrc:'',
 				kboo:false,
-				colorindex:0
+				colorindex:0,
+				cboo:false
 			},
 			methods: {
+				cgai:function(){
+					this.cboo=!this.cboo
+				},
 				changindex:function(index){
 					this.colorindex=index
 				},

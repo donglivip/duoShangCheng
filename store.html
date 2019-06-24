@@ -21,6 +21,9 @@
 			margin: 0 auto;
 		}
 		.index .title{white-space: inherit;height: .9rem;}
+		.backimg{position: fixed;top: 0;left: 0;width: 100%!important;height: 3rem!important;filter: blur(10px);}
+		.header,.main{position: relative;z-index: 999999;margin: 0;}
+		.store-top{color: #FFFFFF!important;}
 	</style>
 
 	<body>
@@ -28,7 +31,7 @@
 			<!--头部-->
 			<div class="header">
 				<div class="aside mui-action-back">
-					<img src="img/youjian.png" class="back" />
+					<img src="img/y  bai.png" class="back" />
 				</div>
 				<div class="head-main" style="background: #FFFFFF;font-size: .35rem;">
 					店铺详情
@@ -38,6 +41,7 @@
 					<img src="img/starn.png" class="back" id="delete"/>
 				</div>
 			</div>
+			<img src="img/youjian.png" class="backimg avatar" />
 			<div class="main big-main">
 				<!--顶部店铺信息-->
 				<div class="store-top">
@@ -159,15 +163,16 @@
 				},
 				success: function(res) {
 					if(res.status == 200) {
+						$(".nav-box").append(`
+							<div class="nav-tab" myid='jianjie'>企业简介</div>
+						`)
 						for(var i in res.data) {
 							$(".nav-box").append(`
 								<div class="nav-tab" myid='${res.data[i].smCommodityTypeId}'>${res.data[i].smCtResult}</div>
 							`)
 						}
-						$(".nav-box").append(`
-							<div class="nav-tab" myid='jianjie'>企业简介</div>
-						`)
-						$(".nav-tab").eq(0).click()
+						
+						$(".nav-tab").eq(1).click()
 					} else {
 						alert(res.msg)
 					}

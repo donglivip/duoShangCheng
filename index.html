@@ -12,11 +12,42 @@
 	<style type="text/css">
 		.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{height: 5px;display: flex;justify-content: center;}
 		.swiper-slide{padding-bottom: .3rem;}
-		.goqq{position: fixed;right: .2rem;bottom: 1.2rem;width: .6rem;height: .6rem;display: flex;align-items: center;justify-content: center;border: 1px solid gainsboro;border-radius:50%;}
-		.goqq img{width: .4rem;height: .4rem;}
+		.main-one{background: #FFFFFF;margin:  .2rem;width: calc(100% - .4rem);border-radius: .25rem;}
+		.header{background: url(img/indexback.jpg);background-size: 100%;}
+		.main-inner{background: url(img/indexback.jpg);background-size: 100% 100%;overflow: hidden;}
+		.wei{z-inde:999;position: fixed;right: .2rem;bottom: 1.3rem;width: .5rem;height: .5rem;border: 1px solid #FFFFFF;background: rgba(255,255,255,.5);border-radius: 50%;display: flex;align-items: center;justify-content: center;}
+		.wei img{height: .4rem;width: .4rem;border-radius: 50%;}
 	</style>
 	<body>
+		<div class="swiper-container qidong">
+			<div class="swiper-wrapper">
+				
+				<div class="swiper-slide">
+					<img src="img/qi02.png" >
+				</div>
+				<div class="swiper-slide">
+					<img src="img/qi03.png" >
+				</div>
+				<div class="swiper-slide">
+					<img src="img/qi04.png" >
+				</div>
+				<div class="swiper-slide">
+					<img src="img/qi05.png" >
+				</div>
+				<div class="swiper-slide">
+					<img src="img/qi06.png" >
+				</div>
+				<div class="swiper-slide" id="go">
+					<img src="img/qi01.png" >
+				</div>
+			</div>
+			<!-- 如果需要分页器 -->
+			<div class="swiper-pagination"></div>
+		</div>
 		<div class="wrapper">
+			<div class="wei">
+				<img src="img/wquan.png" >
+			</div>
 			<div class="header">
 				<div class="header-aside city">
 					未知
@@ -24,11 +55,12 @@
 				<div class="header-text jump" myid='sousuo'>
 					<input type="text" placeholder="搜索商品" readonly="readonly" />
 				</div>
-				<div class="header-aside">
-					<!--<img src="img/news.png" />-->
+				<div class="header-aside goqq">
+					<img src="img/kefu.png" />
 				</div>
 			</div>
 			<div class="main">
+				<div class="main-inner">
 				<div class="swiper-container main-one">
 					<div class="swiper-wrapper">
 
@@ -52,9 +84,6 @@
 
 					</div>
 				</div>
-				<div class="main-two">
-					<div class="two-text">广告区</div>
-				</div>
 				<div class="main-three">
 
 				</div>
@@ -64,9 +93,7 @@
 				<div class="main-box">
 
 				</div>
-			</div>
-			<div class="goqq">
-				<img src="img/kefu.png" />
+				</div>
 			</div>
 			<div class="bottom">
 				<div class="bottom-box">
@@ -74,7 +101,7 @@
 					<div class="bottom-text">首页</div>
 				</div>
 				<div class="bottom-box jump" myid='shoucangliebiao'>
-					<img src="img/fenlei 2.png" />
+					<img src="img/sss.png" />
 					<div class="bottom-news">收藏</div>
 				</div>
 				<div class="bottom-box jump" myid='gouwuche'>
@@ -95,6 +122,36 @@
 	<script type="text/javascript">
 		$(function() {
 			function plusReady() {
+				function checkArguments(){  
+					var args= plus.runtime.arguments; 
+					 alert(args)
+					if(args){  
+						// 处理args参数，如直达到某新页面等  
+						localStorage.setItem('storeinfoid',args.substr(9,args.length))
+						mui.openWindow({
+							url:'store.html',
+							id:'store'
+						})
+					}  
+				}  
+				// 处理从后台恢复  
+				document.addEventListener('newintent',function(){  
+					console.log("addEventListener: newintent");  
+					checkArguments();  
+				},false);  
+				checkArguments()
+				$('.wei').click(function(){
+					mui.openWindow({
+						url: 'share.html',
+						id: 'share'
+					})
+				})
+				$('#go').click(function(){
+					mui.openWindow({
+						url: 'denglu.html',
+						id: 'denglu'
+					})
+				})
 				$('.goqq').click(function(){
 					if(localStorage.getItem('qq')==undefined||localStorage.getItem('qq')==null){
 						plus.nativeUI.toast('您最近还没发起过会话呢!')
@@ -104,9 +161,11 @@
 				})
 				plus.navigator.setStatusBarBackground('#F55353');
 				if (localStorage.getItem('id') == undefined || localStorage.getItem('id') == null) {
-					mui.openWindow({
-						url: 'denglu.html',
-						id: 'denglu'
+					$('.qidong').show()
+					new Swiper('.qidong', {
+						pagination: {
+							el: '.swiper-pagination'
+						}
 					})
 				}
 				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
@@ -221,6 +280,13 @@
 									if(boo){
 										 localStorage.setItem('activeIndex',this.activeIndex)
 									}
+								},
+								click:function(e){
+									localStorage.setItem('navid',e.path[2].attributes['myid'].nodeValue)
+									mui.openWindow({
+										url: "nav03.html",
+										id: "nav03"
+									})
 								}
 							}
 						});
@@ -240,13 +306,7 @@
 					id: "newlist"
 				})
 			})
-			$(".nav").on('click', '.nav-box', function() {
-				localStorage.setItem('navid', $(this).attr('myid'))
-				mui.openWindow({
-					url: "nav03.html",
-					id: "nav03"
-				})
-			})
+			
 			//获取轮播图
 			$.ajax({
 				type: "post",
@@ -348,6 +408,7 @@
 							`
 							)
 						}
+						
 					} else {
 						alert(res.msg)
 					}
