@@ -33,7 +33,7 @@
 				<div class="aside mui-action-back">
 					<img src="img/y  bai.png" class="back" />
 				</div>
-				<div class="head-main" style="background: #FFFFFF;font-size: .35rem;">
+				<div class="head-main" style="color: #FFFFFF;font-size: .35rem;background:none">
 					店铺详情
 				</div>
 				<div class="aside">
@@ -205,7 +205,7 @@
 						data: {
 							smCommodityTypeId: myid,
 							smMerchantId: localStorage.getItem('storeinfoid'),
-							smUserId:localStorage.getItem('myid')
+							smUserId:localStorage.getItem('id')
 						},
 						success: function(res) {
 							if(res.status == 200) {

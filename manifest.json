@@ -1,7 +1,7 @@
 {
     "@platforms" : [ "android", "iPhone", "iPad" ],
     "id" : "H5CF5E194", /*应用的标识，创建应用时自动生成，勿手动修改*/
-    "name" : "贩宝商城", /*应用名称，程序桌面图标名称*/
+    "name" : "贩宝", /*应用名称，程序桌面图标名称*/
     "version" : {
         "name" : "1.1.1", /*应用版本名称*/
         "code" : ""
@@ -95,9 +95,7 @@
                 "keystore" : "", /*Android应用打包使用的密钥库文件*/
                 "password" : "", /*Android应用打包使用密钥库中证书的密码*/
                 "aliasname" : "", /*Android应用打包使用密钥库中证书的别名*/
-				"schemes": [  
-					"fanbao"  
-				],
+                "schemes" : [ "fanbao" ],
                 "permissions" : [
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
