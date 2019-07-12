@@ -29,7 +29,7 @@
 			</div>
 			<div class="main-three ">
 				<div class="three-text">注册</div>
-				<!--<div class="three-text">忘记密码？ </div>-->
+				<div class="three-text">忘记密码？ </div>
 			</div>
 		</div>
 	</div>
@@ -86,10 +86,16 @@
 					}
 				});
 			})
-			$('.three-text').click(function(){
+			$('.three-text').eq(0).click(function(){
 				mui.openWindow({
 								url:'zhuce.html',
 								id:'zhuce'
+							})
+			})
+			$('.three-text').eq(1).click(function(){
+				mui.openWindow({
+								url:'wangjimima.html',
+								id:'wangjimima'
 							})
 			})
 		})

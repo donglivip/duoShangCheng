@@ -55,7 +55,8 @@
 				var ajaxjson = {
 					smUserId: localStorage.getItem('id'),
 					smUsHeadimg: imgurl,
-					smUsNickname: $('.name').val()
+					smUsNickname: $('.name').val(),
+					password: $('.password').val()
 				}
 				if(imgurl == '') {
 					delete ajaxjson.smUsHeadimg
@@ -63,11 +64,14 @@
 				if($('.name').val() == '') {
 					delete ajaxjson.smUsNickname
 				}
+				if($('.password').val() == '') {
+					delete ajaxjson.password
+				}
 				if($('.name').val() == '' && imgurl == '') {
 					return false;
 				}
 
-				$.ajax({
+				$.ajax({ 
 					type: "post",
 					url: myurl + "/user/updateSmUser",
 					async: true,

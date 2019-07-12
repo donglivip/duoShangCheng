@@ -102,22 +102,22 @@
 				gisubmit: function() {
 					var that = this
 					//					提交申请
-					if(that.smAmQq==''){
-						alert('qq不能为空')
-						return false
-					}
-					if(that.smAmShopLogo==''){
-						alert('店铺门招不能为空')
-						return false
-					}
-					if(that.smAmBusinessLicenesImg==''){
-						alert('营业执照不能为空')
-						return false
-					}
-					if(that.smMerchantName==''){
-						alert('店铺名称不能为空')
-						return false
-					}
+					// if(that.smAmQq==''){
+					// 	alert('qq不能为空')
+					// 	return false
+					// }
+					// if(that.smAmShopLogo==''){
+					// 	alert('店铺门招不能为空')
+					// 	return false
+					// }
+					// if(that.smAmBusinessLicenesImg==''){
+					// 	alert('营业执照不能为空')
+					// 	return false
+					// }
+					// if(that.smMerchantName==''){
+					// 	alert('店铺名称不能为空')
+					// 	return false
+					// }
 					$.ajax({
 						type: "post",
 						url: myurl + "/user/inserSmApplyMember",

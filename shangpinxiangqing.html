@@ -102,6 +102,7 @@
 			</div>
 			<div class="bottom" @click="alertchange()">
 				<img src="img/kefu.png" class="bottom-lift" @click.stop="kshow"/>
+				<img src="img/shop.png" class="bottom-lift" @click.stop="opennew('store')">
 				<div class="bottom-news">加入购物车</div>
 				<div class="bottom-word">立即购买</div>
 			</div>
@@ -180,7 +181,7 @@
 				canshudata: '',
 				guigeindex: 0,
 				alertboo: false,
-				shopnum: 1,
+				shopnum: 1,  
 				jinjinum: 1,
 				ksrc:'',
 				kboo:false,
@@ -188,6 +189,9 @@
 				cboo:false
 			},
 			methods: {
+				openshop:function(){
+					
+				},
 				cgai:function(){
 					this.cboo=!this.cboo
 				},
@@ -268,7 +272,7 @@
 							smSbCreateName: localStorage.getItem('id'),
 							smSbNum: that.shopnum,
 							smSbPrice:  that.shopdetail.listSmCoFarmat[that.guigeindex][1],
-							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0] +that.shopdetail.smCommodity.smCoColour[that.colorindex],
+							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0] + '-' +that.shopdetail.smCommodity.smCoColour[that.colorindex],
 							smMerchantId: localStorage.getItem('storeinfoid')
 						},
 						success: function(res) {
@@ -369,7 +373,7 @@
 					$.ajax({
 						type: "post",
 						url: myurl + "/user/selectCommodityDetails",
-						async: true,
+						async: true,  
 						dataType: 'json',
 						data: {
 							smCommodityId: localStorage.getItem('shangpinxiangqingid'),

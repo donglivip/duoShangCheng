@@ -102,7 +102,7 @@
 							for (var i in res.data) {
 								res.data[i].smCoDefaultImg=JSON.parse(res.data[i].smCoDefaultImg)
 								$(".main-inner").append(`
-									<div class="main-one" myid='${res.data[i].smCommodityId}'>
+									<div class="main-one" myid='${res.data[i].smCommodityId}' shopid='${res.data[i].smCoCreateName}'>
 										<div class="one-lift">
 											<img src="${res.data[i].smCoDefaultImg[0]}"/>
 										</div>
@@ -135,6 +135,7 @@
 				});
 				$(".main").on('click','.main-one',function(){
 					localStorage.setItem('shangpinxiangqingid', $(this).attr('myid'))
+					localStorage.setItem('storeinfoid', $(this).attr('shopid'))
 					mui.openWindow({
 						url: "shangpinxiangqing.html",
 						id: "shangpinxiangqing"

@@ -393,7 +393,7 @@
 				});
 			})
 			//			初始化点击
-			$(".one-text").eq(0).click()
+			$(".one-text").eq(localStorage.getItem('dindex')).click()
 			//			取消点击
 			$(".quxiao").click(function() {
 				$('.cancel').hide()

@@ -40,8 +40,8 @@
 						<span>收货地址</span>
 					</div>
 				</div>
-				<div class="main-one jump" myid='wodedingdan'>
-					<div class="one-top">
+				<div class="main-one">
+					<div class="one-top jding" myid='0'>
 						<div class="one-text">我的订单</div>
 						<div class="one-news">查看全部订单</div>
 						<img src="img/you-hui.png" />
@@ -51,25 +51,29 @@
 							<img src="img/tuandui (3).png" />
 							<div class="one-word">待付款</div>
 						</div> -->
-						<div class="one-box">
+						<div class="one-box jding" myid='2'>
 							<img src="img/daifahuo.png" />
 							<div class="one-word">待发货</div>
 						</div>
-						<div class="one-box">
+						<div class="one-box jding" myid='3'>
 							<img src="img/daishouhuo.png" />
 							<div class="one-word">待收货</div>
 						</div>
-						<div class="one-box">
+						<div class="one-box jding" myid='1'>
 							<img src="img/xiaoxi.png" />
 							<div class="one-word">评价</div>
 						</div>
-						<div class="one-box">
+						<div class="one-box jding" myid='4'>
 							<img src="img/tuikuan.png" />
 							<div class="one-word">退货退款</div>
 						</div>
 					</div>
 				</div>
 				<div class="main-three">
+					<div class="three-box jump" myid='wangjimima'>
+						<div class="three-text">修改密码</div>
+						<img src="img/you-hui.png" />
+					</div>
 					<div class="three-box jump" myid='gouwuche'>
 						<div class="three-text">购物车</div>
 						<img src="img/you-hui.png" />
@@ -90,7 +94,11 @@
 						<div class="three-text">物流管理</div>
 						<img src="img/you-hui.png" />
 					</div>
-					<a class="three-box" href="tel:18952168237">
+					<div class="three-box jump" myid='yijian'>
+						<div class="three-text">意见反馈</div>
+						<img src="img/you-hui.png" />
+					</div>
+					<a class="three-box" href="http://wpa.qq.com/msgrd?v=3&uin=2228636548&site=qq&menu=yes">
 						<div class="three-text">客服</div>
 						<img src="img/you-hui.png" />
 					</a>
@@ -136,6 +144,13 @@
 					$('#avatar').attr('src', myurl + localStorage.getItem('smUsHeadimg'))
 				}
 				//跳转页面
+				$('.jding').click(function(){
+					localStorage.setItem('dindex',$(this).attr('myid'))
+					mui.openWindow({
+						url: "wodedingdan.html",
+						id: "wodedingdan"
+					})
+				})
 				$(".jump").click(function() {
 					var jump = $(this).attr('myid')
 					if(jump=='zhanghuyue'){
