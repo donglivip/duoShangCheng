@@ -60,6 +60,11 @@
 						if(res.status == 200) {
 							var xiadanyemian=plus.webview.getWebviewById("wuliuguanli");
 							mui.fire(xiadanyemian,'myajax',{});
+							if(plus.webview.getWebviewById("tijiaodingdan")!=undefined){
+								var tijiaodingdan=plus.webview.getWebviewById("tijiaodingdan");
+								mui.fire(tijiaodingdan,'myajax',{});
+							}
+							
 							mui.back()
 						} else {
 							alert(res.msg)

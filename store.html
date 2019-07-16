@@ -20,7 +20,7 @@
 		.jianjie{
 			margin: 0 auto;
 		}
-		.index .title{white-space: inherit;height: .9rem;}
+		.index .title{white-space: inherit;height: .75rem;}
 		.index .text{display: flex;justify-content: space-between;width: calc(100% - .5rem);margin: 0 .25rem;color: #999999;font-size: .2rem;}
 		.backimg{position: fixed;top: 0;left: 0;width: 100%!important;height: 3rem!important;filter: blur(10px);}
 		.header,.main{position: relative;z-index: 999999;margin: 0;}
@@ -221,16 +221,15 @@
 												<strong style="display:${res.data[i].smCoActivity!=null?'inline-bock':'none'}">${res.data[i].smCoActivity}</strong>
 												${res.data[i].smCoName}
 											</div>
-											
-											<div class="price">
-												<div class="money">￥ ${res.data[i].smCoDefaultPrice}</div>
-												<div class="join">
-													购买
-												</div>
-											</div>
 											<div class="text">
 												<span>销量：${res.data[i].smCoSalesVolume}</span>
 												<span>包邮：${res.data[i].smCoIsFreeShipping==1?'包邮':'不包邮'}</span>
+											</div>
+											<div class="price text" style='align-items: flex-end;'>
+												<div class="money">￥${res.data[i].smCoDefaultPrice}</div>
+												<span>
+													${shopdata.smMeAddress}
+												</span>
 											</div>
 										</div>
 									`)

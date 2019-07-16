@@ -93,9 +93,9 @@
 				layuiboo: false,
 				smMerchantMemberId: '',
 				smMmName: '',
-				smAmQq: '',
+				smAmQq: localStorage.getItem('smAmQq'),
 				smAmShopLogo: '',
-				smMerchantName: '',
+				smMerchantName: localStorage.getItem('smMerchantName'),
 				smAmBusinessLicenesImg:''
 			},
 			methods: {
@@ -137,6 +137,10 @@
 						},
 						success: function(res) {
 							if(res.data == 1) {
+								localStorage.setItem('smAmQq',that.smAmQq)
+								localStorage.setItem('smMerchantName',that.smMerchantName)
+								localStorage.setItem('shi',$('.shi').val())
+								localStorage.setItem('location',$('#location').val())
 								alert('已为您提交申请,分销商购买商品物流费用自理！')
 								mui.back()
 							} else {
@@ -187,6 +191,8 @@
 			},
 			mounted: function() {
 				this.myajax()
+				$('.shi').val(localStorage.getItem('shi'))
+				$('#location').val(localStorage.getItem('location'))
 			}
 		})
 		var target=''

@@ -43,6 +43,7 @@ input{flex: 1;border: 0;text-align: right;}
 }
 .img-box img{
 	width: 100%;
+	height: 100%;
 	border-radius: 2rem;
 }
 .top-text{

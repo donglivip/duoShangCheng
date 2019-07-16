@@ -18,9 +18,9 @@
 			<div class="header mui-action-back">
 				<img src="img/Group 26.png" />
 			</div>
-			<div class="header" style="right: .2rem;left: auto;background: rgba(255,255,255,.3);
+			<div class="header" style="right: .2rem;left: auto;background: rgba(255,255,255,.6);
     padding: .1rem;
-    border-radius: .5rem;" @click="opennew('shenqing')">
+    border-radius: .5rem;color: #333333;" @click="opennew('shenqing')">
 				申请分销商
 			</div>
 			<div class="main" v-if="shopdetail!=''">
@@ -261,6 +261,7 @@
 						smShoppingBasketId='',
 						lprice=that.shopdetail.listSmCoFarmat[that.guigeindex][1]
 					if(that.shopnum>that.shopdetail.smCommodity.smCoStock){alert('库存不足');return false;}
+					console.log(that.shopdetail.smCommodity.smCoColour[that.colorindex])
 					$.ajax({
 						type: "post",
 						url: myurl + "/user/inserShoppingCart",
@@ -302,7 +303,7 @@
 							smCoName: this.shopdetail.smCommodity.smCoName,
 							smCoDefaultImg: this.shopdetail.smCommodity.smCoDefaultImg[0],
 							smUserId:localStorage.getItem('id'),
-							smSbSpec:this.shopdetail.listSmCoFarmat[this.guigeindex][0]
+							smSbSpec:this.shopdetail.listSmCoFarmat[this.guigeindex][0]+ '-' +that.shopdetail.smCommodity.smCoColour[that.colorindex]
 						}]
 					}]
 					localStorage.setItem('shopdata', JSON.stringify(shopdata))
