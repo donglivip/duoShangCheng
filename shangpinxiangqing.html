@@ -56,7 +56,7 @@
 				<div class="main-three">
 					<div class="three-box" @click="alertchange">
 						<div class="three-text">规格</div>
-						<div class="three-news">{{shopdetail.listSmCoFarmat[guigeindex][0]}}</div>
+						<div class="three-news">{{shopdetail.listSmCoFarmat[guigeindex][0] | guige}}</div>
 						<img src="img/you-hui.png" />
 					</div>
 					<div class="three-hezi" @click="cgai">
@@ -129,7 +129,7 @@
 			<div class="alert" v-show="alertboo"@click="alertchange()">
 				<div class="alert-inner">
 					<div class="alert-top">
-						<img :src="shopdetail.smCommodity.smCoDefaultImg[0]" class="avatar" />
+						<img :src="shopdetail.listSmCoFarmat[guigeindex][0] | guigeimg" class="avatar" />
 						<strong>¥ {{shopdetail.listSmCoFarmat[guigeindex][1]}}</strong>
 						<img src="img/Group 27.png" class="close" @click.stop="alertchange()" />
 					</div>
@@ -138,7 +138,7 @@
 					</div>
 					<div class="box">
 						<div class="tab" v-for="(val,index) in shopdetail.listSmCoFarmat" :class="index==guigeindex?'active':''" @click.stop="changeguige(index)">
-							{{val[0]}}
+							{{val[0] | guige}}
 						</div>
 					</div>
 					<div class="title">
@@ -261,7 +261,9 @@
 						smShoppingBasketId='',
 						lprice=that.shopdetail.listSmCoFarmat[that.guigeindex][1]
 					if(that.shopnum>that.shopdetail.smCommodity.smCoStock){alert('库存不足');return false;}
-					console.log(that.shopdetail.smCommodity.smCoColour[that.colorindex])
+					if(that.shopdetail.listSmCoFarmat[that.guigeindex][0].indexOf('-')!=-1){
+						that.shopdetail.listSmCoFarmat[that.guigeindex][0]=that.shopdetail.listSmCoFarmat[that.guigeindex][0].substr(0,that.shopdetail.listSmCoFarmat[that.guigeindex][0].indexOf('-'))
+					}
 					$.ajax({
 						type: "post",
 						url: myurl + "/user/inserShoppingCart",
@@ -312,6 +314,9 @@
 				},
 				addcart: function() {
 					var that = this
+					if(that.shopdetail.listSmCoFarmat[that.guigeindex][0].indexOf('-')!=-1){
+						that.shopdetail.listSmCoFarmat[that.guigeindex][0]=that.shopdetail.listSmCoFarmat[that.guigeindex][0].substr(0,that.shopdetail.listSmCoFarmat[that.guigeindex][0].indexOf('-'))
+					}
 					//					加入购物车
 					if(that.shopnum>that.shopdetail.smCommodity.smCoStock){alert('库存不足');return false;}
 					$.ajax({
@@ -325,7 +330,7 @@
 							smSbCreateName: localStorage.getItem('id'),
 							smSbNum: that.shopnum,
 							smSbPrice: that.shopdetail.listSmCoFarmat[that.guigeindex][1],
-							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0],
+							smSbSpec: that.shopdetail.listSmCoFarmat[that.guigeindex][0]+ '-' +that.shopdetail.smCommodity.smCoColour[that.colorindex],
 							smMerchantId: localStorage.getItem('storeinfoid')
 						},
 						success: function(res) {
@@ -384,6 +389,7 @@
 						},
 						success: function(res) {
 							if(res.status == 200) {
+								localStorage.setItem('shopimg',JSON.parse(res.data.smCommodity.smCoDefaultImg)[0])
 								if(res.data.smCommodity.smCoColour!=null&&res.data.smCommodity.smCoColour!='null'&&res.data.smCommodity.smCoColour!="[]"){
 									res.data.smCommodity.smCoColour=JSON.parse(res.data.smCommodity.smCoColour)
 								}else{
@@ -429,6 +435,22 @@
 						src
 					]);
 				})
+			},
+			filters:{
+				guige:function(value){
+					if(value.indexOf('-')!=-1){
+						return value.substr(0,value.indexOf('-'))
+					}else{
+						return value
+					}
+				},
+				guigeimg:function(value){
+					if(value.indexOf('-')!=-1){
+						return value.substr(value.indexOf('-')+1,value.length)
+					}else{
+						return localStorage.getItem('shopimg')
+					}
+				}
 			}
 		})
 	</script>

@@ -384,7 +384,6 @@
 			},
 			mounted: function() {
 				var that = this
-				
 				document.addEventListener('myajax', function() {
 					that.myajax()
 				})
@@ -396,13 +395,14 @@
 					}, function(e) {
 						alert("获取支付通道失败：" + e.message);
 					});
-					that.myajax()
+					
 				}
 				if(window.plus) {
 					plusReady();
 				} else {
 					document.addEventListener('plusready', plusReady, false);
 				}
+				that.myajax()
 			},
 			filters: {
 				ptype: function(value) {

@@ -20,7 +20,6 @@
 	<body>
 		<div class="swiper-container qidong">
 			<div class="swiper-wrapper">
-				
 				<div class="swiper-slide">
 					<img src="img/qi02.png" >
 				</div>
@@ -278,6 +277,7 @@
 							loop:true,
 							on:{
 								slideChangeTransitionEnd:function(){
+									console.log(this.activeIndex)
 									if(boo){
 										 localStorage.setItem('activeIndex',this.activeIndex)
 									}
@@ -291,7 +291,9 @@
 								}
 							}
 						});
-						swiper.slideTo( localStorage.getItem('activeIndex'), 1000, false);
+						if(localStorage.getItem('activeIndex')!=undefined){
+							swiper.slideTo( localStorage.getItem('activeIndex'), 1000, false);
+						}
 						boo=true
 					} else {
 						alert(res.msg)
@@ -321,7 +323,7 @@
 								$('.main-one .swiper-wrapper').append(
 									`
 									<div class="swiper-slide" id='${res.data[i].smBaUrl}'>
-										<img src="${myurl + res.data[i].smBaImg}" />
+										<img src="${res.data[i].smBaImg}" />
 									</div>
 								`
 								)
@@ -362,7 +364,7 @@
 							$(".main-three").append(
 								`
 								<div class="three-box" myid="${res.data[i].smMerchantId}">
-									<img src="${myurl + res.data[i].smMeShopImg}" />
+									<img src="${res.data[i].smMeShopImg}" />
 									<div class="three-text">${res.data[i].smMeShopName}</div>
 								</div>
 							`

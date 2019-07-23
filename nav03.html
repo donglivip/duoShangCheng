@@ -59,7 +59,7 @@
 					<div class="swiper-container" v-if="goodsType2id==''">
 					    <div class="swiper-wrapper">
 					        <div class="swiper-slide" v-for="val in navdata.type" @click="openshop(val.smMerchantId)" v-if="val!='null'">
-								<img :src="myurl + val.smMeShopImg" >
+								<img :src="val.smMeShopImg" >
 							</div>
 					    </div>
 					    <!-- Add Pagination -->
@@ -99,8 +99,8 @@
 <!-- 							<div class="bottom-tab" @click="change('','地区分类')" >
 								地区分类
 							</div> -->
-							<div class="bottom-tab" @click="change(val.smAdvertisementAddressId,val.smAaArea)" v-for="(val,index) in adressdata" >
-								{{val.smAaProvice}}{{val.smAaCity}}
+							<div class="bottom-tab" @click="change(val.smAdvertisementAddressId,val.smAaProvice)" v-for="(val,index) in adressdata" >
+								{{val.smAaProvice}}
 							</div>
 					</div>
 				</div>
@@ -234,6 +234,18 @@
 					this.goodsTypename = name
 					this.goodsType2id=''
 					this.goodsType2name=''
+					//					获取地区
+					$.ajax({
+						type: "POST",
+						url: myurl + '/user/selectSmAdvertisementAddress',
+						datatype: 'json',
+						data:{
+							id:id
+						},
+						success: function(res) {
+							that.adressdata = res.data
+						}
+					});
 					//					获取二级分类广告
 					$.ajax({
 						type: "post",
@@ -332,15 +344,7 @@
 						}
 					});
 
-					//					获取地区
-					$.ajax({
-						type: "POST",
-						url: myurl + '/user/selectSmAdvertisementAddress',
-						datatype: 'json',
-						success: function(res) {
-							that.adressdata = res.data
-						}
-					});
+					
 					//					获取一级广告
 					$.ajax({
 						type: "POST",
