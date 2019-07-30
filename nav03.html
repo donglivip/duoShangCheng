@@ -18,7 +18,7 @@
 			text-align: right;
 		}
 		.swiper-slide img{
-			width: 100%;height: 100%;
+			width: 100%;
 		}
 		.swiper-container{height: 3rem;}
 		.swiper-pagination-bullet-active{background: #F55353;}
@@ -59,7 +59,7 @@
 					<div class="swiper-container" v-if="goodsType2id==''">
 					    <div class="swiper-wrapper">
 					        <div class="swiper-slide" v-for="val in navdata.type" @click="openshop(val.smMerchantId)" v-if="val!='null'">
-								<img :src="val.smMeShopImg" >
+								<img :src="myurl + val.smMeShopImg" >
 							</div>
 					    </div>
 					    <!-- Add Pagination -->
