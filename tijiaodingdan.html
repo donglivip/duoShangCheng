@@ -104,7 +104,7 @@
 				adressdata: {},
 				alertboo: false,
 				smOrRemarke: '',
-				smOrPayStyle: '3',
+				smOrPayStyle: '1',
 				smOrFreight: 0,
 				jinji: '',
 				channel: '',
@@ -252,6 +252,7 @@
 				},
 				mysuccess: function(id) {
 					var that=this
+					localStorage.setItem('dindex',2)
 						// 用户购买分红
 						$.ajax({
 							type: "post",

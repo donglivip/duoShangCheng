@@ -59,7 +59,8 @@
 					<div class="swiper-container" v-if="goodsType2id==''">
 					    <div class="swiper-wrapper">
 					        <div class="swiper-slide" v-for="val in navdata.type" @click="openshop(val.smMerchantId)" v-if="val!='null'">
-								<img :src="myurl + val.smMeShopImg" >
+								<img :src="myurl + val.smMeShopImg" v-if="val.smMeShopImg.indexOf('http')==-1">
+								<img :src="val.smMeShopImg" v-if="val.smMeShopImg.indexOf('http')!=-1">
 							</div>
 					    </div>
 					    <!-- Add Pagination -->
@@ -363,13 +364,23 @@
 				this.myajax()
 			},
 			updated: function() {
-				var swiper = new Swiper('.swiper-container', {
-				    pagination: '.swiper-pagination',
-				    autoplay: 3000,
-					pagination: {
-						el: '.swiper-pagination',
-					  }
-				});
+				if(this.navdata.type.length>1){
+					var swiper = new Swiper('.swiper-container', {
+					    pagination: '.swiper-pagination',
+					    autoplay:true,
+						pagination: {
+							el: '.swiper-pagination',
+						  }
+					});
+				}else{
+					var swiper = new Swiper('.swiper-container', {
+					    pagination: '.swiper-pagination',
+						pagination: {
+							el: '.swiper-pagination',
+						  }
+					});
+				}
+				
 			}
 		})
 	</script>
