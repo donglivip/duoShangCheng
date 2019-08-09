@@ -73,10 +73,7 @@
 							localStorage.setItem('weixinxingming',res.data.smUsWechatName)//微信姓名
 							localStorage.setItem('smUsHeadimg',res.data.smUsHeadimg)//头像
 							localStorage.setItem('mima',mima)//手机号
-							mui.openWindow({
-								url:'index.html',
-								id:'index'
-							})
+							plus.runtime.restart()
 						} else{
 							alert(res.msg)
 						}
